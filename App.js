@@ -7,8 +7,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import RootStackScreen from './screens/RootStackScreen';
 import WelcomeScreen from './screens/WelcomeScreen';
-import Navigation from './components/navigation/navigation';
-import Settings from './components/settings/settings';
+
 
 
 const Stack = createStackNavigator();
@@ -22,8 +21,6 @@ function App() {
         <Stack.Screen name="Map" component={MapScreen} />
       </Stack.Navigator> */}
     </NavigationContainer>
-    // <Settings />
-    // <Navigation />
   );
 }
 
