@@ -12,3 +12,11 @@ import Feather from 'react-native-vector-icons/Feather';
 //Our Work
 //Sign Up for Updates
 //Footer
+
+function HomeScreen(){
+    return (
+    <Text>Hello there. General Kenobi</Text>
+    );
+}
+
+export default HomeScreen;
