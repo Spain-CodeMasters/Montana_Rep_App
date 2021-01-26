@@ -14,6 +14,7 @@ import {
   View,
   Text,
   StatusBar,
+  Image,
 } from 'react-native';
 
 import {
@@ -24,15 +25,21 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-const App: () => React$Node = () => {
+import Navigation from './components/navigation/navigation';
+import Settings from './components/settings/settings';
+
+const App = () => {
   return (
     <>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView>
+      
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
+          
           <Header />
+          
           {global.HermesInternal == null ? null : (
             <View style={styles.engine}>
               <Text style={styles.footer}>Engine: Hermes</Text>
@@ -66,7 +73,10 @@ const App: () => React$Node = () => {
             </View>
             <LearnMoreLinks />
           </View>
+          
         </ScrollView>
+        <Settings />
+        <Navigation />
       </SafeAreaView>
     </>
   );
