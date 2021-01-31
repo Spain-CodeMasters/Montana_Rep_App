@@ -3,8 +3,9 @@ import * as React from 'react';
 import {Text, View, Button, StyleSheet, TouchableOpacity, Dimensions, Platform, TextInput, StatusBar, ScrollView, FlatList, Image} from 'react-native';
 import {SocialIcon} from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
-// import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+
 // import { CheckBox } from 'react-native-elements'
 import Navigation from '../components/navigation/navigation';
 import Settings from '../components/settings/settings';
@@ -13,32 +14,38 @@ import Settings from '../components/settings/settings';
 const {width, height} = Dimensions.get('screen');
 
 const ITEM_WIDTH = width;
-const ITEM_HEIGHT = height * .75;
+const ITEM_HEIGHT = height * .90;
 
-const images = [
-    '../assets/glacier.jpg',
-    '../assets/mountain.jpg',
-    '../assets/creek.jpg',
-
+const data = [
+    'https://res.cloudinary.com/claire-dev/image/upload/v1612076013/mountain_nonpge.jpg',
+    'https://res.cloudinary.com/claire-dev/image/upload/v1612076013/glacier_aqjz96.jpg',
+    'https://res.cloudinary.com/claire-dev/image/upload/v1612076013/creek_dadkt3.jpg',
 ];
 
 
-export default () => {
+export default ({navigation}) => {
     return <ScrollView style={styles.container}>
         <StatusBar hidden/>
-        <Settings />
-        <Navigation />
         
+        <Navigation />
+
         {/* Carousel Module */}
-        {/* <FlatList 
-            data={images}
-            // keyExtractor={item => item.id}
-            renderItem={({item}) => {
-                return <View>
-                    <Image source={{uri: item}} style={styles.image}/>
-                </View>
-            }}
-        /> */}
+        <FlatList 
+            data={data}
+           keyExtractor={(_, index) => index.toString()}
+           horizontal
+           pagingEnabled
+           renderItem={({item}) =>{
+               return <View style={{width}}>
+                   <Image source={{uri: item}} style={{
+                       width: ITEM_WIDTH, 
+                       height: ITEM_HEIGHT, 
+                       resizeMode: 'cover'
+                   }}/>
+               </View>
+           }}
+        />
+        <Settings />
 
         {/* //Our Mission Module */}
         <View style={styles.header}>
@@ -55,7 +62,7 @@ export default () => {
                 </TouchableOpacity>
 
                 <View style={{flexDirection: 'row'}}>
-                    <SocialIcon  type='facebook' onPress={() =>{alert('facebook');}}/>
+                    <SocialIcon  type='facebook' onPress={()=> navigation.navigate('MapScreen')} />
                     <SocialIcon  type='instagram'onPress={() =>{alert('instagram');}}/>
                      <SocialIcon type='envelope'onPress={() =>{alert('email');}}/>
                 </View>
@@ -85,7 +92,36 @@ export default () => {
 
         {/* Subscription Module */}
         <View style={styles.header}>
-            <Text>Sign Up for Updates</Text>
+            <View style={styles.subscribe_container}>
+            <Text style={styles.subscribe_header}>Sign Up for Updates!</Text>
+            <Text style={styles.subscribe_text}>Get news from Montana Repertory Theatre in your inbox.</Text>
+            <View style={{flexDirection: "row", flex: 1, marginBottom: 40,}}>
+            <TextInput
+              placeholder= "Your Email Address"
+              style={styles.textInput}
+              autoCapitalize="none"
+              />
+              <TouchableOpacity style={styles.subscribe_button} onPress={() =>{alert('Email address sent')}}>
+              <Feather
+                // style={styles.subscribe_button}
+                name="send"
+                color="white"
+                
+                size={25}
+                
+              /></TouchableOpacity>
+              
+              </View>
+              
+              <View style={{alignItems: 'center', justifyContent: 'center'}}>
+              <FontAwesome5
+                name="newspaper"
+                solid
+                color="#D1D1D1"
+                size={150}
+              />
+              </View>
+            </View>
             <View style={{flexDirection: 'row'}}>
                     <SocialIcon  type='facebook' onPress={() =>{alert('facebook');}}/>
                     <SocialIcon  type='instagram'onPress={() =>{alert('instagram');}}/>
@@ -124,6 +160,51 @@ const styles = StyleSheet.create({
         width: ITEM_WIDTH,
         height: ITEM_HEIGHT,
         resizeMode: 'cover'
+    },
+    subscribe_container: {
+        flex: 1, 
+        backgroundColor: '#EBEBEB',
+        borderRadius: 9,
+        padding: 30,
+        margin: 30
+    },
+    subscribe_header: {
+        marginTop: 100,
+        textAlign: 'center',
+        fontSize: 24,
+        fontFamily: 'FuturaPTDemi',
+        marginBottom: 40
+
+    },
+    subscribe_text: {
+        textAlign: 'center',
+        fontFamily: 'FuturaPTBook',
+        fontSize: 16,
+        color: '#737373',
+        paddingLeft: 15,
+        paddingRight: 15,
+        marginBottom: 50
+    },
+
+    textInput: {
+        flex: 1,
+        backgroundColor: 'white',
+        borderColor: '#707070',
+        borderWidth: 1,
+        color: 'black',
+        fontFamily: 'FuturaPTBook',
+        fontSize: 18,
+        paddingLeft: 10,
+        
+
+    },
+    subscribe_button: {
+        marginLeft: 10,
+        backgroundColor: "#343A3F",
+        padding: 12,
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
     },
     footer_logo: {
         flex: 1,

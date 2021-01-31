@@ -6,3 +6,13 @@ import * as Animatable from 'react-native-animatable';
 import Feather from 'react-native-vector-icons/Feather';
 
 //tooltip
+import Navigation from '../components/navigation/navigation';
+import Settings from '../components/settings/settings';
+
+function MapScreen() {
+    return(
+    <Text>Map</Text>
+    );
+}
+
+export default MapScreen;

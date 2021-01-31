@@ -1,4 +1,5 @@
 import React from 'react';
+import 'react-native-gesture-handler';
 import {
   SafeAreaView,
   StyleSheet,
@@ -22,7 +23,7 @@ class Navigation extends React.Component {
         <TouchableOpacity style={{ alignSelf: 'center', margin: 25, marginTop: 30, }}>
           <Image  source={home} />
         </TouchableOpacity>
-        <TouchableOpacity style={{ alignSelf: 'flex-end', margin: 5, }}>
+        <TouchableOpacity  style={{ alignSelf: 'flex-end', margin: 5, }}>
           <Image  source={map} />
         </TouchableOpacity>
         <TouchableOpacity style={{ alignSelf: 'center', margin: 25, marginTop: 30, }}>
@@ -47,6 +48,7 @@ const styles = StyleSheet.create({
     elevation: 2,
     backgroundColor: 'rgba(255, 255, 255, .8)',
     
+    // alignSelf: 'flex-end',
     position: 'absolute',
     width: '100%',
     maxHeight: 55,
