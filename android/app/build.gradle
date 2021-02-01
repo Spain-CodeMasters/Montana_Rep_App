@@ -189,6 +189,12 @@ dependencies {
 
     implementation project(':react-native-linear-gradient')
 
+    //  implementation project(':react-native-maps')
+
+    //  classpath 'com.google.gms:google-services:4.3.5'
+
+
+
     // implementation platform('com.google.firebase:firebase-bom:26.3.0')
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {

@@ -9,10 +9,13 @@ import Feather from 'react-native-vector-icons/Feather';
 import Navigation from '../components/navigation/navigation';
 import Settings from '../components/settings/settings';
 
-function MapScreen() {
-    return(
-    <Text>Map</Text>
-    );
+function MapScreen () {
+  return(
+    <View>
+
+      <Text>Map Screen</Text>
+    </View>
+  );
 }
 
 export default MapScreen;
