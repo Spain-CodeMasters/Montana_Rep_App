@@ -1,8 +1,9 @@
 import 'react-native-gesture-handler';
-import * as React from 'react';
-import {Text, View, Button} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {Text, View, Button, ActivityIndicator} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import auth from '@react-native-firebase/auth';
 // import { createStackNavigator, createAppContainer } from 'react-navigaton';
 
 import RootStackScreen from './screens/RootStackScreen';
@@ -14,6 +15,24 @@ import Settings from './components/settings/settings';
 const Stack = createStackNavigator();
 
 function App() {
+  //Set initializing state while Firebase connects
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState();
+
+  //Handle user state changes
+  function onAuthStateChanged(user) {
+    setUser(user);
+    if (initializing) setInitializing(false);
+  }
+
+  useEffect(()=> {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; //unsubscribe on unmount
+  }, []);
+
+  if (initializing) return null;
+  
+
   return (
     <NavigationContainer>
       <RootStackScreen/>
