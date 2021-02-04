@@ -1,12 +1,19 @@
 import 'react-native-gesture-handler';
-import * as React from 'react';
+import React, {useContext, useState} from 'react';
 import {Text, View, Button, StyleSheet, TouchableOpacity, Dimensions, Platform, TextInput, StatusBar} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 // import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import { CheckBox } from 'react-native-elements'
+import {AuthContext} from './AuthProvider';
+
+import auth from '@react-native-firebase/auth';
+
+//form validation
 
 const SignUpScreen = ({navigation}) => {
+  cosnt [email, setEmail] = useStae();
+  const {} = useContext(AuthContext);
 
     const [data, setData] = React.useState({
       name: '',
