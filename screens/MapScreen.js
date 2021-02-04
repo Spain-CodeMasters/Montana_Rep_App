@@ -44,7 +44,7 @@ export default class MapScreen extends Component {
         {/* <PlayingBanner/> */}
         
        
-        z
+        
         <MapView
         provider = {PROVIDER_GOOGLE}
         style= {styles.map}
