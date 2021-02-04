@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import * as React from 'react';
-import {Text, View, Button, StyleSheet, TouchableOpacity, Dimensions, Platform, TextInput, StatusBar, ScrollView, FlatList, Image} from 'react-native';
+import {Text, View, Button, StyleSheet, TouchableOpacity, Dimensions, Platform, TextInput, StatusBar, ScrollView, FlatList, Image, SafeAreaView} from 'react-native';
 import {SocialIcon} from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 import Feather from 'react-native-vector-icons/Feather';
@@ -24,10 +24,11 @@ const data = [
 
 
 export default ({navigation}) => {
-    return <ScrollView style={styles.container}>
+    return <SafeAreaView style={styles.container}>
+        <ScrollView>
         <StatusBar hidden/>
         
-        <Navigation />
+        
 
         {/* Carousel Module */}
         <FlatList 
@@ -45,7 +46,7 @@ export default ({navigation}) => {
                </View>
            }}
         />
-        <Settings />
+        
 
         {/* //Our Mission Module */}
         <View style={styles.header}>
@@ -142,6 +143,9 @@ export default ({navigation}) => {
         </View>
 
     </ScrollView>
+    <Settings />
+    <Navigation navigation={navigation}/>
+    </SafeAreaView>
 }
 
 const styles = StyleSheet.create({

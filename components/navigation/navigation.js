@@ -1,12 +1,8 @@
 import React from 'react';
 import 'react-native-gesture-handler';
 import {
-  SafeAreaView,
   StyleSheet,
-  ScrollView,
   View,
-  Text,
-  StatusBar,
   Image,
   TouchableOpacity,
 } from 'react-native';
@@ -15,23 +11,20 @@ import home from './assets/homeIcon.png'
 import map from './assets/mapIcon.png'
 import cal from './assets/upcomingIcon.png'
 
-class Navigation extends React.Component {
-
-  render() {
+function Navigation ({navigation}) {
     return (
       <View style={styles.navBar}>
-        <TouchableOpacity style={{ alignSelf: 'center', margin: 25, marginTop: 30, }}>
+        <TouchableOpacity style={{ alignSelf: 'center', margin: 25, marginTop: 30, }} onPress={()=> navigation.navigate('HomeScreen')}>
           <Image  source={home} />
         </TouchableOpacity>
-        <TouchableOpacity  style={{ alignSelf: 'flex-end', margin: 5, }}>
+        <TouchableOpacity  style={{ alignSelf: 'flex-end', margin: 5, }} onPress={()=> navigation.navigate('MapScreen')}>
           <Image  source={map} />
         </TouchableOpacity>
-        <TouchableOpacity style={{ alignSelf: 'center', margin: 25, marginTop: 30, }}>
+        <TouchableOpacity style={{ alignSelf: 'center', margin: 25, marginTop: 30, }} onPress={()=> navigation.navigate('HomeScreen')}>
           <Image  source={cal} />
         </TouchableOpacity>
       </View>
     );
-  }
 }
 
 const styles = StyleSheet.create({

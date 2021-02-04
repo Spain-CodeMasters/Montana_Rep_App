@@ -54,7 +54,6 @@ const styles = StyleSheet.create({
   },
 
   settingsOpen: {
-    //elevation: 3,
     position: 'absolute',
     top: 0,
     width: '100%',
