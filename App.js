@@ -7,8 +7,6 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import RootStackScreen from './screens/RootStackScreen';
 // import NotifyScreen from './screens/NotifyScreen';
-import Navigation from './components/navigation/navigation';
-import Settings from './components/settings/settings';
 
 
 const Stack = createStackNavigator();

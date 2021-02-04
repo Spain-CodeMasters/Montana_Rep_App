@@ -20,7 +20,7 @@ function Navigation ({navigation}) {
         <TouchableOpacity  style={{ alignSelf: 'flex-end', margin: 5, }} onPress={()=> navigation.navigate('MapScreen')}>
           <Image  source={map} />
         </TouchableOpacity>
-        <TouchableOpacity style={{ alignSelf: 'center', margin: 25, marginTop: 30, }} onPress={()=> navigation.navigate('HomeScreen')}>
+        <TouchableOpacity style={{ alignSelf: 'center', margin: 25, marginTop: 30, }} onPress={()=> navigation.navigate('ScheduleScreen')}>
           <Image  source={cal} />
         </TouchableOpacity>
       </View>
