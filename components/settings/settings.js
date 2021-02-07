@@ -32,6 +32,18 @@ class Settings extends React.Component {
         <TouchableOpacity style={{ height: 50 }} onPress={() => { this.setState({ show: !this.state.show }) }}>
           <Image style={{ margin: 15,}} source={gear} />
         </TouchableOpacity>
+
+        {/* <DrawerItem 
+                    icon={({color, size}) => (
+                        <Icon 
+                        name="exit-to-app" 
+                        color={color}
+                        size={size}
+                        />
+                    )}
+                    label="Sign Out"
+                    onPress={() => {signOut()}}
+                /> */}
       </View>
 
     );

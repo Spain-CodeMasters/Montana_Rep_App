@@ -14,11 +14,11 @@ import Settings from '../components/settings/settings';
 const {width, height} = Dimensions.get('screen');
 
 const ITEM_WIDTH = width;
-const ITEM_HEIGHT = height * .90;
+const ITEM_HEIGHT = height * .88;
 
 const data = [
-    'https://res.cloudinary.com/claire-dev/image/upload/v1612076013/mountain_nonpge.jpg',
     'https://res.cloudinary.com/claire-dev/image/upload/v1612076013/glacier_aqjz96.jpg',
+    'https://res.cloudinary.com/claire-dev/image/upload/v1612076013/mountain_nonpge.jpg',
     'https://res.cloudinary.com/claire-dev/image/upload/v1612076013/creek_dadkt3.jpg',
 ];
 
