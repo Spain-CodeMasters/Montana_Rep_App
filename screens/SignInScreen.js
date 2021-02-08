@@ -1,9 +1,11 @@
 import 'react-native-gesture-handler';
 import * as React from 'react';
-import {Text, View, Button, StyleSheet, TouchableOpacity, Dimensions, Platform, TextInput, StatusBar} from 'react-native';
+import {Text, View, Button, KeyboardAvoidingView, StyleSheet, TouchableOpacity, Dimensions, Platform, TextInput, StatusBar, Keyboard, TouchableWithoutFeedback} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
 import Feather from 'react-native-vector-icons/Feather';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 
 
 const SignInScreen = ({navigation}) => {
@@ -12,31 +14,45 @@ const SignInScreen = ({navigation}) => {
       email: '',
       password: '',
       check_textInputChange: false,
-      secureTextEntry: true
+      secureTextEntry: true,
+      isValidEmail: true, 
+      isValidPassword: true,
 
     });
 
     const textInputChange = (val) => {
-      if( val.length !== 0) {
+      if( val.trim().length >= 4) {
         setData({
           ...data,
           email: val, 
-          check_textInputChange: true
+          check_textInputChange: true,
+          isValidEmail: true
         });
       } else {
         setData({
           ...data,
           email: val, 
-          check_textInputChange: false
+          check_textInputChange: false,
+          isValidEmail: false
         });
       }
     }
 
     const handlePasswordChange = (val) => {
+      if( val.trim().length >= 8) {
       setData({
         ...data, 
-        password: val
+        password: val,
+        isValidPassword: true
       });
+    } else {
+      setData({
+        ...data, 
+        password: val,
+        isValidPassword: false
+      });
+
+    }
     }
 
     const updateSecureTextEntry = () => {
@@ -46,18 +62,46 @@ const SignInScreen = ({navigation}) => {
       });
     }
 
+    const handleValidEmail = (val) => {
+        if( val.trim().length >= 4) {
+          setData({
+            ...data, 
+            isValidEmail: true
+          });
+
+        } else {
+          setData({
+            ...data, 
+            isValidEmail: false
+          });
+        }
+    }
+
+    const loginHandle = (email, password) => {
+      signIn(email, password);
+    }
+
     return (
-      <View style={styles.container}>
+      <KeyboardAwareScrollView
+      style={{ backgroundColor: 'blue' }}
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      contentContainerStyle={styles.container}
+      scrollEnabled={false}
+    >
+      {/* <View style={styles.container}> */}
+      
           <StatusBar backgroundColor='#fff' barStyle="dark-content"/>
         <View style={styles.header}>
           <Text style={styles.text_header}>Sign In</Text>
-          <View style={{display: "flex", flexDirection: "row", flex: 1, flexwrap: 'wrap', margin: 10}}>
+          <View>
+          <View style={{display: "flex", flexDirection: "row", flex: 1, flexwrap: 'wrap', margin: 15}}>
             <Text style={styles.text_subheader}>New User? </Text>  
               <TouchableOpacity onPress={()=> navigation.navigate('SignUpScreen')}>
                   <Text style={styles.text_linkheader}> 
                     Create an account
                   </Text>
               </TouchableOpacity>
+          </View>
           </View>
         </View>
         <Animatable.View 
@@ -69,6 +113,7 @@ const SignInScreen = ({navigation}) => {
               style={styles.textInput}
               autoCapitalize="none"
               onChangeText={(val)=>textInputChange(val)}
+              onEndEditing={(e)=> handleValidEmail(e.nativeEvent.text)}
               />
               {data.check_textInputChange ?
             <Animatable.View
@@ -82,6 +127,13 @@ const SignInScreen = ({navigation}) => {
             </Animatable.View>
             : null}
           </View>
+
+          {data.isValidEmail ? null :
+          <Animatable.View animation = "fadeInLeft" duration={500}>
+          <Text style={styles.errorMsg}>Email must be 4 characters long.</Text>
+          </Animatable.View>
+          }
+
           <View style={[styles.action, {
             marginTop: 20
           }]}>
@@ -110,7 +162,17 @@ const SignInScreen = ({navigation}) => {
               }
             </TouchableOpacity>
           </View>
-          
+
+          {data.isValidPassword ? null :
+          <Animatable.View animation = "fadeInLeft" duration={500}>
+          <Text style={styles.errorMsg}>Password must be 8 characters long.</Text>
+          </Animatable.View>
+          }
+
+            <TouchableOpacity>
+                <Text style={{color: '#009387', marginTop:15}}>Forgot password?</Text>
+            </TouchableOpacity>
+
           <View style={styles.button}>
             <TouchableOpacity
               style={styles.signIn}
@@ -126,7 +188,8 @@ const SignInScreen = ({navigation}) => {
 
           
         </Animatable.View>
-      </View>
+        
+      </KeyboardAwareScrollView>
     );
   };
 
@@ -138,19 +201,24 @@ const SignInScreen = ({navigation}) => {
       flex: 1, 
       backgroundColor: '#fff'
     },
+    inner: { 
+      flex: 1, 
+      justifyContent: "space-around"
+    },
     header: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
         paddingHorizontal: 0,
-        paddingTop: 100,
-        paddingBottom: 50
+        paddingTop: 125,
+        paddingBottom: 10
     },
     footer: {
         flex: 3,
         backgroundColor: '#fff',
         paddingHorizontal: 20,
-        paddingVertical: 30,
+        // paddingVertical: 30,
+        // paddingTop: 20,
         paddingLeft: 50,
         paddingRight: 50
     },
