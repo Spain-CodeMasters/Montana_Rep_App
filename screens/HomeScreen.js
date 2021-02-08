@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import * as React from 'react';
-import {Text, View, Button, StyleSheet, TouchableOpacity, Dimensions, Platform, TextInput, StatusBar, ScrollView, FlatList, Image} from 'react-native';
+import {Text, View, Button, StyleSheet, TouchableOpacity, Dimensions, Platform, TextInput, StatusBar, ScrollView, FlatList, Image, SafeAreaView} from 'react-native';
 import {SocialIcon} from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 import Feather from 'react-native-vector-icons/Feather';
@@ -14,20 +14,21 @@ import Settings from '../components/settings/settings';
 const {width, height} = Dimensions.get('screen');
 
 const ITEM_WIDTH = width;
-const ITEM_HEIGHT = height * .90;
+const ITEM_HEIGHT = height * .88;
 
 const data = [
-    'https://res.cloudinary.com/claire-dev/image/upload/v1612076013/mountain_nonpge.jpg',
     'https://res.cloudinary.com/claire-dev/image/upload/v1612076013/glacier_aqjz96.jpg',
+    'https://res.cloudinary.com/claire-dev/image/upload/v1612076013/mountain_nonpge.jpg',
     'https://res.cloudinary.com/claire-dev/image/upload/v1612076013/creek_dadkt3.jpg',
 ];
 
 
 export default ({navigation}) => {
-    return <ScrollView style={styles.container}>
+    return <SafeAreaView style={styles.container}>
+        <ScrollView>
         <StatusBar hidden/>
         
-        <Navigation />
+        
 
         {/* Carousel Module */}
         <FlatList 
@@ -45,7 +46,7 @@ export default ({navigation}) => {
                </View>
            }}
         />
-        <Settings />
+        
 
         {/* //Our Mission Module */}
         <View style={styles.header}>
@@ -142,6 +143,9 @@ export default ({navigation}) => {
         </View>
 
     </ScrollView>
+    <Settings />
+    <Navigation navigation={navigation}/>
+    </SafeAreaView>
 }
 
 const styles = StyleSheet.create({

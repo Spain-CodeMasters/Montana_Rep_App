@@ -12,7 +12,6 @@ import Navigation from './components/navigation/navigation';
 import Settings from './components/settings/settings';
 import HomeScreen from './screens/HomeScreen';
 
-
 import Providers from './screens/navigation';
 
 const App = () => {

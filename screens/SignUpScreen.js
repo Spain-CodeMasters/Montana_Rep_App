@@ -74,6 +74,7 @@ const SignUpScreen = ({navigation}) => {
       <View style={styles.container}>
           <StatusBar backgroundColor='#fff' barStyle="dark-content"/>
         <View style={styles.header}>
+          
           <Text style={styles.text_header}>Sign Up</Text>
           <View style={{display: "flex", flexDirection: "row", flex: 1, flexwrap: 'wrap', margin: 10}}>
             <Text style={styles.text_subheader}>Have an account? </Text>  
@@ -218,11 +219,12 @@ const SignUpScreen = ({navigation}) => {
     },
     header: {
         flex: 1,
+        // backgroundColor: 'blue',
         alignItems: 'center',
         justifyContent: 'center',
         paddingHorizontal: 0,
         paddingTop: 70
-        // paddingBottom: 20
+        // paddingBottom: 50
     },
     footer: {
         flex: 3,
