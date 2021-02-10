@@ -5,7 +5,7 @@ import * as Animatable from 'react-native-animatable';
 // import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import { CheckBox } from 'react-native-elements'
-import {AuthContext} from './AuthProvider';
+import {AuthContext} from '../navigation/AuthProvider';
 
 import auth from '@react-native-firebase/auth';
 

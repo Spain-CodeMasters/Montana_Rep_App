@@ -12,74 +12,46 @@ import Navigation from './components/navigation/navigation';
 import Settings from './components/settings/settings';
 import HomeScreen from './screens/HomeScreen';
 
+
 import Providers from './screens/navigation';
+import AppStack from './navigation/AppStack';
+import AsyncStorage from '@react-native-community/async-storage';
+
+const AppStack = createStackNAvigator();
 
 const App = () => {
-  return <Providers />;
+  const [isFirstLaunch, setIsFirstLaunch] = React.useState(null);
+
+  useEffect(()=> {
+    AsyncStorage.getItem('alreadyLaunched').then(value =>{
+      if(value == null) {
+        AsyncStorage.setItem('alreadyLaunched', 'true');
+        setIsFirstLaunch(true);
+      } else {
+        setIsFirstLaunch(false);
+      }
+    });
+  }, []);
+
+  if ( isFirstLaunch === null) {
+    return null;
+  } else if ( isFirstLaunch === true) {
+    return (
+      <NavigationContainer>
+          <AppStack.Navigator
+            headerMode="none"
+          >
+            <AppStack.Screen name="Onboarding" component={OnboardingScreen} />
+            <AppStack.Screen name="Sign In" component={SignInScreen} />
+  
+          </AppStack.Navigator>
+      </NavigationContainer>
+    );
+  } else {
+    return <SignInScreen />
+  }
 }
 
 export default App;
 
 
-// const Stack = createStackNavigator();
-
-
-
-// function App() {
-//   //Set initializing state while Firebase connects
-//   const [initializing, setInitializing] = useState(true);
-//   const [user, setUser] = useState(null);
-
-//   //Handle user state changes
-//   // function onAuthStateChanged(user) {
-//   //   setUser(user);
-//   //   if (initializing) setInitializing(false);
-//   // }
-
-//   useEffect(()=> {
-//     // const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-//     // return subscriber; //unsubscribe on unmount
-//     setTimeout(()=> {
-//       setInitializing(false);
-//     }, 1000);
-//     }, []);
-
-//   // if (initializing) return null;
-
-//   if (initializing) {
-//     return (
-//       <View>
-//         <ActivityIndicator size="large" />
-//       </View>
-//     );
-//   }
-
-//   return (
-//     <View>
-//       <NavigationContainer>
-//       {/* <Stack.Screen name="HomeScreen" component={HomeScreen} /> */}
-      
-//         <RootStackScreen/>
-      
-//       </NavigationContainer>
-//     </View>
-//   );
-//   }
-
-
-  
-
-//   return (
-//     <NavigationContainer>
-      
-//       {/* <Stack.Navigator initialRouteName="Home">
-//         <Stack.Screen name="Home" component={HomeScreen} />
-//         <Stack.Screen name="Map" component={MapScreen} />
-//       </Stack.Navigator> */}
-//     </NavigationContainer>
-//     // <Settings />
-//     // <Navigation />
-//   );
-// }
-
-// export default App;
