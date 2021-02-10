@@ -1,83 +1,110 @@
 import 'react-native-gesture-handler';
 import * as React from 'react';
-import {Text, View, Button, StyleSheet, TouchableOpacity, Dimensions, Platform, TextInput, StatusBar, ScrollView, FlatList, Image, SafeAreaView, ImageBackground} from 'react-native';
-import {SocialIcon} from 'react-native-elements';
-import * as Animatable from 'react-native-animatable';
-import Feather from 'react-native-vector-icons/Feather';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-
+import { Animated, Text, View, Button, StyleSheet, TouchableOpacity, Dimensions, StatusBar, ScrollView, Image, SafeAreaView, ImageBackground } from 'react-native';
+import Video from 'react-native-video';
+//import Video from 'react-native';
 import Navigation from '../components/navigation/navigation';
 import Settings from '../components/settings/settings';
-
-const {width, height} = Dimensions.get('screen');
-
-const ITEM_WIDTH = width;
-const ITEM_HEIGHT = height * .90;
-
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import playImage from '../assets/mountain.jpg';
 
-var author = 'Author';
+const { width, height } = Dimensions.get('screen');
+const ITEM_WIDTH = width;
+const ITEM_HEIGHT = height * .90;
 
-export default ({navigation}) => {
+const HEADER_MAX_HEIGHT = ITEM_HEIGHT;
+const HEADER_MIN_HEIGHT = 200;
+const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
+
+var author = 'Author';
+var source = 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'
+
+export default ({ navigation }) => {
+    
     return <SafeAreaView style={styles.container}>
         <ScrollView>
-        <StatusBar hidden/>
-        
-        
+            
+            <StatusBar backgroundColor='#fff' barStyle="dark-content" />
+            <ImageBackground source={playImage} style={styles.image}>
+                <View style={styles.overlay}>
+                    <Video source={{ uri: source }} 
+                    // ref={(ref) => {
+                    //     this.player = ref
+                    //   }}         
+                    rate={1.0}
+                    volume={1.0}
+                    muted={false}
+                    resizeMode={"cover"}
+                    style={styles.video}
+                     />
 
-       
-                   <ImageBackground source={playImage} style={styles.image}>
-                   <View style={styles.overlay}>
-                        <Text style={styles.title}>Test</Text>
-                        
-                        </View>
-                    </ImageBackground>
-        
-
-        {/* //Our Mission Module */}
-        <View style={styles.header}>
-            <Text style={styles.text_title}>Test</Text>
-            <Text style={styles.author}>Written by {author}</Text>
-            <Text style={styles.subtext}>Play Discription</Text>
-
+                    <Text style={styles.title}>Test</Text>
+                    
+                    <FontAwesome5
+                        name="lock"
+                        solid
+                        color="#fff"
+                        size={40}
+                    />
+                    <FontAwesome5
+                        name="play"
+                        solid
+                        color="#fff"
+                        size={40}
+                    />
+                    
+                    
+                    
+                </View>
+            </ImageBackground>
                 
-        </View>
-       
-        {/* footer Module */}
+            {/* discription */}
+            <View style={styles.header}>
+                <Text style={styles.text_title}>Test</Text>
+                <Text style={styles.author}>Written by {author}</Text>
+                <Text style={styles.subtext}>Play Discription</Text>
+            </View>
+
+            {/* footer */}
 
             <View style={styles.footer}>
-            <Image source={require('../assets/1_MontanaRep_PrimaryLogo_GreenLandscape.png')}  style={styles.footer_logo} />
- 
+                <Image source={require('../assets/1_MontanaRep_PrimaryLogo_GreenLandscape.png')} style={styles.footer_logo} />
+
             </View>
 
 
 
-    </ScrollView>
-    <Settings />
-    <Navigation navigation={navigation}/>
+        </ScrollView>
+        <Settings />
+        <Navigation navigation={navigation} />
     </SafeAreaView>
 }
 
 const styles = StyleSheet.create({
+    video: {
+        position: 'absolute',
+        height: "100%",
+        width: ITEM_WIDTH,
+    },
     container: {
-        flex: 1, 
+        flex: 1,
         backgroundColor: '#fff'
-      },
-      overlay: {
-        backgroundColor:'rgba(0, 0, 0, 0.3)',
+    },
+    overlay: {
+        backgroundColor: 'rgba(0, 0, 0, 0.3)',
         width: '100%',
         height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
     },
-      header: {
+    header: {
         flex: 1,
         alignItems: 'flex-start',
         justifyContent: 'center',
         margin: 45
 
-      },
+    },
     image: {
         width: ITEM_WIDTH,
         height: ITEM_HEIGHT,
@@ -95,7 +122,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: 50,
         marginBottom: 70,
-        width: 212, 
+        width: 212,
         height: 90,
     },
 
@@ -128,7 +155,7 @@ const styles = StyleSheet.create({
         fontFamily: 'FuturaPTDemi',
         fontSize: 30,
         letterSpacing: 5,
-      }
+    }
 
 
 })
