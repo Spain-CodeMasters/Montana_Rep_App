@@ -1,14 +1,20 @@
 import 'react-native-gesture-handler';
-import * as React from 'react';
+// import * as React from 'react';
+import React, {useContext, useState} from 'react';
 import {Text, View, Button, KeyboardAvoidingView, StyleSheet, TouchableOpacity, Dimensions, Platform, TextInput, StatusBar, Keyboard, TouchableWithoutFeedback} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
 import Feather from 'react-native-vector-icons/Feather';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
+import {AuthContext} from '../navigation/AuthProvider';
 
 
 const SignInScreen = ({navigation}) => {
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
+
+    const {login} = useContext(AuthContext);
 
     const [data, setData] = React.useState({
       email: '',
@@ -77,9 +83,9 @@ const SignInScreen = ({navigation}) => {
         }
     }
 
-    const loginHandle = (email, password) => {
-      signIn(email, password);
-    }
+    // const loginHandle = (email, password) => {
+    //   signIn(email, password);
+    // }
 
     return (
       <KeyboardAwareScrollView
@@ -109,9 +115,13 @@ const SignInScreen = ({navigation}) => {
           style={styles.footer}>
           <View style={styles.action}>
             <TextInput
+              labelValue= {email}
+              onChangeText={(userEmail) => setEmail(userEmail)}
               placeholder= "Email"
               style={styles.textInput}
+              keyboardType="email-address"
               autoCapitalize="none"
+              autoCorrect={false}
               onChangeText={(val)=>textInputChange(val)}
               onEndEditing={(e)=> handleValidEmail(e.nativeEvent.text)}
               />
@@ -138,6 +148,8 @@ const SignInScreen = ({navigation}) => {
             marginTop: 20
           }]}>
             <TextInput
+              labelValue={password}
+              onChangeText={(userPassword) => setPassword}
               placeholder= "Password"
               secureTextEntry={data.secureTextEntry ? true : false}
               style={styles.textInput}
@@ -176,7 +188,7 @@ const SignInScreen = ({navigation}) => {
           <View style={styles.button}>
             <TouchableOpacity
               style={styles.signIn}
-              // onPress={(alert)=}
+              onPress={() => login(email, password)}
             >
               <Text style={[styles.textSign,
                 {color:'#fff'
@@ -185,6 +197,11 @@ const SignInScreen = ({navigation}) => {
             </TouchableOpacity>
 
           </View>
+
+      {/* <FormButton
+        buttonTitle="Sign In"
+        onPress={() => login(email, password)}
+      /> */}
 
           
         </Animatable.View>

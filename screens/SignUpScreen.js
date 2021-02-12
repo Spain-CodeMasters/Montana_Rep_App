@@ -2,7 +2,7 @@ import 'react-native-gesture-handler';
 import React, {useContext, useState} from 'react';
 import {Text, View, Button, StyleSheet, TouchableOpacity, Dimensions, Platform, TextInput, StatusBar} from 'react-native';
 import * as Animatable from 'react-native-animatable';
-// import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import { CheckBox } from 'react-native-elements'
 import {AuthContext} from '../navigation/AuthProvider';
@@ -12,8 +12,12 @@ import auth from '@react-native-firebase/auth';
 //form validation
 
 const SignUpScreen = ({navigation}) => {
-  cosnt [email, setEmail] = useStae();
-  const {} = useContext(AuthContext);
+  const [name, setName] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [confirmPassword, setConfirmPassword] = useState();
+
+  const {register} = useContext(AuthContext);
 
     const [data, setData] = React.useState({
       name: '',
@@ -89,10 +93,14 @@ const SignUpScreen = ({navigation}) => {
           animation="fadeInUpBig"
           style={styles.footer}>
             <View style={styles.action}>
+
             <TextInput
+              labelValue={name}
               placeholder= "Name"
+              onChangeText={(userName)=> setName(userName)}
               style={styles.textInput}
               autoCapitalize="none"
+              autoCorrect={false}
               onChangeText={(val)=>textInputChange(val)}
               />
               {data.check_textInputChange ?
@@ -110,8 +118,12 @@ const SignUpScreen = ({navigation}) => {
 
           <View style={styles.action}>
             <TextInput
+              labelValue={email}
+              onChangeText={(userEmail)=> setEmail(userEmail)}
               placeholder= "Email"
               style={styles.textInput}
+              keyboardType="email-address"
+              autoCapitalize="none"
               autoCapitalize="none"
               onChangeText={(val)=>textInputChange(val)}
               />
@@ -131,6 +143,8 @@ const SignUpScreen = ({navigation}) => {
             marginTop: 20
           }]}>
             <TextInput
+              labelValue={password}
+              onChangeText={(userPassword) => setPassword(userPassword)}
               placeholder= "Password"
               secureTextEntry={data.secureTextEntry ? true : false}
               style={styles.textInput}
@@ -160,6 +174,8 @@ const SignUpScreen = ({navigation}) => {
             marginTop: 20
           }]}>
             <TextInput
+              labelValue={confirmPassword}
+              onChangeText={(userPassword)=> setPassword(userPassword)}
               placeholder= "Confirm Password"
               secureTextEntry={data.confirm_secureTextEntry ? true : false}
               style={styles.textInput}
@@ -190,9 +206,13 @@ const SignUpScreen = ({navigation}) => {
             // checked={this.state.checked}
           />
 
+          <View>
+            <Text>By registering, you confirm that you accept our Terms of service and Privacy Policy</Text>
+          </View>
+
           <View style={styles.button}>
             <TouchableOpacity
-              onPress={()=> navigation.navigate('HomeScreen')}
+              onPress={()=> register(email, password)}
               style={styles.signIn}
             >
               <Text style={[styles.textSign,
@@ -223,14 +243,14 @@ const SignUpScreen = ({navigation}) => {
         alignItems: 'center',
         justifyContent: 'center',
         paddingHorizontal: 0,
-        paddingTop: 70
+        paddingTop: 10
         // paddingBottom: 50
     },
     footer: {
-        flex: 3,
+        flex: 4,
         backgroundColor: '#fff',
         paddingHorizontal: 20,
-        paddingVertical: 30,
+        paddingVertical: 20,
         paddingLeft: 50,
         paddingRight: 50
     },

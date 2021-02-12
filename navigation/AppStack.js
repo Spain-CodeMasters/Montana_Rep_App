@@ -8,17 +8,19 @@ import {createStackNavigator} from '@react-navigation/stack';
 import HomeScreen from '../screens/HomeScreen';
 import MapScreen from '../screens/MapScreen';
 
-const RootStack = createStackNavigator();
+const Stack = createStackNavigator();
 
-const AppStack = ({navigation}) => (
-    <RootStack.Navigator headerMode='none'>
+const AppStack = () => {
+    return(
+    <Stack.Navigator headerMode='none'>
         {/* <RootStack.Screen name="SplashScreen" component={SplashScreen} />
         <RootStack.Screen name="SignInScreen" component={SignInScreen} />
         <RootStack.Screen name="SignUpScreen" component={SignUpScreen} /> */}
-        <RootStack.Screen name="HomeScreen" component={HomeScreen} />
+        <Stack.Screen name="HomeScreen" component={HomeScreen} />
         <RootStack.Screen name="MapScreen" component={MapScreen} />
-    </RootStack.Navigator>
+    </Stack.Navigator>
 
 );
 
+}
 export default AppStack;

@@ -4,52 +4,59 @@ import {Text, View, Button, ActivityIndicator} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import auth from '@react-native-firebase/auth';
+
 // import { createStackNavigator, createAppContainer } from 'react-navigaton';
 
-import RootStackScreen from './screens/RootStackScreen';
+// import RootStackScreen from './screens/RootStackScreen';
 // import NotifyScreen from './screens/NotifyScreen';
-import Navigation from './components/navigation/navigation';
-import Settings from './components/settings/settings';
-import HomeScreen from './screens/HomeScreen';
+// import Navigation from './components/navigation/navigation';
+// import Settings from './components/settings/settings';
+// import HomeScreen from './screens/HomeScreen';
 
 
-import Providers from './screens/navigation';
-import AppStack from './navigation/AppStack';
-import AsyncStorage from '@react-native-community/async-storage';
+import Providers from './navigation';
+// import AppStack from './navigation/AppStack';
 
-const AppStack = createStackNAvigator();
+
+import OnboardingScreen from './screens/OnboardingScreen';
+import SignInScreen from './screens/SignInScreen';
+
+// import AsyncStorage from '@react-native-community/async-storage';
+
+const AppStack = createStackNavigator();
 
 const App = () => {
-  const [isFirstLaunch, setIsFirstLaunch] = React.useState(null);
+ 
+  // const [isFirstLaunch, setIsFirstLaunch] = React.useState(null);
 
-  useEffect(()=> {
-    AsyncStorage.getItem('alreadyLaunched').then(value =>{
-      if(value == null) {
-        AsyncStorage.setItem('alreadyLaunched', 'true');
-        setIsFirstLaunch(true);
-      } else {
-        setIsFirstLaunch(false);
-      }
-    });
-  }, []);
+  // useEffect(()=> {
+  //   AsyncStorage.getItem('alreadyLaunched').then(value =>{
+  //    if(value == null) {
+  //       AsyncStorage.setItem('alreadyLaunched', 'true');
+  //       setIsFirstLaunch(true);
+  //     } else {
+  //       setIsFirstLaunch(false);
+  //     }
+  //   });
+  // }, []);
 
-  if ( isFirstLaunch === null) {
-    return null;
-  } else if ( isFirstLaunch === true) {
-    return (
-      <NavigationContainer>
-          <AppStack.Navigator
-            headerMode="none"
-          >
-            <AppStack.Screen name="Onboarding" component={OnboardingScreen} />
-            <AppStack.Screen name="Sign In" component={SignInScreen} />
+  // if ( isFirstLaunch === null) {
+  //   return null;
+  // } else if ( isFirstLaunch === true) {
+    return <Providers />;
+    //   <NavigationContainer>
+    //       <AppStack.Navigator
+    //         headerMode="none"
+    //       >
+    //         <AppStack.Screen name="Onboarding" component={OnboardingScreen} />
+    //         <AppStack.Screen name="Sign In" component={SignInScreen} />
   
-          </AppStack.Navigator>
-      </NavigationContainer>
-    );
-  } else {
-    return <SignInScreen />
-  }
+    //       </AppStack.Navigator>
+    //   </NavigationContainer>
+    // );
+//   } else {
+//     return <SignInScreen />
+//   }
 }
 
 export default App;
