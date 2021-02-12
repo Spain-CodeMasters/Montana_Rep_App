@@ -9,7 +9,6 @@ import {AuthContext} from '../navigation/AuthProvider';
 
 import auth from '@react-native-firebase/auth';
 
-//form validation
 
 const SignUpScreen = ({navigation}) => {
   const [name, setName] = useState();

@@ -45,7 +45,7 @@ const SignInScreen = ({navigation}) => {
     }
 
     const handlePasswordChange = (val) => {
-      if( val.trim().length >= 8) {
+      if( val.trim().length >= 6) {
       setData({
         ...data, 
         password: val,
@@ -177,7 +177,7 @@ const SignInScreen = ({navigation}) => {
 
           {data.isValidPassword ? null :
           <Animatable.View animation = "fadeInLeft" duration={500}>
-          <Text style={styles.errorMsg}>Password must be 8 characters long.</Text>
+          <Text style={styles.errorMsg}>Password must be 6 characters long.</Text>
           </Animatable.View>
           }
 
