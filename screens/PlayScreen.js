@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Animated, Text, View, Button, StyleSheet, TouchableOpacity, Dimensions, StatusBar, ScrollView, Image, SafeAreaView, ImageBackground } from 'react-native';
 import Video from 'react-native-video';
 //import Video from 'react-native';
@@ -11,7 +11,7 @@ import playImage from '../assets/mountain.jpg';
 
 const { width, height } = Dimensions.get('screen');
 const ITEM_WIDTH = width;
-const ITEM_HEIGHT = height * .90;
+const ITEM_HEIGHT = height * 0.9;
 
 const HEADER_MAX_HEIGHT = ITEM_HEIGHT;
 const HEADER_MIN_HEIGHT = 240;
@@ -21,8 +21,12 @@ var author = 'Author';
 var title = 'Title';
 var discription = "Play Discription";
 var transcript = "Play Transcript";
+
+{/* Video Testing */ }
 var source = 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4';
 
+{/* Audio Testing */ }
+//var source = 'https://actions.google.com/sounds/v1/crowds/voices_angry.ogg';
 
 export default ({ navigation }) => {
     const [scrollY, setScrollY] = useState(new Animated.Value(0));
@@ -31,59 +35,15 @@ export default ({ navigation }) => {
         outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
         extrapolate: 'clamp',
     });
+
+    const video = useRef(null);
+
     return <View style={styles.container}>
-        {/* AUDIO/VIDEO HEADER */}
-        <Animated.View style={[styles.header, { height: headerHeight }]} >
-            <ImageBackground source={playImage} style={styles.image}>
-                <View style={styles.overlay}>
-                    {/* video */}
-                    <Video source={{ uri: source }}
-                        // ref={(ref) => {
-                        //     this.player = ref
-                        //   }}         
-                        rate={1.0}
-                        volume={1.0}
-                        paused={true}
-                        muted={false}
-                        resizeMode={"cover"}
-                        style={styles.video}
-                    />
 
-                    {/* title */}
-                    <Text style={styles.title}>{title}</Text>
-
-                    {/* preview */}
-                    <View style={styles.button}>
-                        <TouchableOpacity
-                            //onPress={() => navigation.navigate('HomeScreen')}
-                        >
-                            <Text style={styles.buttonText}>Preview</Text>
-
-                        </TouchableOpacity>
-
-                    </View>
-
-                    {/* controls */}
-                    <FontAwesome5
-                        name="lock"
-                        solid
-                        color="#fff"
-                        size={40}
-                        style={{padding: 10,}}
-                    />
-                    {/* <FontAwesome5
-                        name="play"
-                        solid
-                        color="#fff"
-                        size={40}
-                    /> */}
-                </View>
-            </ImageBackground>
-        </Animated.View>
 
         {/* MAIN CONTENT */}
         <ScrollView
-            contentContainerStyle={{ position: 'relative' }}
+            style={{ position: 'relative' }}
             scrollEventThrottle={16}
             onScroll={Animated.event(
                 [{ nativeEvent: { contentOffset: { y: scrollY } } }],
@@ -111,6 +71,54 @@ export default ({ navigation }) => {
 
 
         </ScrollView>
+
+        {/* AUDIO/VIDEO HEADER */}
+        <Animated.View style={[styles.header, { height: headerHeight }]} >
+            <ImageBackground source={playImage} style={styles.image}>
+                <View style={styles.overlay}>
+                    {/* video */}
+                    <Video source={{ uri: source }}
+                        ref={video}
+                        rate={1.0}
+                        volume={1.0}
+                        paused={true}
+                        muted={false}
+                        resizeMode={"cover"}
+                        style={styles.video}
+                    />
+
+                    {/* title */}
+                    <Text style={styles.title}>{title}</Text>
+
+                    {/* preview */}
+                    <TouchableOpacity
+                        onPress={() => video.paused}
+                    >
+                        <View style={styles.button}>
+
+                            <Text style={styles.buttonText}>Preview</Text>
+
+                        </View>
+                    </TouchableOpacity>
+
+                    {/* controls */}
+                    <FontAwesome5
+                        name="lock"
+                        solid
+                        color="#fff"
+                        size={40}
+                        style={{ padding: 10, }}
+                    />
+                    {/* <FontAwesome5
+                        name="play"
+                        solid
+                        color="#fff"
+                        size={40}
+                    /> */}
+                </View>
+            </ImageBackground>
+        </Animated.View>
+
         <Settings />
         <Navigation navigation={navigation} />
     </View>
@@ -212,13 +220,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 5,
         margin: 10,
+        position: "relative",
+        zIndex: 99,
     },
-     buttonText: {
+    buttonText: {
         fontFamily: 'FuturaPTBook',
         fontSize: 24,
         color: "white",
         //fontWeight: 'bold',
- 
+
     }
 
 
