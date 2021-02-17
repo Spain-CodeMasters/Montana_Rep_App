@@ -56,6 +56,23 @@ export default class MapScreen extends Component {
         }}
         >
         </MapView>
+
+        {/* <View style={{ flex: 1 }}>
+                    <MapView 
+                        provider={PROVIDER_GOOGLE} 
+                        mapType='hybrid'   
+                        showsUserLocation style={{flex: 1}}>
+                    {this.state.marker.map(item     => (
+                    <MapView.Marker        
+                        coordinate={{latitude: item.geopoint.latitude,                         
+                        longitude: item.geopoint.longitude}}
+                        title={("Test")}
+                        description={("Test")} 
+                    /> 
+                    )}
+                    </MapView> */}
+
+                    
         <Settings />
         {/* <Navigation /> */}
       </View>
