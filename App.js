@@ -14,7 +14,7 @@ import auth from '@react-native-firebase/auth';
 // import HomeScreen from './screens/HomeScreen';
 
 
-import Providers from './navigation';
+import Providers from './navigation/index';
 // import AppStack from './navigation/AppStack';
 
 
@@ -43,7 +43,7 @@ const App = () => {
   // if ( isFirstLaunch === null) {
   //   return null;
   // } else if ( isFirstLaunch === true) {
-    return <Providers />;
+    return <Providers />
     //   <NavigationContainer>
     //       <AppStack.Navigator
     //         headerMode="none"

@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import * as React from 'react';
+import React, { useContext } from 'react';
 import {Text, View, Button, StyleSheet, TouchableOpacity, Dimensions, Platform, TextInput, StatusBar, ScrollView, FlatList, Image, SafeAreaView} from 'react-native';
 import {SocialIcon} from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
@@ -9,6 +9,9 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 // import { CheckBox } from 'react-native-elements'
 import Navigation from '../components/navigation/navigation';
 import Settings from '../components/settings/settings';
+
+import FormButton from '../components/Forms/FormButton';
+import { AuthContext } from '../navigation/AuthProvider';
 
 //Carousel Banner
 const {width, height} = Dimensions.get('screen');
@@ -24,10 +27,15 @@ const data = [
 
 
 export default ({navigation}) => {
+    const { user, logout } = useContext(AuthContext);
+
     return <SafeAreaView style={styles.container}>
         <ScrollView>
         <StatusBar hidden/>
-        
+        <View style={styles.container}>
+      <Text style={styles.text}>Welcome user {user.uid}</Text>
+      <FormButton buttonTitle='Logout' onPress={() => logout()} />
+    </View>
         
 
         {/* Carousel Module */}

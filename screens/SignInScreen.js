@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 // import * as React from 'react';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, Component} from 'react';
 import {Text, View, Button, KeyboardAvoidingView, StyleSheet, TouchableOpacity, Dimensions, Platform, TextInput, StatusBar, Keyboard, TouchableWithoutFeedback} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
@@ -8,6 +8,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import {AuthContext} from '../navigation/AuthProvider';
+import auth from "@react-native-firebase/auth"
 
 
 const SignInScreen = ({navigation}) => {
@@ -299,3 +300,4 @@ const SignInScreen = ({navigation}) => {
         fontWeight: 'bold'
     }
   });
+
