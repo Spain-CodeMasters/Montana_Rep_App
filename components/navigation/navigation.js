@@ -14,13 +14,13 @@ import cal from './assets/upcomingIcon.png'
 function Navigation ({navigation}) {
     return (
       <View style={styles.navBar}>
-        <TouchableOpacity style={{ alignSelf: 'center', margin: 25, marginTop: 30, }} onPress={()=> navigation.navigate('HomeScreen')}>
+        <TouchableOpacity style={{ alignSelf: 'center', margin: 25, marginTop: 30, }} onPress={()=> navigation.navigate('Home')}>
           <Image  source={home} />
         </TouchableOpacity>
-        <TouchableOpacity  style={{ alignSelf: 'flex-end', margin: 5, }} onPress={()=> navigation.navigate('MapScreen')}>
+        <TouchableOpacity  style={{ alignSelf: 'flex-end', margin: 5, }} onPress={()=> navigation.navigate('Map')}>
           <Image  source={map} />
         </TouchableOpacity>
-        <TouchableOpacity style={{ alignSelf: 'center', margin: 25, marginTop: 30, }} onPress={()=> navigation.navigate('ScheduleScreen')}>
+        <TouchableOpacity style={{ alignSelf: 'center', margin: 25, marginTop: 30, }} onPress={()=> navigation.navigate('Schedule')}>
           <Image  source={cal} />
         </TouchableOpacity>
       </View>
