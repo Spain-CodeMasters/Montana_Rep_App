@@ -1,87 +1,168 @@
 import 'react-native-gesture-handler';
-import * as React from 'react';
-import {Text, View, Button, StyleSheet, TouchableOpacity, Dimensions, Platform, TextInput, StatusBar, ScrollView, FlatList, Image, SafeAreaView, ImageBackground} from 'react-native';
-import {SocialIcon} from 'react-native-elements';
-import * as Animatable from 'react-native-animatable';
-import Feather from 'react-native-vector-icons/Feather';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-
+import React, { useState, useRef } from 'react';
+import { Animated, Text, View, StyleSheet, TouchableOpacity, Dimensions, StatusBar, ScrollView, Image, ImageBackground } from 'react-native';
+import Video from 'react-native-video';
+//import Video from 'react-native';
 import Navigation from '../components/navigation/navigation';
 import Settings from '../components/settings/settings';
-
-const {width, height} = Dimensions.get('screen');
-
-const ITEM_WIDTH = width;
-const ITEM_HEIGHT = height * .90;
-
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import playImage from '../assets/mountain.jpg';
 
+const { width, height } = Dimensions.get('screen');
+const ITEM_WIDTH = width;
+const ITEM_HEIGHT = height * 0.9;
+
+const HEADER_MAX_HEIGHT = ITEM_HEIGHT;
+const HEADER_MIN_HEIGHT = 240;
+const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
+
 var author = 'Author';
+var title = 'Title';
+var discription = "Play Discription";
+var transcript = "Play Transcript";
 
-export default ({navigation}) => {
-    return <SafeAreaView style={styles.container}>
-        <ScrollView>
-        <StatusBar hidden/>
-        
-        
+{/* Video Testing */ }
+var source = 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4';
 
-       
-                   <ImageBackground source={playImage} style={styles.image}>
-                   <View style={styles.overlay}>
-                        <Text style={styles.title}>Test</Text>
-                        
-                        </View>
-                    </ImageBackground>
-        
+{/* Audio Testing */ }
+//var source = 'https://actions.google.com/sounds/v1/crowds/voices_angry.ogg';
 
-        {/* //Our Mission Module */}
-        <View style={styles.header}>
-            <Text style={styles.text_title}>Test</Text>
-            <Text style={styles.author}>Written by {author}</Text>
-            <Text style={styles.subtext}>Play Discription</Text>
+export default ({ navigation }) => {
+    const [scrollY, setScrollY] = useState(new Animated.Value(0));
+    const headerHeight = scrollY.interpolate({
+        inputRange: [0, HEADER_SCROLL_DISTANCE],
+        outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
+        extrapolate: 'clamp',
+    });
 
-                
-        </View>
-       
-        {/* footer Module */}
+    const video = useRef(null);
 
+    return <View style={styles.container}>
+
+
+        {/* MAIN CONTENT */}
+        <ScrollView
+            style={{ position: 'relative' }}
+            scrollEventThrottle={16}
+            onScroll={Animated.event(
+                [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+                { useNativeDriver: false }
+            )}>
+
+            <StatusBar backgroundColor='#fff' barStyle="dark-content" />
+
+            {/* spacer */}
+            <View style={{ height: HEADER_MAX_HEIGHT }}></View>
+
+            {/* discription */}
+            <View style={styles.discription}>
+                <Text style={styles.text_title}>{title}</Text>
+                <Text style={styles.author}>Written by {author}</Text>
+                <Text style={styles.subtext}>{discription}</Text>
+            </View>
+
+            {/* footer */}
             <View style={styles.footer}>
-            <Image source={require('../assets/1_MontanaRep_PrimaryLogo_GreenLandscape.png')}  style={styles.footer_logo} />
- 
+                <Image source={require('../assets/1_MontanaRep_PrimaryLogo_GreenLandscape.png')} style={styles.footer_logo} />
+
             </View>
 
 
 
-    </ScrollView>
-    <Settings />
-    <Navigation navigation={navigation}/>
-    </SafeAreaView>
+        </ScrollView>
+
+        {/* AUDIO/VIDEO HEADER */}
+        <Animated.View style={[styles.header, { height: headerHeight }]} >
+            <ImageBackground source={playImage} style={styles.image}>
+                <View style={styles.overlay}>
+                    {/* video */}
+                    <Video source={{ uri: source }}
+                        ref={video}
+                        rate={1.0}
+                        volume={1.0}
+                        paused={true}
+                        muted={false}
+                        resizeMode={"cover"}
+                        style={styles.video}
+                    />
+
+                    {/* title */}
+                    <Text style={styles.title}>{title}</Text>
+
+                    {/* preview */}
+                    <TouchableOpacity
+                        onPress={() => video.paused}
+                    >
+                        <View style={styles.button}>
+
+                            <Text style={styles.buttonText}>Preview</Text>
+
+                        </View>
+                    </TouchableOpacity>
+
+                    {/* controls */}
+                    <FontAwesome5
+                        name="lock"
+                        solid
+                        color="#fff"
+                        size={40}
+                        style={{ padding: 10, }}
+                    />
+                    {/* <FontAwesome5
+                        name="play"
+                        solid
+                        color="#fff"
+                        size={40}
+                    /> */}
+                </View>
+            </ImageBackground>
+        </Animated.View>
+
+        <Settings />
+        <Navigation navigation={navigation} />
+    </View>
 }
 
 const styles = StyleSheet.create({
+    fill: {
+        flex: 1,
+    },
+    header: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: '#fff',
+        overflow: 'hidden',
+    },
+    video: {
+        position: 'absolute',
+        height: "100%",
+        width: ITEM_WIDTH,
+    },
     container: {
-        flex: 1, 
+        flex: 1,
         backgroundColor: '#fff'
-      },
-      overlay: {
-        backgroundColor:'rgba(0, 0, 0, 0.3)',
+    },
+    overlay: {
+        backgroundColor: 'rgba(0, 0, 0, 0.3)',
         width: '100%',
         height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
     },
-      header: {
+    discription: {
         flex: 1,
         alignItems: 'flex-start',
         justifyContent: 'center',
         margin: 45
 
-      },
+    },
     image: {
-        width: ITEM_WIDTH,
-        height: ITEM_HEIGHT,
-        resizeMode: 'cover'
+        width: "100%",
+        height: "100%",
+        //resizeMode: 'cover'
     },
     footer: {
         flex: 1,
@@ -95,7 +176,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: 50,
         marginBottom: 70,
-        width: 212, 
+        width: 212,
         height: 90,
     },
 
@@ -126,9 +207,29 @@ const styles = StyleSheet.create({
         color: '#fff',
         textTransform: 'uppercase',
         fontFamily: 'FuturaPTDemi',
-        fontSize: 30,
+        fontSize: 40,
         letterSpacing: 5,
-      }
+        margin: 10,
+    },
+
+    button: {
+        backgroundColor: '#cc8a05',
+        width: 177,
+        height: 44,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 5,
+        margin: 10,
+        position: "relative",
+        zIndex: 99,
+    },
+    buttonText: {
+        fontFamily: 'FuturaPTBook',
+        fontSize: 24,
+        color: "white",
+        //fontWeight: 'bold',
+
+    }
 
 
 })
