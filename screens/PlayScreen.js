@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { useState, useRef } from 'react';
-import { Animated, Text, View, Button, StyleSheet, TouchableOpacity, Dimensions, StatusBar, ScrollView, Image, SafeAreaView, ImageBackground } from 'react-native';
+import { Animated, Text, View, StyleSheet, TouchableOpacity, Dimensions, StatusBar, ScrollView, Image, ImageBackground } from 'react-native';
 import Video from 'react-native-video';
 //import Video from 'react-native';
 import Navigation from '../components/navigation/navigation';

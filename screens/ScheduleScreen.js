@@ -65,12 +65,16 @@ const PLAY_DATA = [
 ]
 
 const Item = ({ item, onPress }) => (
-  <ImageBackground source={{uri: item.source}} style={styles.play}>
+  <ImageBackground source={{ uri: item.source }} style={styles.play}>
     <TouchableOpacity style={styles.play} onPress={onPress}>
       <View style={styles.overlay}>
+
         <Text style={styles.title}>{item.title}</Text>
       </View>
     </TouchableOpacity>
+    <View style={styles.time}>
+      <Text style={styles.timeText}>Coming Soon</Text>
+    </View>
   </ImageBackground>
 );
 
@@ -84,18 +88,18 @@ export default ({ navigation }) => {
       <Item
         item={item}
         //onPress={() => setSelectedId(item.id)  }
-        onPress={() => navigation.navigate('PlayScreen') }
+        onPress={() => navigation.navigate('PlayScreen')}
       />
     );
   };
   return <View style={styles.container}>
     <FlatList
-        data={PLAY_DATA}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-        extraData={selectedId}
-      />
-     <View style={{ height: 55 }}></View>
+      data={PLAY_DATA}
+      renderItem={renderItem}
+      keyExtractor={(item) => item.id}
+      extraData={selectedId}
+    />
+    <View style={{ height: 55 }}></View>
     <Settings />
     <Navigation navigation={navigation} />
   </View>
@@ -133,6 +137,23 @@ const styles = StyleSheet.create({
     fontFamily: 'FuturaPTDemi',
     fontSize: 30,
     letterSpacing: 5,
+  },
+  time: {
+    backgroundColor: '#cc8a05',
+    width: 177,
+    height: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 5,
+    position: "absolute",
+    top: 0,
+  },
+  timeText: {
+    fontFamily: 'FuturaPTBook',
+    fontSize: 24,
+    color: "white",
+    //fontWeight: 'bold',
+
   }
 
 })
