@@ -88,7 +88,7 @@ export default ({ navigation }) => {
       <Item
         item={item}
         //onPress={() => setSelectedId(item.id)  }
-        onPress={() => navigation.navigate('PlayScreen')}
+        onPress={() => navigation.navigate('Play')}
       />
     );
   };

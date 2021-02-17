@@ -26,7 +26,7 @@ var transcript = "Play Transcript";
 var source = 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4';
 
 {/* Audio Testing */ }
-//var source = 'https://actions.google.com/sounds/v1/crowds/voices_angry.ogg';
+// var source = 'https://actions.google.com/sounds/v1/crowds/voices_angry.ogg';
 
 export default ({ navigation }) => {
     const [scrollY, setScrollY] = useState(new Animated.Value(0));
