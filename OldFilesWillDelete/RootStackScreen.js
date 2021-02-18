@@ -2,13 +2,13 @@ import React from 'react';
 
 import {createStackNavigator} from '@react-navigation/stack';
 
-import SplashScreen from './SplashScreen';
-import SignInScreen from './SignInScreen';
-import SignUpScreen from './SignUpScreen';
-import HomeScreen from './HomeScreen';
-import MapScreen from './MapScreen';
-import ScheduleScreen from './ScheduleScreen';
-import PlayScreen from './PlayScreen';
+import SplashScreen from '../screens/SplashScreen';
+import SignInScreen from '../screens/SignInScreen';
+import SignUpScreen from '../screens/SignUpScreen';
+import HomeScreen from '../screens/HomeScreen';
+import MapScreen from '../screens/MapScreen';
+import ScheduleScreen from '../screens/ScheduleScreen';
+import PlayScreen from '../screens/PlayScreen';
 
 const RootStack = createStackNavigator();
 
