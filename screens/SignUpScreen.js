@@ -4,6 +4,7 @@ import FormButton from '../components/Forms/FormButton';
 import FormInput from '../components/FormInput';
 import * as Animatable from 'react-native-animatable';
 import { AuthContext } from '../navigation/AuthProvider';
+import { NavigationEvents } from 'react-navigation';
 
 export default function SignupScreen() {
   const [email, setEmail] = useState('');
@@ -20,7 +21,7 @@ export default function SignupScreen() {
           <Text style={styles.text_header}>Sign Up</Text>
           <View style={{display: "flex", flexDirection: "row", flex: 1, flexwrap: 'wrap', margin: 10}}>
             <Text style={styles.text_subheader}>Have an account? </Text>  
-              <TouchableOpacity onPress={()=> navigation.goBack()}>
+              <TouchableOpacity onPress={()=> Navigate.navigation(Signup)}>
                   <Text style={styles.text_linkheader}> 
                     Sign In
                   </Text>
