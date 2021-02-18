@@ -13,6 +13,8 @@ const { width, height } = Dimensions.get('screen');
 const ITEM_WIDTH = width;
 const ITEM_HEIGHT = height * 0.9;
 
+
+
 // const HEADER_MAX_HEIGHT = ITEM_HEIGHT;
 // const HEADER_MIN_HEIGHT = 240;
 // const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
@@ -21,6 +23,9 @@ var author = 'Author';
 var title = 'Title';
 var discription = "Play Discription";
 var transcript = "Play Transcript";
+var actors = "Actor Information";
+var addInfo = "Additional Information"
+var copyright = "Copyright"
 
 {/* Video Testing */ }
 //var source = 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4';
@@ -45,7 +50,6 @@ export default ({ navigation }) => {
     const [paused, setPaused] = useState(true);
 
     const onProgress = (data) => {
-        // Video Player will progress continue even if it ends
         if (!loading) {
             setCurrentTime(data.currentTime);
         }
@@ -55,6 +59,10 @@ export default ({ navigation }) => {
         setDuration(data.duration);
         setLoading(false);
     };
+
+    const onEnd = () => [video.current.seek(0), setPaused(true)];
+
+    // const [progress, setProgress] = useState(ITEM_WIDTH * 0.9 / duration * currentTime);
 
     return <View style={styles.container}>
 
@@ -88,6 +96,7 @@ export default ({ navigation }) => {
                             style={styles.video}
                             onProgress={onProgress}
                             onLoad={onLoad}
+                            onEnd={onEnd}
                         />
 
                         {/* title */}
@@ -131,6 +140,12 @@ export default ({ navigation }) => {
                             </TouchableOpacity> : null
                         }
 
+                        <View style={styles.progressBar}>
+                            <Animated.View style={[styles.progressBarFill]}>
+                                <View style={styles.progressDot}></View>
+                            </Animated.View>
+                        </View>
+
 
 
                     </View>
@@ -145,6 +160,22 @@ export default ({ navigation }) => {
                 <Text style={styles.text_title}>{title}</Text>
                 <Text style={styles.author}>Written by {author}</Text>
                 <Text style={styles.subtext}>{discription}</Text>
+                {!locked ? <Text style={styles.subtext}>{transcript}</Text> : null}
+                {
+                    locked ? <TouchableOpacity
+                        onPress={() => [setLocked(false), alert('Unlocked')]}
+                    >
+                        <View style={[styles.subButton]}>
+
+                            <Text style={styles.subButtonText}>Unlock</Text>
+
+                        </View>
+                    </TouchableOpacity> : null
+                }
+                <Text style={styles.subtext}>{actors}</Text>
+                <Text style={styles.subtext}>{addInfo}</Text>
+                <Text style={styles.subtext}>{copyright}</Text>
+
             </View>
 
             {/* footer */}
@@ -240,7 +271,7 @@ const styles = StyleSheet.create({
         fontFamily: 'FuturaPTBook',
         paddingHorizontal: 40,
         marginTop: 20,
-        marginBottom: 30,
+        //marginBottom: 10,
         lineHeight: 20
     },
 
@@ -270,6 +301,49 @@ const styles = StyleSheet.create({
         color: "white",
         //fontWeight: 'bold',
 
+    },
+
+    subButton: {
+        backgroundColor: '#004E47',
+        width: ITEM_WIDTH * .75,
+        height: 44,
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center',
+        borderRadius: 5,
+        //margin: 10,
+        position: "relative",
+        zIndex: 99,
+    },
+    subButtonText: {
+        fontFamily: 'FuturaPTBook',
+        fontSize: 20,
+        color: "white",
+        //fontWeight: 'bold',
+
+    },
+
+    progressBar: {
+        position: 'absolute',
+        bottom: 120,
+        backgroundColor: 'white',
+        height: 9,
+        borderRadius: 5,
+        width: ITEM_WIDTH * 0.9,
+    },
+    progressBarFill: {
+        backgroundColor: '#CC8A05',
+        height: 9,
+        borderRadius: 5,
+        width: ITEM_WIDTH * 0.2,
+        flexDirection: "row-reverse",
+        alignItems: "center" 
+    },
+    progressDot: {
+        backgroundColor: '#CC8A05',
+        height: 15,
+        borderRadius: 15,
+        width: 15,
     }
 
 
