@@ -335,15 +335,15 @@ const styles = StyleSheet.create({
         backgroundColor: '#CC8A05',
         height: 9,
         borderRadius: 5,
-        width: ITEM_WIDTH * 0.2,
+        width: 10,
         flexDirection: "row-reverse",
         alignItems: "center" 
     },
     progressDot: {
         backgroundColor: '#CC8A05',
-        height: 15,
+        height: 20,
         borderRadius: 15,
-        width: 15,
+        width: 20,
     }
 
 

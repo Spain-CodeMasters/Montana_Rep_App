@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import { AuthContext } from '../../navigation/AuthProvider';
 import {
   SafeAreaView,
   StyleSheet,
@@ -12,28 +13,28 @@ import {
 } from 'react-native';
 
 import gear from './assets/gear.png'
+import FormButton from '../Forms/FormButton';
 
-class Settings extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      show: false
-    }
-  }
+export default function Settings() {
+  const [show, setShow] = useState(false)
+  const { user, logout } = useContext(AuthContext);
 
-  render() {
-    return (
-      <View style={styles.settings}>
-        {
-          this.state.show ? <View style={styles.settingsOpen}>
-            {/* <Image style={{ margin: 15, }} source={gear} /> */}
-          </View> : null
-        }
-        <TouchableOpacity style={{ height: 50 }} onPress={() => { this.setState({ show: !this.state.show }) }}>
-          <Image style={{ margin: 15,}} source={gear} />
-        </TouchableOpacity>
+  return (
+    <View style={styles.settings}>
+      {
+        show ? <View style={styles.settingsOpen}>
 
-        {/* <DrawerItem 
+          <Text style={styles.subText}>User ID: {user.uid}</Text>
+          <FormButton buttonTitle='Sign Out' onPress={() => logout()} />
+
+          {/* <Image style={{ margin: 15, }} source={gear} /> */}
+        </View> : null
+      }
+      <TouchableOpacity style={{ height: 50 }} onPress={() => { setShow(!show) }}>
+        <Image style={{ margin: 15, }} source={gear} />
+      </TouchableOpacity>
+
+      {/* <DrawerItem 
                     icon={({color, size}) => (
                         <Icon 
                         name="exit-to-app" 
@@ -44,10 +45,10 @@ class Settings extends React.Component {
                     label="Sign Out"
                     onPress={() => {signOut()}}
                 /> */}
-      </View>
+    </View>
 
-    );
-  }
+  );
+
 }
 
 function settings() {
@@ -70,10 +71,20 @@ const styles = StyleSheet.create({
     top: 0,
     width: '100%',
     height: '100%',
-    flexDirection: 'row-reverse',
-    //justifyContent: 'center',
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
     backgroundColor: 'white',
-  }
+    paddingBottom: 80,
+  },
+  subtext: {
+    fontSize: 16,
+    fontFamily: 'FuturaPTBook',
+    paddingHorizontal: 40,
+    marginTop: 20,
+    //marginBottom: 10,
+    lineHeight: 20
+  },
 });
 
-export default Settings;
+//export default Settings;
