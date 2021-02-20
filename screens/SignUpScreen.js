@@ -5,13 +5,22 @@ import FormInput from '../components/FormInput';
 import * as Animatable from 'react-native-animatable';
 import { AuthContext } from '../navigation/AuthProvider';
 import { NavigationEvents } from 'react-navigation';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
-export default function SignupScreen() {
+const SignupScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { register } = useContext(AuthContext);
+  const safeAreaInsets = useSafeAreaInsets();
+
   return (
-    <View style={styles.container}>
+    <View style={{
+      flex: 1,
+      paddingTop: safeAreaInsets.top,
+      paddingBottom: safeAreaInsets.bottom,
+      paddingLeft: safeAreaInsets.left,
+      paddingRight: safeAreaInsets.right,
+    }}>
         <View style={{ flex: 0.2 }}>
         {/* {!!fetching && <ActivityIndicator color={blue} />} */}
       </View>
@@ -21,7 +30,7 @@ export default function SignupScreen() {
           <Text style={styles.text_header}>Sign Up</Text>
           <View style={{display: "flex", flexDirection: "row", flex: 1, flexwrap: 'wrap', margin: 10}}>
             <Text style={styles.text_subheader}>Have an account? </Text>  
-              <TouchableOpacity onPress={()=> Navigate.navigation(Signup)}>
+              <TouchableOpacity onPress={()=> navigation.navigate('Login')}>
                   <Text style={styles.text_linkheader}> 
                     Sign In
                   </Text>
@@ -59,6 +68,8 @@ export default function SignupScreen() {
     </View>
   );
 }
+
+export default SignupScreen;
 
 const styles = StyleSheet.create({
   container: {

@@ -5,6 +5,7 @@ import AuthStack from './AuthStack';
 import HomeStack from './HomeStack';
 import { AuthContext } from './AuthProvider';
 import Spinner from '../components/Spinner';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export default function Routes() {
   const { user, setUser } = useContext(AuthContext);
@@ -28,8 +29,10 @@ export default function Routes() {
   }
 
   return (
+    <SafeAreaProvider>
     <NavigationContainer>
       {user ? <HomeStack /> : <AuthStack />}
     </NavigationContainer>
+    </SafeAreaProvider>
   );
 }

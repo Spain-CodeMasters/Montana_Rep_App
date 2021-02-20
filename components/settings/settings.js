@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 import { AuthContext } from '../../navigation/AuthProvider';
 import {
   SafeAreaView,
@@ -11,6 +11,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
+import * as Animatable from 'react-native-animatable';
 
 import gear from './assets/gear.png'
 import FormButton from '../Forms/FormButton';
@@ -22,13 +23,16 @@ export default function Settings() {
   return (
     <View style={styles.settings}>
       {
-        show ? <View style={styles.settingsOpen}>
+        show ? <Animatable.View
+        animation = "fadeInDownBig"
+        style={styles.settingsOpen}
+        >
 
           <Text style={styles.subText}>User ID: {user.uid}</Text>
           <FormButton buttonTitle='Sign Out' onPress={() => logout()} />
 
           {/* <Image style={{ margin: 15, }} source={gear} /> */}
-        </View> : null
+        </Animatable.View> : null
       }
       <TouchableOpacity style={{ height: 50 }} onPress={() => { setShow(!show) }}>
         <Image style={{ margin: 15, }} source={gear} />

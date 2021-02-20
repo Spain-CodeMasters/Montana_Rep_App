@@ -10,21 +10,24 @@ import {
 import home from './assets/homeIcon.png'
 import map from './assets/mapIcon.png'
 import cal from './assets/upcomingIcon.png'
+import { SafeAreaView } from 'react-native';
 
-function Navigation ({navigation}) {
-    return (
+function Navigation({ navigation }) {
+  return (
+    <SafeAreaView>
       <View style={styles.navBar}>
-        <TouchableOpacity style={{ alignSelf: 'center', margin: 25, marginTop: 30, }} onPress={()=> navigation.navigate('Home')}>
-          <Image  source={home} />
+        <TouchableOpacity style={{ alignSelf: 'center', margin: 25, marginTop: 30, }} onPress={() => navigation.navigate('Home')}>
+          <Image source={home} />
         </TouchableOpacity>
-        <TouchableOpacity  style={{ alignSelf: 'flex-end', margin: 5, }} onPress={()=> navigation.navigate('Map')}>
-          <Image  source={map} />
+        <TouchableOpacity style={{ alignSelf: 'flex-end', margin: 5, }} onPress={() => navigation.navigate('Map')}>
+          <Image source={map} />
         </TouchableOpacity>
-        <TouchableOpacity style={{ alignSelf: 'center', margin: 25, marginTop: 30, }} onPress={()=> navigation.navigate('Schedule')}>
-          <Image  source={cal} />
+        <TouchableOpacity style={{ alignSelf: 'center', margin: 25, marginTop: 30, }} onPress={() => navigation.navigate('Schedule')}>
+          <Image source={cal} />
         </TouchableOpacity>
       </View>
-    );
+    </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -39,8 +42,8 @@ const styles = StyleSheet.create({
     shadowRadius: 1.41,
 
     elevation: 2,
-    backgroundColor: 'rgba(255, 255, 255, .8)',
-    
+    backgroundColor: 'rgba(255, 255, 255, 1)',
+
     // alignSelf: 'flex-end',
     position: 'absolute',
     width: '100%',

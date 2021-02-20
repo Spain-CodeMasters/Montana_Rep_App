@@ -19,6 +19,7 @@ import {
 
 import Navigation from '../components/navigation/navigation';
 import Settings from '../components/settings/settings';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { width, height } = Dimensions.get('screen');
 
@@ -92,7 +93,14 @@ export default ({ navigation }) => {
       />
     );
   };
-  return <View style={styles.container}>
+  const safeAreaInsets = useSafeAreaInsets()
+  return <View style={{
+      flex: 1,
+      //paddingTop: safeAreaInsets.top,
+      paddingBottom: safeAreaInsets.bottom,
+      paddingLeft: safeAreaInsets.left,
+      paddingRight: safeAreaInsets.right,
+    }}>
     <FlatList
       data={PLAY_DATA}
       renderItem={renderItem}

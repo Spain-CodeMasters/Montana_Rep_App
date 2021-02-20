@@ -13,7 +13,7 @@ import auth from '@react-native-firebase/auth';
 // import Settings from './components/settings/settings';
 // import HomeScreen from './screens/HomeScreen';
 
-
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Providers from './navigation/index';
 // import AppStack from './navigation/AppStack';
 
@@ -43,7 +43,7 @@ const App = () => {
   // if ( isFirstLaunch === null) {
   //   return null;
   // } else if ( isFirstLaunch === true) {
-    return <Providers />
+    return <SafeAreaProvider><Providers /></SafeAreaProvider>
     //   <NavigationContainer>
     //       <AppStack.Navigator
     //         headerMode="none"

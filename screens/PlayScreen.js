@@ -2,16 +2,15 @@ import 'react-native-gesture-handler';
 import React, { useState, useRef } from 'react';
 import { Animated, Text, View, StyleSheet, TouchableOpacity, Dimensions, StatusBar, ScrollView, Image, ImageBackground } from 'react-native';
 import Video from 'react-native-video';
-//import Video from 'react-native';
 import Navigation from '../components/navigation/navigation';
 import Settings from '../components/settings/settings';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import playImage from '../assets/mountain.jpg';
 
 const { width, height } = Dimensions.get('screen');
 const ITEM_WIDTH = width;
-const ITEM_HEIGHT = height * 0.9;
+const ITEM_HEIGHT = height * .88;
 
 
 
@@ -64,7 +63,14 @@ export default ({ navigation }) => {
 
     // const [progress, setProgress] = useState(ITEM_WIDTH * 0.9 / duration * currentTime);
 
-    return <View style={styles.container}>
+    const safeAreaInsets = useSafeAreaInsets()
+    return <View style={{
+        flex: 1,
+        //paddingTop: safeAreaInsets.top,
+        paddingBottom: safeAreaInsets.bottom,
+        paddingLeft: safeAreaInsets.left,
+        paddingRight: safeAreaInsets.right,
+    }}>
 
 
         {/* MAIN CONTENT */}
@@ -77,8 +83,8 @@ export default ({ navigation }) => {
         // )}
         >
 
-            <StatusBar backgroundColor='#fff' barStyle="dark-content" />
-
+            {/* <StatusBar backgroundColor='#fff' barStyle="dark-content" /> */}
+            <StatusBar translucent={true} hidden={true} />
             {/* AUDIO/VIDEO HEADER */}
             <View style={styles.header} >
                 {/* <Animated.View style={[styles.header, { height: headerHeight }]} ></Animated.View> */}
@@ -271,7 +277,7 @@ const styles = StyleSheet.create({
         fontFamily: 'FuturaPTBook',
         paddingHorizontal: 40,
         marginTop: 20,
-        //marginBottom: 10,
+        marginBottom: 10,
         lineHeight: 20
     },
 
@@ -325,11 +331,11 @@ const styles = StyleSheet.create({
 
     progressBar: {
         position: 'absolute',
-        bottom: 120,
+        bottom: 40,
         backgroundColor: 'white',
         height: 9,
         borderRadius: 5,
-        width: ITEM_WIDTH * 0.9,
+        width: ITEM_WIDTH * 0.83,
     },
     progressBarFill: {
         backgroundColor: '#CC8A05',
@@ -337,7 +343,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         width: 10,
         flexDirection: "row-reverse",
-        alignItems: "center" 
+        alignItems: "center"
     },
     progressDot: {
         backgroundColor: '#CC8A05',

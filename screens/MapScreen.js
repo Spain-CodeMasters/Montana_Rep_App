@@ -5,7 +5,7 @@ import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps';
 import * as Animatable from 'react-native-animatable';
 // import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
-
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 //tooltip
 import Navigation from '../components/navigation/navigation';
 import Settings from '../components/settings/settings';
@@ -26,9 +26,15 @@ import PlayingBanner from '../components/playingBanner';
 
 export default ({ navigation }) => {
 
-
+  const safeAreaInsets = useSafeAreaInsets()
   return (
-    <View style={styles.container}>
+    <View style={{
+      flex: 1,
+      //paddingTop: safeAreaInsets.top,
+      paddingBottom: safeAreaInsets.bottom,
+      paddingLeft: safeAreaInsets.left,
+      paddingRight: safeAreaInsets.right,
+    }}>
       <MapView
         provider={PROVIDER_GOOGLE}
         style={styles.map}
