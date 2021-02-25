@@ -1,6 +1,7 @@
 import React, { createContext, useState } from 'react';
 import auth from '@react-native-firebase/auth';
-
+import firebase from 'firebase';
+import 'firebase/auth';
 /**
  * This provider is created
  * to access user in whole app
@@ -36,8 +37,15 @@ export const AuthProvider = ({ children }) => {
           } catch (e) {
             console.error(e);
           }
+        }, 
+        passwordReset: email => {
+           firebase.auth().sendPasswordResetEmail(email, null);
+          }, catch (e) {
+            console.log(e);
         }
-      }}
+      }
+
+      }
     >
       {children}
     </AuthContext.Provider>

@@ -125,8 +125,6 @@ const styles = StyleSheet.create({
   actionError: {
       flexDirection: 'row',
       marginTop: 10,
-      borderBottomWidth: 1,
-      borderBottomColor: '#FF0000',
       paddingBottom: 5
   },
   textInput: {

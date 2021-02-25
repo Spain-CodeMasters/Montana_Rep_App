@@ -154,7 +154,7 @@ export default function LoginScreen({ navigation }) {
                 <View styles={styles.button} >
       <FormButton buttonTitle='Sign In' onPress={() => login(email, password)} />
       </View>
-      <TouchableOpacity >
+      <TouchableOpacity  onPress={()=> navigation.navigate('ForgotPasswordScreen')}>
                 <Text style={{color: '#009387', marginTop:15}}>Forgot password?</Text>
             </TouchableOpacity>
       {/* </View> */}
@@ -214,8 +214,6 @@ const styles = StyleSheet.create({
   action: {
       flexDirection: 'row',
       // marginTop: 10,
-      borderBottomWidth: 1,
-      borderBottomColor: '#f2f2f2',
       paddingBottom: 10
   },
   actionError: {

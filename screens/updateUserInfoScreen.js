@@ -1,1 +1,0 @@
-//This screen will update user information such as password, email, and name.
