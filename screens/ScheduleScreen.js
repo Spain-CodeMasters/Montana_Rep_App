@@ -83,7 +83,6 @@ export default ({ navigation }) => {
   const [selectedId, setSelectedId] = useState(null);
 
   const renderItem = ({ item }) => {
-    const backgroundColor = item.id === selectedId ? "#6e3b6e" : "#f9c2ff";
 
     return (
       <Item
