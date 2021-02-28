@@ -5,11 +5,10 @@ import { SocialIcon } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-// import { CheckBox } from 'react-native-elements'
 import Navigation from '../components/navigation/navigation';
-import Settings from '../components/settings/settings';
 import { AuthContext } from '../navigation/AuthProvider';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import Cog from '../components/Cog';
 //Carousel Banner
 const { width, height } = Dimensions.get('screen');
 
@@ -32,6 +31,7 @@ export default ({ navigation }) => {
         paddingLeft: safeAreaInsets.left,
         paddingRight: safeAreaInsets.right,
     }}>
+        <Cog  onPress={()=> navigation.navigate('Settings')} />
         <ScrollView>
             <StatusBar hidden />
             {/* <View style={styles.container}>
@@ -153,7 +153,7 @@ export default ({ navigation }) => {
             </View>
 
         </ScrollView>
-        <Settings />
+        
         <Navigation navigation={navigation} />
     </View>
 }

@@ -18,7 +18,7 @@ import {
 } from 'react-native';
 
 import Navigation from '../components/navigation/navigation';
-import Settings from '../components/settings/settings';
+import Cog from '../components/Cog';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { width, height } = Dimensions.get('screen');
@@ -101,6 +101,7 @@ export default ({ navigation }) => {
       paddingLeft: safeAreaInsets.left,
       paddingRight: safeAreaInsets.right,
     }}>
+       <Cog  onPress={()=> navigation.navigate('Settings')} />
     <FlatList
       data={PLAY_DATA}
       renderItem={renderItem}
@@ -108,7 +109,7 @@ export default ({ navigation }) => {
       extraData={selectedId}
     />
     <View style={{ height: 55 }}></View>
-    <Settings />
+   
     <Navigation navigation={navigation} />
   </View>
 }

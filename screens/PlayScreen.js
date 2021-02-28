@@ -3,7 +3,7 @@ import React, { useState, useRef } from 'react';
 import { Animated, Text, View, StyleSheet, TouchableOpacity, Dimensions, StatusBar, ScrollView, Image, ImageBackground } from 'react-native';
 import Video from 'react-native-video';
 import Navigation from '../components/navigation/navigation';
-import Settings from '../components/settings/settings';
+import Settings from '../components/Cog';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import playImage from '../assets/mountain.jpg';
@@ -196,7 +196,7 @@ export default ({ navigation }) => {
 
 
 
-        <Settings />
+        {/* <Settings /> */}
         <Navigation navigation={navigation} />
     </View>
 }

@@ -17,10 +17,6 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Providers from './navigation/index';
 // import AppStack from './navigation/AppStack';
 
-
-import OnboardingScreen from './screens/OnboardingScreen';
-import SignInScreen from './screens/SignInScreen';
-
 // import AsyncStorage from '@react-native-community/async-storage';
 
 const AppStack = createStackNavigator();

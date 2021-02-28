@@ -8,7 +8,8 @@ import Feather from 'react-native-vector-icons/Feather';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 //tooltip
 import Navigation from '../components/navigation/navigation';
-import Settings from '../components/settings/settings';
+import Cog from '../components/Cog';
+// import Settings from '../components/Cog';
 import PlayingBanner from '../components/playingBanner';
 
 // onMarkerRecieved = (marker) => {
@@ -35,6 +36,7 @@ export default ({ navigation }) => {
       paddingLeft: safeAreaInsets.left,
       paddingRight: safeAreaInsets.right,
     }}>
+       <Cog  onPress={()=> navigation.navigate('Settings')} />
       <MapView
         provider={PROVIDER_GOOGLE}
         style={styles.map}
@@ -74,7 +76,7 @@ export default ({ navigation }) => {
           </Callout>
         </Marker>
       </MapView>
-      <Settings />
+      {/* <Settings /> */}
       <Navigation navigation={navigation} />
     </View>
   );
