@@ -13,7 +13,7 @@ export default function Cog({onPress}) {
   
   <TouchableOpacity style={styles.button} 
     onPress={onPress}>
-        <View style={{ margin: 20 }}>
+        <View style={{ margin: 14 }}>
       <FontAwesome5
           name = "cog"
           solid

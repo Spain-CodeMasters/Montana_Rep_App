@@ -6,9 +6,9 @@ import * as Animatable from 'react-native-animatable';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Navigation from '../components/navigation/navigation';
 import { AuthContext } from '../navigation/AuthProvider';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+// import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import Cog from '../components/Cog';
-import Settings from '../components/settings/settings';
+// import Settings from '../components/settings/settings';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ImageBackground, LogBox } from 'react-native';
 
@@ -107,22 +107,6 @@ const Post = ({ item, color }) => (
 
 
 export default ({ navigation }) => {
-    const safeAreaInsets = useSafeAreaInsets();
-    return <View style={{
-        flex: 1,
-        //paddingTop: safeAreaInsets.top,
-        paddingBottom: safeAreaInsets.bottom,
-        paddingLeft: safeAreaInsets.left,
-        paddingRight: safeAreaInsets.right,
-    }}>
-        <Cog  onPress={()=> navigation.navigate('Settings')} />
-        <ScrollView>
-            <StatusBar hidden />
-            {/* <View style={styles.container}>
-                <Text style={styles.text}>Welcome user {user.uid}</Text>
-                <FormButton buttonTitle='Logout' onPress={() => logout()} />
-            </View> */}
-
     // Filter Posts 
     const [filter, setFilter] = useState("all");
     const [greenSelected, setGreenSelected] = useState(false);
@@ -157,6 +141,7 @@ export default ({ navigation }) => {
         }
 
     }
+    
 
     const renderHeader = () => {
         {/* Carousel Module */ }
@@ -194,6 +179,7 @@ export default ({ navigation }) => {
         </View>
 
     }
+
 
     const renderItem = ({ item }) => {
 
@@ -286,8 +272,7 @@ export default ({ navigation }) => {
             ListEmptyComponent={renderEmpty}
         />
 
-        <Settings />
-        {/* Flatlist Navigation */}
+        <Cog  onPress={()=> navigation.navigate('Settings')} />
         <View style={{ position: "absolute", left: ITEM_WIDTH - 60, flexDirection: 'column', alignItems: 'flex-end', padding: 10, paddingTop: 55, }}>
             <TouchableOpacity onPress={() => filterPosts('mtrep')}><Animated.View style={[styles.postNavi, { backgroundColor: '#747A21'}]}></Animated.View></TouchableOpacity>
             <TouchableOpacity onPress={() => filterPosts('goplay')}><Animated.View style={[styles.postNavi, { backgroundColor: '#cc8a05'}]}></Animated.View></TouchableOpacity>
