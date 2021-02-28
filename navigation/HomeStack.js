@@ -4,12 +4,17 @@ import HomeScreen from '../screens/HomeScreen';
 import MapScreen from '../screens/MapScreen';
 import ScheduleScreen from '../screens/ScheduleScreen';
 import PlayScreen from '../screens/PlayScreen';
-import AccountScreen from '../screens/AccountScreen';
+
 import SettingsScreen from '../screens/SettingsScreen';
-// import NotifyScreen from '../screens/NotifyScreen';
+
 import PrivacyScreen from '../screens/PrivacyScreen';
+import TermsScreen from '../screens/TermsScreen';
 import AboutScreen from '../screens/AboutScreen';
+import ChangePasswordScreen from '../screens/ChangePasswordScreen';
+import UpdateAccountScreen from '../screens/UpdateAccountScreen';
+
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+
 
 const Stack = createStackNavigator();
 export default function HomeStack() {
@@ -21,10 +26,12 @@ export default function HomeStack() {
       <Stack.Screen name='Map' component={MapScreen} options={{ header: () => null }}/>
       <Stack.Screen name='Schedule' component={ScheduleScreen} options={{ header: () => null }}/>
       <Stack.Screen name='Play' component={PlayScreen} options={{ header: () => null }}/>
-      <Stack.Screen name='Account' component={AccountScreen} options={{ header: () => null }}/>
-      {/* <Stack.Screen name='Notification' component={NotifyScreen} options={{ header: () => null }}/> */}
-      <Stack.Screen name='About' component={AboutScreen} options={{ header: () => null }}/>
-      <Stack.Screen name='Privacy' component={PrivacyScreen} options={{ header: () => null }}/>
+
+      <Stack.Screen name='About' component={AboutScreen} />
+      <Stack.Screen name='Privacy Policy' component={PrivacyScreen} />
+      <Stack.Screen name='Terms and Conditions' component={TermsScreen} />
+      <Stack.Screen name='Change Password' component={ChangePasswordScreen}/>
+      <Stack.Screen name='Update Account' component={UpdateAccountScreen}/>
       
     </Stack.Navigator>
     </SafeAreaProvider>

@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 5
+    borderRadius: 5,
+    alignSelf: 'center'
   },
   buttonText: {
     fontFamily: 'FuturaPTBook',

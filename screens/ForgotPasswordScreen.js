@@ -1,28 +1,11 @@
 import React, { useState, useContext,  } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Platform, StatusBar } from 'react-native';
-
-
-import Colors from '../components/utils/colors';
-import SafeView from '../components/SafeView';
 import FormInput from '../components/FormInput';
-import Form from '../components/Forms/Form';
-import FormField from '../components/Forms/FormField';
 import FormButton from '../components/Forms/FormButton';
-import IconButton from '../components/IconButton';
-import {passwordReset} from '../components/Firebase/firebase';
 import FormErrorMessage from '../components/Forms/FormErrorMessage';
 import useStatusBar from '../hooks/useStatusBar';
 
-// import firebase from 'react-native-firebase/app';
-
 import { AuthContext } from '../navigation/AuthProvider';
-
-// const validationSchema = Yup.object().shape({
-//   email: Yup.string()
-//     .label('Email')
-//     .email('Enter a valid email')
-//     .required('Please enter a registered email')
-// });
 
 
 export default function ForgotPasswordScreen({ navigation }) {
