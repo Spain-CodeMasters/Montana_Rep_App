@@ -1,12 +1,33 @@
 import React, { useState, useContext,  } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Platform, StatusBar } from 'react-native';
+import FancyCard from '../components/FancyCard';
 
 
 export default() => {
+    // firebase.auth().onAuthStateChanged(function(user){
+    //     if (user) {
+    //         //user is signed in.
+    //     } else {
+    //         //No user is signed in.
+    //     }
+    // });
+
     return(
         <View style={styles.container}>
             <View>
-                 {/* <Text style={styles.header_text}>Change Password</Text> */}
+                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', margin: 20,}}>
+                    <FancyCard 
+                    title='Become a Premium Member'
+                    onPress={()=> navigation.navigate('Account')}
+                    />
+                </View>
+
+                <Text style={styles.subtext}>User Profile</Text>
+
+                <Text style={styles.subtext}>Basic Tier</Text>
+                <Text style={styles.subtext}>Update Email</Text>
+                <Text style={styles.subtext}>Update Name</Text>
+
             </View>
             
             

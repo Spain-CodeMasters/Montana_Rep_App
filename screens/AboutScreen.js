@@ -6,7 +6,7 @@ export default() => {
     return(
         <View style={styles.container}>
             <View>
-                 {/* <Text style={styles.header_text}>Change Password</Text> */}
+                 <Text style={styles.subtext}>Information about GoPlay! and Montana Repertory Theatre can go here.</Text>
             </View>
             
             

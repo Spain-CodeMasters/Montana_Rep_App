@@ -1,7 +1,7 @@
 import React, { useState, useContext, useRef } from "react";
 import 'react-native-gesture-handler';
 import { AuthContext } from '../navigation/AuthProvider';
-import { SafeAreaView, StyleSheet, ScrollView, View, Text, StatusBar, Switch, Image, TouchableOpacity,} from 'react-native';
+import { Button, SafeAreaView, StyleSheet, ScrollView, View, Text, StatusBar, Switch, Image, TouchableOpacity, Linking} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {windowHeight, windowWidth} from '../components/utils/Dimensions';
 import Feather from 'react-native-vector-icons/Feather';
@@ -9,7 +9,13 @@ import Cog from '../components/Cog';
 import FancyCard from '../components/FancyCard';
 
 
-// import FormButton from '../Forms/FormButton';
+import FormButton from '../components/Forms/FormButton';
+
+
+
+
+
+
 
 export default ({navigation : { goBack }, navigation }) => {
   // const [show, setShow] = useState(false)
@@ -20,6 +26,18 @@ export default ({navigation : { goBack }, navigation }) => {
 
   const [isMenu, setIsMenu] = useState(false);
 
+  const ExternalLinkBtn = (props) => {
+    return <Button
+              title={props.title}
+              onPress={() => {
+                  Linking.openURL(props.url)
+                  .catch(err => {
+                      console.error("Failed opening page because: ", err)
+                      alert('Failed to open page')
+                  })}}
+            />
+  }
+  
 
   return (
     <View style={styles.settings}>
@@ -88,23 +106,26 @@ export default ({navigation : { goBack }, navigation }) => {
 
         <View style={styles.horizontal_rule} />
          <View>
-          {/* <TouchableOpacity  onPress={()=> navigation.navigate('About')}> */}
+          
               <Text style={styles.text}><Feather name= "help-circle" size= {20} color= '#747A21'  />  About</Text>
-          {/* </TouchableOpacity> */}
+         
           <View style={styles.horizontal_rule} />
-          <TouchableOpacity  onPress={()=> navigation.navigate('About')}>
-            <Text style={styles.subtext}>About Us</Text>
-           </TouchableOpacity>
+        
+                <ExternalLinkBtn title="About Us" url="https://montanarep.com/mission" />
                 <View style={styles.horizontal_rule} />
-                <Text style={styles.subtext}>Follow us on Facebook</Text>
+                
+                <ExternalLinkBtn title="Facebook" url="https://www.facebook.com/MontanaRep" />
                 <View style={styles.horizontal_rule} />
-                <Text style={styles.subtext}>Follow us on Instagram</Text>
+                
+                <ExternalLinkBtn title="Instagram" url="https://www.instagram.com/mtreptheatre/?hl=en" />
                 <View style={styles.horizontal_rule} />
-                <Text style={styles.subtext}>Rate us on the App Store</Text>
+                
+                <ExternalLinkBtn title="Rate us on the App Store" url="" />
                 <View style={styles.horizontal_rule} />
-                <Text style={styles.subtext}>Write a Review</Text>
+              
+                <ExternalLinkBtn title="Write a Review" url="" />
                 <View style={styles.horizontal_rule} />
-                <Text style={styles.subtext}>Contact Us</Text>
+                <ExternalLinkBtn title="Contact Us" url="https://montanarep.com/contact" />
 
         </View>
           <View style={styles.horizontal_rule} />
@@ -117,6 +138,9 @@ export default ({navigation : { goBack }, navigation }) => {
         <View style={styles.horizontal_rule} />
 
           <Text style={{marginTop: 20, color: 'grey'}}>Version 0.1.0</Text>
+
+          {/* A little bit wiggle room at the bottom for UX */}
+          <View style={{marginTop: 100, marginBottom: 100}}></View>
 
 
           </ScrollView>

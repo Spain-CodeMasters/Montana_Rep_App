@@ -1,16 +1,16 @@
 import React, { useState, useContext,  } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Platform, StatusBar } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Platform, StatusBar } from 'react-native';
 
 
 export default() => {
     return(
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <View>
-                 {/* <Text style={styles.header_text}>Change Password</Text> */}
+                 <Text style={styles.subtext}>Terms and Conditions will go here.</Text>
             </View>
             
             
-        </View>
+        </ScrollView>
     );
 }
 
