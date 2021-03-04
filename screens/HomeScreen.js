@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { useState, useRef } from 'react';
-import {  Animated, Text, View, Button, StyleSheet, TouchableOpacity, Dimensions, Platform, TextInput, StatusBar, ScrollView, FlatList, Image } from 'react-native';
+import { Animated, Text, View, Button, StyleSheet, TouchableOpacity, Dimensions, Platform, TextInput, StatusBar, ScrollView, FlatList, Image } from 'react-native';
 import { SocialIcon } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -109,9 +109,14 @@ const Post = ({ item, color }) => (
 export default ({ navigation }) => {
     // Filter Posts 
     const [filter, setFilter] = useState("all");
-    const [greenSelected, setGreenSelected] = useState(false);
-    const [goldSelected, setGoldSelected] = useState(false);
-    const [redSelected, setRedSelected] = useState(false);
+
+    const [greenAnimation, setGreenAnimation] = useState('fadeOut');
+    const [goldAnimation, setGoldAnimation] = useState('fadeOut');
+    const [redAnimation, setRedAnimation] = useState('fadeOut');
+    const [greenSize, setGreenSize] = useState(1.5);
+    const [goldSize, setGoldSize] = useState(1.5);
+    const [redSize, setRedSize] = useState(1.5);
+
     const scroll = useRef(null);
 
     function filterPosts(type) {
@@ -119,29 +124,47 @@ export default ({ navigation }) => {
         if (filter !== type) {
             if (type == "mtrep") {
                 setFilter("mtrep");
-                setGreenSelected(true);
-                setGoldSelected(false);
-                setRedSelected(false);
+                selectGreen();
+                setGreenSize(0);
+                setGoldSize(1.5);
+                setRedSize(1.5);
             } else if (type == "goplay") {
                 setFilter("goplay");
-                setGreenSelected(false);
-                setGoldSelected(true);
-                setRedSelected(false);
+                selectGold();
+                setGreenSize(1.5);
+                setGoldSize(0);
+                setRedSize(1.5);
             } else if (type == "comm") {
                 setFilter("comm");
-                setGreenSelected(false);
-                setGoldSelected(false);
-                setRedSelected(true);
+                selectRed();
+                setGreenSize(1.5);
+                setGoldSize(1.5);
+                setRedSize(0);
             }
         } else {
             setFilter("all");
-            setGreenSelected(false);
-            setGoldSelected(false);
-            setRedSelected(false);
+            setGreenSize(1.5);
+            setGoldSize(1.5);
+            setRedSize(1.5);
         }
 
     }
-    
+
+    function selectGreen() {
+        setGreenAnimation("fadeIn");
+        setTimeout(function () { setGreenAnimation("fadeOutLeft"); }, 2000);
+    }
+
+    function selectGold() {
+        setGoldAnimation("fadeIn");
+        setTimeout(function () { setGoldAnimation("fadeOutLeft"); }, 2000);
+    }
+
+    function selectRed() {
+        setRedAnimation("fadeIn");
+        setTimeout(function () { setRedAnimation("fadeOutLeft"); }, 2000);
+    }
+
 
     const renderHeader = () => {
         {/* Carousel Module */ }
@@ -272,11 +295,14 @@ export default ({ navigation }) => {
             ListEmptyComponent={renderEmpty}
         />
 
-        <Cog  onPress={()=> navigation.navigate('Settings')} />
-        <View style={{ position: "absolute", left: ITEM_WIDTH - 60, flexDirection: 'column', alignItems: 'flex-end', padding: 10, paddingTop: 55, }}>
-            <TouchableOpacity onPress={() => filterPosts('mtrep')}><Animated.View style={[styles.postNavi, { backgroundColor: '#747A21'}]}></Animated.View></TouchableOpacity>
-            <TouchableOpacity onPress={() => filterPosts('goplay')}><Animated.View style={[styles.postNavi, { backgroundColor: '#cc8a05'}]}></Animated.View></TouchableOpacity>
-            <TouchableOpacity onPress={() => filterPosts('comm')}><Animated.View style={[styles.postNavi, { backgroundColor: '#A5580C'}]}></Animated.View></TouchableOpacity>
+        <Cog onPress={() => navigation.navigate('Settings')} />
+        <View style={{ position: "absolute", left: ITEM_WIDTH - 63, flexDirection: 'column', alignItems: 'flex-end', padding: 10, paddingTop: 55 }}>
+            <Animatable.View animation={greenAnimation} duration={500} style={[{ backgroundColor: '#747A21', position: "absolute", left: -107, top: 65, width: 117, paddingLeft: 5, paddingRight: 5, borderRadius: 5 }]}><Text style={[styles.postLabel, { color: "white" }]}>Montana Rep</Text></Animatable.View>
+            <TouchableOpacity onPress={() => filterPosts('mtrep')}><Animated.View style={[styles.postNavi, { backgroundColor: '#747A21', borderColor: "#0000", borderWidth: greenSize }]}></Animated.View></TouchableOpacity>
+            <Animatable.View animation={goldAnimation} duration={500} style={[{ backgroundColor: '#cc8a05', position: "absolute", left: -65, top: 109, width: 75, paddingLeft: 5, paddingRight: 5, borderRadius: 5 }]}><Text style={[styles.postLabel, { color: "white" }]}>Go Play!</Text></Animatable.View>
+            <TouchableOpacity onPress={() => filterPosts('goplay')}><Animated.View style={[styles.postNavi, { backgroundColor: '#cc8a05', borderColor: "#0000", borderWidth: goldSize }]}></Animated.View></TouchableOpacity>
+            <Animatable.View animation={redAnimation} duration={500} style={[{ backgroundColor: '#A5580C', position: "absolute", left: -92, top: 152, width: 102, paddingLeft: 5, paddingRight: 5, borderRadius: 5 }]}><Text style={[styles.postLabel, { color: "white" }]}>Community</Text></Animatable.View>
+            <TouchableOpacity onPress={() => filterPosts('comm')}><Animated.View style={[styles.postNavi, { backgroundColor: '#A5580C', borderColor: "#0000", borderWidth: redSize }]}></Animated.View></TouchableOpacity>
         </View>
         <Navigation navigation={navigation} />
     </View>
@@ -321,8 +347,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     postNavi: {
-        minWidth: 10,
-        minHeight: 10,
+        minWidth: 13,
+        minHeight: 13,
         borderRadius: 10,
         margin: 15,
     },

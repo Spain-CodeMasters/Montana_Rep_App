@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   Text,
   View,
@@ -14,9 +14,10 @@ import {
   FlatList,
   Image,
   SafeAreaView,
-  ImageBackground
+  ImageBackground,
+  Animated,
 } from 'react-native';
-
+import * as Animatable from 'react-native-animatable';
 import Navigation from '../components/navigation/navigation';
 import Cog from '../components/Cog';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -80,6 +81,63 @@ const Item = ({ item, onPress }) => (
 );
 
 export default ({ navigation }) => {
+  const [filter, setFilter] = useState("all");
+
+  const [greenAnimation, setGreenAnimation] = useState('fadeOut');
+  const [goldAnimation, setGoldAnimation] = useState('fadeOut');
+  const [redAnimation, setRedAnimation] = useState('fadeOut');
+  const [greenSize, setGreenSize] = useState(1.5);
+  const [goldSize, setGoldSize] = useState(1.5);
+  const [redSize, setRedSize] = useState(1.5);
+
+  const scroll = useRef(null);
+
+  function filterPosts(type) {
+    //scroll.current.scrollToOffset({ offset: ITEM_HEIGHT, animated: true })
+    if (filter !== type) {
+      if (type == "mtrep") {
+        setFilter("mtrep");
+        selectGreen();
+        setGreenSize(0);
+        setGoldSize(1.5);
+        setRedSize(1.5);
+      } else if (type == "goplay") {
+        setFilter("goplay");
+        selectGold();
+        setGreenSize(1.5);
+        setGoldSize(0);
+        setRedSize(1.5);
+      } else if (type == "comm") {
+        setFilter("comm");
+        selectRed();
+        setGreenSize(1.5);
+        setGoldSize(1.5);
+        setRedSize(0);
+      }
+    } else {
+      setFilter("all");
+      setGreenSize(1.5);
+      setGoldSize(1.5);
+      setRedSize(1.5);
+    }
+
+  }
+
+  function selectGreen() {
+    setGreenAnimation("fadeIn");
+    setTimeout(function () { setGreenAnimation("fadeOutLeft"); }, 2000);
+  }
+
+  function selectGold() {
+    setGoldAnimation("fadeIn");
+    setTimeout(function () { setGoldAnimation("fadeOutLeft"); }, 2000);
+  }
+
+  function selectRed() {
+    setRedAnimation("fadeIn");
+    setTimeout(function () { setRedAnimation("fadeOutLeft"); }, 2000);
+  }
+
   const [selectedId, setSelectedId] = useState(null);
 
   const renderItem = ({ item }) => {
@@ -94,13 +152,13 @@ export default ({ navigation }) => {
   };
   const safeAreaInsets = useSafeAreaInsets()
   return <View style={{
-      flex: 1,
-      //paddingTop: safeAreaInsets.top,
-      paddingBottom: safeAreaInsets.bottom,
-      paddingLeft: safeAreaInsets.left,
-      paddingRight: safeAreaInsets.right,
-    }}>
-       <Cog  onPress={()=> navigation.navigate('Settings')} />
+    flex: 1,
+    //paddingTop: safeAreaInsets.top,
+    paddingBottom: safeAreaInsets.bottom,
+    paddingLeft: safeAreaInsets.left,
+    paddingRight: safeAreaInsets.right,
+  }}>
+    <Cog onPress={() => navigation.navigate('Settings')} />
     <FlatList
       data={PLAY_DATA}
       renderItem={renderItem}
@@ -108,7 +166,16 @@ export default ({ navigation }) => {
       extraData={selectedId}
     />
     <View style={{ height: 55 }}></View>
-   
+
+    <View style={{ position: "absolute", left: ITEM_WIDTH - 63, flexDirection: 'column', alignItems: 'flex-end', padding: 10, paddingTop: 55 }}>
+      <Animatable.View animation={greenAnimation} duration={500} style={[{ backgroundColor: '#747A21', position: "absolute", left: -107, top: 65, width: 117, paddingLeft: 5, paddingRight: 5, borderRadius: 5 }]}><Text style={[styles.postLabel, { color: "white" }]}>Montana Rep</Text></Animatable.View>
+      <TouchableOpacity onPress={() => filterPosts('mtrep')}><Animated.View style={[styles.postNavi, { backgroundColor: '#747A21', borderColor: "#0000", borderWidth: greenSize }]}></Animated.View></TouchableOpacity>
+      <Animatable.View animation={goldAnimation} duration={500} style={[{ backgroundColor: '#cc8a05', position: "absolute", left: -65, top: 109, width: 75, paddingLeft: 5, paddingRight: 5, borderRadius: 5 }]}><Text style={[styles.postLabel, { color: "white" }]}>Go Play!</Text></Animatable.View>
+      <TouchableOpacity onPress={() => filterPosts('goplay')}><Animated.View style={[styles.postNavi, { backgroundColor: '#cc8a05', borderColor: "#0000", borderWidth: goldSize }]}></Animated.View></TouchableOpacity>
+      <Animatable.View animation={redAnimation} duration={500} style={[{ backgroundColor: '#A5580C', position: "absolute", left: -92, top: 152, width: 102, paddingLeft: 5, paddingRight: 5, borderRadius: 5 }]}><Text style={[styles.postLabel, { color: "white" }]}>Community</Text></Animatable.View>
+      <TouchableOpacity onPress={() => filterPosts('comm')}><Animated.View style={[styles.postNavi, { backgroundColor: '#A5580C', borderColor: "#0000", borderWidth: redSize }]}></Animated.View></TouchableOpacity>
+    </View>
+
     <Navigation navigation={navigation} />
   </View>
 }
@@ -162,6 +229,25 @@ const styles = StyleSheet.create({
     color: "white",
     //fontWeight: 'bold',
 
-  }
+  },
+  buttonText: {
+    fontFamily: 'FuturaPTBook',
+    fontSize: 24,
+    color: "white",
+    //fontWeight: 'bold',
+
+  },
+  postNavi: {
+    minWidth: 13,
+    minHeight: 13,
+    borderRadius: 10,
+    margin: 15,
+  },
+  postLabel: {
+    fontSize: 16,
+    fontFamily: 'FuturaPTMedium',
+    lineHeight: 20,
+    textTransform: 'uppercase'
+  },
 
 })
