@@ -16,8 +16,10 @@ import {
   SafeAreaView,
   ImageBackground,
   Animated,
+  Modal,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Navigation from '../components/navigation/navigation';
 import Cog from '../components/Cog';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -30,39 +32,46 @@ const ITEM_HEIGHT = height * .90;
 const PLAY_DATA = [
   {
     id: "1",
-    title: "Mountain View",
+    title: "Go Play!",
     source: 'https://res.cloudinary.com/claire-dev/image/upload/v1612076013/mountain_nonpge.jpg',
-    time: "Sep 25, 2025 15:00:00"
+    time: "Sep 25, 2025 15:00:00",
+    type: "goplay"
   },
   {
     id: "2",
-    title: "Babble Brook",
+    title: "Community",
     source: 'https://res.cloudinary.com/claire-dev/image/upload/v1612076013/glacier_aqjz96.jpg',
-    time: "Sep 25, 2021 15:00:00"
+    time: "Sep 25, 2021 15:00:00",
+    type: "comm"
   },
   {
     id: "3",
-    title: "Fly Fish",
+    title: "Montana Rep",
     source: 'https://res.cloudinary.com/claire-dev/image/upload/v1612076013/creek_dadkt3.jpg',
-    time: ""
+    time: "",
+    type: 'mtrep'
   },
   {
     id: "4",
-    title: "Mountain View",
+    title: "Montana Rep",
     source: 'https://res.cloudinary.com/claire-dev/image/upload/v1612076013/mountain_nonpge.jpg',
-    time: "Sep 25, 2025 15:00:00"
+    time: "Sep 25, 2025 15:00:00",
+    type: 'mtrep'
   },
   {
     id: "5",
-    title: "Babble Brook",
+    title: "Community",
     source: 'https://res.cloudinary.com/claire-dev/image/upload/v1612076013/glacier_aqjz96.jpg',
-    time: ""
+    time: "",
+    type: "comm"
+
   },
   {
     id: "6",
-    title: "Fly Fish",
+    title: "Go Play!",
     source: 'https://res.cloudinary.com/claire-dev/image/upload/v1612076013/creek_dadkt3.jpg',
-    time: "Sep 25, 2018 15:00:00"
+    time: "Sep 25, 2018 15:00:00",
+    type: 'goplay'
   },
 ]
 
@@ -74,9 +83,22 @@ const Item = ({ item, onPress }) => (
         <Text style={styles.title}>{item.title}</Text>
       </View>
     </TouchableOpacity>
-    <View style={styles.time}>
-      <Text style={styles.timeText}>Coming Soon</Text>
-    </View>
+
+    {(function () {
+      if (item.type == 'mtrep') {
+        return <View style={[styles.time, { backgroundColor: '#747A21' }]}>
+          <Text style={styles.timeText}>Time</Text>
+        </View>
+      } else if (item.type == 'goplay') {
+        return <View style={styles.time}>
+          <Text style={styles.timeText}>Time</Text>
+        </View>
+      } else if (item.type == 'comm') {
+        return <View style={[styles.time, { backgroundColor: '#A5580C' }]}>
+          <Text style={styles.timeText}>Time</Text>
+        </View>
+      }
+    })()}
   </ImageBackground>
 );
 
@@ -141,16 +163,43 @@ export default ({ navigation }) => {
   const [selectedId, setSelectedId] = useState(null);
 
   const renderItem = ({ item }) => {
+    if (filter == "all") {
+      return (
+        <Item
+          item={item}
+          //onPress={() => setSelectedId(item.id)  }
+          onPress={() => setModalVisible(!modalVisible)}
+        />
+      );
+    } else if (filter == "mtrep" && item.type == "mtrep") {
+      return (
+        <Item
+          item={item}
+          //onPress={() => setSelectedId(item.id)  }
+          onPress={() => setModalVisible(!modalVisible)}
+        />
+      );
+    } else if (filter == "goplay" && item.type == "goplay") {
+      return (
+        <Item
+          item={item}
+          //onPress={() => setSelectedId(item.id)  }
+          onPress={() => navigation.navigate('Play')}
+        />
+      );
+    } else if (filter == "comm" && item.type == "comm") {
+      return (
+        <Item
+          item={item}
+          //onPress={() => setSelectedId(item.id)  }
+          onPress={() => setModalVisible(!modalVisible)}
+        />
+      );
+    }
 
-    return (
-      <Item
-        item={item}
-        //onPress={() => setSelectedId(item.id)  }
-        onPress={() => navigation.navigate('Play')}
-      />
-    );
   };
   const safeAreaInsets = useSafeAreaInsets()
+  const [modalVisible, setModalVisible] = useState(false);
   return <View style={{
     flex: 1,
     //paddingTop: safeAreaInsets.top,
@@ -159,6 +208,26 @@ export default ({ navigation }) => {
     paddingRight: safeAreaInsets.right,
   }}>
     <Cog onPress={() => navigation.navigate('Settings')} />
+    <Modal
+      animationType="fade"
+      transparent={true}
+      visible={modalVisible}
+      onRequestClose={() => {
+        setModalVisible(!modalVisible);
+      }}
+    >
+      <View style={styles.centeredView}>
+        <View style={styles.modalView}>
+          <TouchableOpacity style={{alignSelf: 'flex-end'}} onPress={() => { setModalVisible(!modalVisible); }}>
+            <FontAwesome5 name='times' solid color="black" size={30} style={{ }}  />
+          </TouchableOpacity>
+          <Text style={styles.postLabel}>Event Information</Text>
+          {/* <Image source={{uri: "https://res.cloudinary.com/claire-dev/image/upload/v1612076013/glacier_aqjz96.jpg"}}></Image> */}
+          <Text style={styles.subtext}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
+
+        </View>
+      </View>
+    </Modal>
     <FlatList
       data={PLAY_DATA}
       renderItem={renderItem}
@@ -248,6 +317,36 @@ const styles = StyleSheet.create({
     fontFamily: 'FuturaPTMedium',
     lineHeight: 20,
     textTransform: 'uppercase'
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: -100,
+  },
+  modalView: {
+    margin: 0,
+    backgroundColor: "white",
+    borderRadius: 10,
+    padding: 40,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+    width: 300,
+    height: 550,
+  },
+  subtext: {
+    fontSize: 18,
+    fontFamily: 'FuturaPTBook',
+    marginTop: 20,
+    marginBottom: 20,
+    lineHeight: 20,
   },
 
 })
