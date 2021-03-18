@@ -99,7 +99,7 @@ const Post = ({ item, color }) => (
             }
         })()}
 
-        <Text style={styles.subtext}>{item.text}</Text>
+        <Text allowFontScaling style={styles.subtext}>{item.text}</Text>
 
     </View>
 );

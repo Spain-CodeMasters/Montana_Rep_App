@@ -32,11 +32,21 @@ const ITEM_HEIGHT = height * .90;
 const PLAY_DATA = [
   {
     id: "1",
-    title: "Go Play!",
+    title: "The Phantom Bride",
     source: 'https://res.cloudinary.com/claire-dev/image/upload/v1612076013/mountain_nonpge.jpg',
     time: "Sep 25, 2025 15:00:00",
     type: "goplay"
   },
+  {
+    id: "6",
+    title: "Go Play!",
+    source: 'https://res.cloudinary.com/claire-dev/image/upload/v1612076013/creek_dadkt3.jpg',
+    time: "Sep 25, 2018 15:00:00",
+    type: 'goplay'
+  },
+]
+
+const EVENT_DATA = [
   {
     id: "2",
     title: "Community",
@@ -66,24 +76,44 @@ const PLAY_DATA = [
     type: "comm"
 
   },
-  {
-    id: "6",
-    title: "Go Play!",
-    source: 'https://res.cloudinary.com/claire-dev/image/upload/v1612076013/creek_dadkt3.jpg',
-    time: "Sep 25, 2018 15:00:00",
-    type: 'goplay'
-  },
 ]
 
+//Adjust size of title text based on content
+const AdjustTitle = ({
+  fontSize, text, style, numberOfLines
+}) => {
+  const [currentFont, setCurrentFont] = useState(fontSize);
+  const [currentLines, setCurrentLines] = useState(numberOfLines);
+
+  return (
+    <Text
+      numberOfLines={currentLines}
+      adjustsFontSizeToFit
+      style={[style, { fontSize: currentFont }]}
+      onTextLayout={(e) => {
+        const { lines } = e.nativeEvent;
+        if (lines.length > currentLines) {
+          setCurrentFont(currentFont - 1);
+        }
+        
+      }}
+    >
+      {text}
+    </Text>
+  );
+};
+
+//Create List Item
 const Item = ({ item, onPress }) => (
   <ImageBackground source={{ uri: item.source }} style={styles.play}>
     <TouchableOpacity style={styles.play} onPress={onPress}>
       <View style={styles.overlay}>
-
-        <Text style={styles.title}>{item.title}</Text>
+        <AdjustTitle fontSize={40} text={item.title} style={styles.title} numberOfLines={1} />
+        {/* <Text numberOfLines={3} style={styles.title}>{item.title}</Text> */}
       </View>
     </TouchableOpacity>
 
+    {/*Determine Event Type*/}
     {(function () {
       if (item.type == 'mtrep') {
         return <View style={[styles.time, { backgroundColor: '#747A21' }]}>
@@ -218,12 +248,12 @@ export default ({ navigation }) => {
     >
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
-          <TouchableOpacity style={{alignSelf: 'flex-end'}} onPress={() => { setModalVisible(!modalVisible); }}>
-            <FontAwesome5 name='times' solid color="black" size={30} style={{ }}  />
+          <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={() => { setModalVisible(!modalVisible); }}>
+            <FontAwesome5 name='times' solid color="black" size={30} style={{}} />
           </TouchableOpacity>
           <Text style={styles.postLabel}>Event Information</Text>
           {/* <Image source={{uri: "https://res.cloudinary.com/claire-dev/image/upload/v1612076013/glacier_aqjz96.jpg"}}></Image> */}
-          <Text style={styles.subtext}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
+          <Text allowFontScaling style={styles.subtext}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
 
         </View>
       </View>
@@ -279,8 +309,10 @@ const styles = StyleSheet.create({
     color: '#fff',
     textTransform: 'uppercase',
     fontFamily: 'FuturaPTDemi',
-    fontSize: 30,
+    fontSize: 40,
     letterSpacing: 5,
+    margin: 10,
+    textAlign: 'center',
   },
   time: {
     backgroundColor: '#cc8a05',

@@ -27,10 +27,10 @@ var addInfo = "Additional Information"
 var copyright = "Copyright"
 
 {/* Video Testing */ }
-//var source = 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4';
+var source = 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4';
 
 {/* Audio Testing */ }
-var source = 'https://actions.google.com/sounds/v1/crowds/voices_angry.ogg';
+//var source = 'https://actions.google.com/sounds/v1/crowds/voices_angry.ogg';
 
 export default ({ navigation }) => {
     // const [scrollY, setScrollY] = useState(new Animated.Value(0));
@@ -164,9 +164,9 @@ export default ({ navigation }) => {
             {/* discription */}
             <View style={styles.discription}>
                 <Text style={styles.text_title}>{title}</Text>
-                <Text style={styles.author}>Written by {author}</Text>
-                <Text style={styles.subtext}>{discription}</Text>
-                {!locked ? <Text style={styles.subtext}>{transcript}</Text> : null}
+                <Text allowFontScaling style={styles.author}>Written by {author}</Text>
+                <Text allowFontScaling style={styles.subtext}>{discription}</Text>
+                {!locked ? <Text allowFontScaling style={styles.subtext}>{transcript}</Text> : null}
                 {
                     locked ? <TouchableOpacity
                         onPress={() => [setLocked(false), alert('Unlocked')]}
@@ -178,9 +178,9 @@ export default ({ navigation }) => {
                         </View>
                     </TouchableOpacity> : null
                 }
-                <Text style={styles.subtext}>{actors}</Text>
-                <Text style={styles.subtext}>{addInfo}</Text>
-                <Text style={styles.subtext}>{copyright}</Text>
+                <Text allowFontScaling style={styles.subtext}>{actors}</Text>
+                <Text allowFontScaling style={styles.subtext}>{addInfo}</Text>
+                <Text allowFontScaling style={styles.subtext}>{copyright}</Text>
 
             </View>
 
@@ -285,9 +285,10 @@ const styles = StyleSheet.create({
         color: '#fff',
         textTransform: 'uppercase',
         fontFamily: 'FuturaPTDemi',
-        fontSize: 40,
+        fontSize: 50,
         letterSpacing: 5,
         margin: 10,
+        textAlign: 'center',
     },
 
     button: {
@@ -349,6 +350,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#CC8A05',
         height: 20,
         borderRadius: 15,
+
         width: 20,
     }
 
