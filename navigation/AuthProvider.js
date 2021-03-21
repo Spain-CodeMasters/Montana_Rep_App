@@ -1,11 +1,16 @@
 import React, { createContext, useState } from 'react';
 import auth from '@react-native-firebase/auth';
-import firebase from 'firebase';
-import 'firebase/auth';
+import firebase from '@react-native-firebase/app';
+import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
 /**
  * This provider is created
  * to access user in whole app
  */
+
+
+
+
 
 export const AuthContext = createContext({});
 
