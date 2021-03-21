@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Animated, Text, View, Button, StyleSheet, TouchableOpacity, Dimensions, Platform, TextInput, StatusBar, ScrollView, FlatList, Image } from 'react-native';
 import { SocialIcon } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
@@ -11,6 +11,8 @@ import Cog from '../components/Cog';
 // import Settings from '../components/settings/settings';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ImageBackground, LogBox } from 'react-native';
+
+import { db } from '../components/Firebase/firebase'
 
 //Carousel Banner
 const { width, height } = Dimensions.get('screen');
@@ -42,41 +44,10 @@ const HERO_DATA = [
     // 'https://res.cloudinary.com/claire-dev/image/upload/v1612076013/creek_dadkt3.jpg',
 ];
 
-const POST_DATA = [
-    {
-        id: "1",
-        image: 'https://res.cloudinary.com/claire-dev/image/upload/v1612076013/mountain_nonpge.jpg',
-        title: 'Go Play! Post with a long title to check for run off',
-        text: 'This is a post for Go Play! with a lot of text so I can see where the text breaks',
-        type: 'goplay'
 
-    },
-    {
-        id: "2",
-        image: null,
-        title: 'MT Rep Post',
-        text: 'This is a post for Montana Rep',
-        type: 'mtrep'
-    },
-    {
-        id: "3",
-        image: '',
-        title: 'Community Post',
-        text: 'This is a post for the community/sponsors',
-        type: 'comm'
-    },
-    {
-        id: "4",
-        image: 'https://res.cloudinary.com/claire-dev/image/upload/v1612076013/glacier_aqjz96.jpg',
-        title: 'MT Rep Post 2',
-        text: 'This is another post for Montana Rep',
-        type: 'mtrep'
-    },
-];
-
-const Post = ({ item, color }) => (
+const Post = ({ item }) => (
     <View style={styles.post}>
-        <Text style={styles.text_title}>{item.title}</Text>
+        <Text style={styles.text_title}>{item.post.postTitle}</Text>
         {(function () {
             if (item.type == 'mtrep') {
                 return <Text style={[styles.postLabel, { color: '#747A21' }]}>Montana Repertory Theatre</Text>
@@ -90,16 +61,25 @@ const Post = ({ item, color }) => (
 
         {/* Check for Image */}
         {(function () {
-            if (item.image == '' || item.image == null) {
+            if (item.post.photoUrl == '' || item.post.photoUrl == null) {
                 return <></>
             } else {
                 return <View style={{ flex: 1 }}>
-                    <Image source={{ uri: item.image }} style={{ width: 270, height: 200, marginTop: 10 }}></Image>
+                    <Image source={{ uri: item.post.photoUrl }} style={{ width: 270, height: 200, marginTop: 10 }}></Image>
                 </View>
             }
         })()}
 
-        <Text allowFontScaling style={styles.subtext}>{item.text}</Text>
+        <Text allowFontScaling style={styles.subtext}>{item.post.postBody}</Text>
+
+        {/* Check for Link */}
+        {(function () {
+            if (item.post.link == '' || item.post.link == null) {
+                return <></>
+            } else {
+                return <Text style={[styles.postLabel, { color: 'red' }]}>{item.post.link}</Text>
+            }
+        })()}
 
     </View>
 );
@@ -118,6 +98,14 @@ export default ({ navigation }) => {
     const [redSize, setRedSize] = useState(1.5);
 
     const scroll = useRef(null);
+
+    const [postData, setPostData] = useState([]);
+
+    useEffect(() => {
+        db.collection("posts").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
+            setPostData(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
+        })
+    }, [])
 
     function filterPosts(type) {
         scroll.current.scrollToOffset({ offset: ITEM_HEIGHT, animated: true })
@@ -286,7 +274,7 @@ export default ({ navigation }) => {
 
         <FlatList
             ref={scroll}
-            data={POST_DATA}
+            data={postData}
             renderItem={renderItem}
             keyExtractor={(item) => item.id}
             ListHeaderComponent={renderHeader}
