@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
-import React, { Component } from 'react';
-import { Text, View, Image, Button, StyleSheet, TouchableOpacity, Dimensions, Platform, TextInput, StatusBar } from 'react-native';
+import React, { Component, useState, useEffect } from 'react';
+import { Text, View, Image, Button, StyleSheet, TouchableOpacity, Dimensions, Platform, TextInput, StatusBar, PermissionsAndroid } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps';
 import * as Animatable from 'react-native-animatable';
 // import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -11,6 +11,8 @@ import Navigation from '../components/navigation/navigation';
 import Cog from '../components/Cog';
 // import Settings from '../components/Cog';
 import PlayingBanner from '../components/playingBanner';
+
+import Geolocation from 'react-native-geolocation-service';
 
 // onMarkerRecieved = (marker) => {
 //   this.setState(prevState => ({
@@ -28,6 +30,66 @@ import PlayingBanner from '../components/playingBanner';
 export default ({ navigation }) => {
 
   const safeAreaInsets = useSafeAreaInsets()
+
+  const locationPermission = PermissionsAndroid.check( PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION );
+  const [deviceLatitude, setDeviceLatitude] = useState(46.87215);
+  const [deviceLongitude, setDeviceLongitude] = useState(-113.994);
+  const [deviceLatitudeDelta, setDeviceLatitudeDelta] = useState();
+  const [deviceLongitudeDelta, setDeviceLongitudeDelta] = useState();
+
+  const requestLocationPermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          title: "Montana Repertory Theatre Location Permission",
+          message:
+            "We need access to your location " +
+            "to use the community map",
+          buttonNeutral: "Ask Me Later",
+          buttonNegative: "Cancel",
+          buttonPositive: "OK"
+        }
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log("Location Permission Granted");
+        currentPosition();
+      } else {
+        console.log("Location Permission Denied");
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
+  const currentPosition = () => {
+    if (locationPermission) {
+      Geolocation.getCurrentPosition(
+        (position) => {
+          setDeviceLatitude(position.coords.latitude);
+          setDeviceLongitude(position.coords.longitude);
+          console.log(position);
+        },
+        (error) => {
+          // See error code charts below.
+          console.log(error.code, error.message);
+        },
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+      );
+    } else {
+      requestLocationPermission();
+    }
+
+  }
+
+  useEffect(() => {
+    requestLocationPermission();
+  }, [])
+
+  useEffect(() => {
+    currentPosition();
+  }, [deviceLatitude, deviceLongitude, locationPermission])
+
   return (
     <View style={{
       flex: 1,
@@ -36,25 +98,27 @@ export default ({ navigation }) => {
       paddingLeft: safeAreaInsets.left,
       paddingRight: safeAreaInsets.right,
     }}>
-       <Cog  onPress={()=> navigation.navigate('Settings')} />
+      <Cog onPress={() => navigation.navigate('Settings')} />
       <MapView
         provider={PROVIDER_GOOGLE}
         style={styles.map}
 
         region={{
-          latitude: 46.87215,
-          longitude: -113.994,
+          latitude: deviceLatitude,
+          longitude: deviceLongitude,
           latitudeDelta: 0.00922,
           longitudeDelta: 0.00921,
         }}
       >
+        
+        {/* Device Location Marker */}
         <Marker
           // coordinate={marker.coordinate}
           // title={marker.title}
           // description={marker.description}>
           coordinate={{
-            latitude: 46.86006,
-            longitude: -113.98523,
+            latitude: deviceLatitude,
+            longitude: deviceLongitude,
           }}
           image={require('../assets/map_marker.png')}
         // title="Test Title"
