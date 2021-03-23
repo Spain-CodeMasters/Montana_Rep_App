@@ -48,13 +48,21 @@ const HERO_DATA = [
 const Post = ({ item }) => (
     <View style={styles.post}>
         <Text style={styles.text_title}>{item.post.postTitle}</Text>
+
+        {/* Check catagory for post label */}
         {(function () {
-            if (item.type == 'mtrep') {
+            if (item.post.catagory == 'mtrep') {
                 return <Text style={[styles.postLabel, { color: '#747A21' }]}>Montana Repertory Theatre</Text>
-            } else if (item.type == 'goplay') {
+            } else if (item.post.catagory == 'goplay') {
                 return <Text style={[styles.postLabel, { color: '#cc8a05' }]}>Go Play!</Text>
-            } else if (item.type == 'comm') {
+            } else if (item.post.catagory == null || item.post.catagory == '' || item.post.catagory == ' ') {
                 return <Text style={[styles.postLabel, { color: '#A5580C' }]}>Community</Text>
+            } else {
+                return <Text style={[styles.postLabel, { color: '#A5580C' }]}>
+
+                    {item.post.catagory}
+                    
+                    </Text>
             }
         })()}
 
@@ -88,8 +96,6 @@ const Post = ({ item }) => (
 
 export default ({ navigation }) => {
     // Filter Posts 
-    const [filter, setFilter] = useState("all");
-
     const [greenAnimation, setGreenAnimation] = useState('fadeOut');
     const [goldAnimation, setGoldAnimation] = useState('fadeOut');
     const [redAnimation, setRedAnimation] = useState('fadeOut');
@@ -100,6 +106,12 @@ export default ({ navigation }) => {
     const scroll = useRef(null);
 
     const [postData, setPostData] = useState([]);
+    const [postView, setPostView] = useState(postData);
+    const commPosts = postData.filter(function(posts) { return posts.post.catagory !== 'mtrep' && posts.post.catagory !== 'goplay'; });
+    const mtrepPosts = postData.filter(function(posts) { return posts.post.catagory == 'mtrep'; });
+    const goplayPosts = postData.filter(function(posts) { return posts.post.catagory == 'goplay'; });
+
+    const [filter, setFilter] = useState()
 
     useEffect(() => {
         db.collection("posts").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
@@ -112,18 +124,21 @@ export default ({ navigation }) => {
         if (filter !== type) {
             if (type == "mtrep") {
                 setFilter("mtrep");
+                setPostView(mtrepPosts);
                 selectGreen();
                 setGreenSize(0);
                 setGoldSize(1.5);
                 setRedSize(1.5);
             } else if (type == "goplay") {
                 setFilter("goplay");
+                setPostView(goplayPosts);
                 selectGold();
                 setGreenSize(1.5);
                 setGoldSize(0);
                 setRedSize(1.5);
             } else if (type == "comm") {
                 setFilter("comm");
+                setPostView(commPosts);
                 selectRed();
                 setGreenSize(1.5);
                 setGoldSize(1.5);
@@ -131,6 +146,7 @@ export default ({ navigation }) => {
             }
         } else {
             setFilter("all");
+            setPostView(postData);
             setGreenSize(1.5);
             setGoldSize(1.5);
             setRedSize(1.5);
@@ -212,7 +228,7 @@ export default ({ navigation }) => {
                     item={item}
                 />
             );
-        } else if (filter == "comm" && item.type == "comm") {
+        } else if (filter == "comm" && item.type !== "mtrep" && item.type !== "goplay") {
             return (
                 <Post
                     item={item}
@@ -274,7 +290,7 @@ export default ({ navigation }) => {
 
         <FlatList
             ref={scroll}
-            data={postData}
+            data={postView}
             renderItem={renderItem}
             keyExtractor={(item) => item.id}
             ListHeaderComponent={renderHeader}
