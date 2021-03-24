@@ -117,8 +117,62 @@ export default ({ navigation }) => {
           // title={marker.title}
           // description={marker.description}>
           coordinate={{
-            latitude: deviceLatitude,
-            longitude: deviceLongitude,
+            latitude: 46.87,
+            longitude: -113.987,
+          }}
+          image={require('../assets/map_marker.png')}
+        // title="Test Title"
+        // description= "This is the test description"
+        >
+          <Callout tooltip>
+            <View>
+              <View style={styles.bubble}>
+                <Text style={styles.name}>Child's Play</Text>
+                <Text style={styles.nameDescription}> A Short description</Text>
+                {/* <Image
+                  style={styles.image}
+                  source={require('../assets/logo.png')}
+                  /> */}
+              </View>
+              <View style={styles.arrowBorder} />
+              <View style={styles.arrow} />
+            </View>
+          </Callout>
+        </Marker>
+        <Marker
+          // coordinate={marker.coordinate}
+          // title={marker.title}
+          // description={marker.description}>
+          coordinate={{
+            latitude: 46.87215,
+            longitude: -113.994,
+          }}
+          image={require('../assets/map_marker.png')}
+        // title="Test Title"
+        // description= "This is the test description"
+        >
+          <Callout tooltip>
+            <View>
+              <View style={styles.bubble}>
+                <Text style={styles.name}>Child's Play</Text>
+                <Text style={styles.nameDescription}> A Short description</Text>
+                {/* <Image
+                  style={styles.image}
+                  source={require('../assets/logo.png')}
+                  /> */}
+              </View>
+              <View style={styles.arrowBorder} />
+              <View style={styles.arrow} />
+            </View>
+          </Callout>
+        </Marker>
+        <Marker
+          // coordinate={marker.coordinate}
+          // title={marker.title}
+          // description={marker.description}>
+          coordinate={{
+            latitude: 46.79015,
+            longitude: -113.899,
           }}
           image={require('../assets/map_marker.png')}
         // title="Test Title"

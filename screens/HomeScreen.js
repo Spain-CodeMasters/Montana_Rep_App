@@ -6,13 +6,12 @@ import * as Animatable from 'react-native-animatable';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Navigation from '../components/navigation/navigation';
 import { AuthContext } from '../navigation/AuthProvider';
-// import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import Cog from '../components/Cog';
 // import Settings from '../components/settings/settings';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ImageBackground, LogBox } from 'react-native';
 
-import { db } from '../components/Firebase/firebase'
+import { db } from '../components/Firebase/firebase';
 
 //Carousel Banner
 const { width, height } = Dimensions.get('screen');
@@ -151,7 +150,6 @@ export default ({ navigation }) => {
             setGoldSize(1.5);
             setRedSize(1.5);
         }
-
     }
 
     function selectGreen() {
@@ -237,6 +235,7 @@ export default ({ navigation }) => {
         }
     };
 
+
     const renderItemSeparator = () => {
         return (
             <View
@@ -250,6 +249,7 @@ export default ({ navigation }) => {
         );
     }
 
+
     const renderEmpty = () => {
         return <View style={styles.post}>
             <Text style={[styles.postLabel, { color: '#999' }]}>No recent posts</Text>
@@ -257,6 +257,7 @@ export default ({ navigation }) => {
 
     }
 
+    
     const renderFooter = () => {
         {/* footer Module */ }
         return <View style={{ backgroundColor: '#747A21', marginTop: -3 }}>
@@ -285,6 +286,7 @@ export default ({ navigation }) => {
         paddingLeft: safeAreaInsets.left,
         paddingRight: safeAreaInsets.right,
     }}>
+
         {/* <ScrollView stickyHeaderIndices={[2]}> */}
         <StatusBar hidden />
 
@@ -311,6 +313,7 @@ export default ({ navigation }) => {
         <Navigation navigation={navigation} />
     </View>
 }
+
 
 const styles = StyleSheet.create({
     container: {

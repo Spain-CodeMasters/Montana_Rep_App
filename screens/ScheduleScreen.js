@@ -1,19 +1,12 @@
 import 'react-native-gesture-handler';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Text,
   View,
-  Button,
   StyleSheet,
   TouchableOpacity,
   Dimensions,
-  Platform,
-  TextInput,
-  StatusBar,
-  ScrollView,
   FlatList,
-  Image,
-  SafeAreaView,
   ImageBackground,
   Animated,
   Modal,
@@ -23,6 +16,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Navigation from '../components/navigation/navigation';
 import Cog from '../components/Cog';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { db } from '../components/Firebase/firebase';
 
 const { width, height } = Dimensions.get('screen');
 
@@ -95,7 +89,7 @@ const AdjustTitle = ({
         if (lines.length > currentLines) {
           setCurrentFont(currentFont - 1);
         }
-        
+
       }}
     >
       {text}
@@ -133,7 +127,7 @@ const Item = ({ item, onPress }) => (
 );
 
 export default ({ navigation }) => {
-  const [filter, setFilter] = useState("all");
+  //const [filter, setFilter] = useState("all");
 
   const [greenAnimation, setGreenAnimation] = useState('fadeOut');
   const [goldAnimation, setGoldAnimation] = useState('fadeOut');
@@ -143,6 +137,27 @@ export default ({ navigation }) => {
   const [redSize, setRedSize] = useState(1.5);
 
   const scroll = useRef(null);
+
+  const [eventData, setEventData] = useState([]);
+  const [playData, setPlayData] = useState([]);
+  const scheduleData = eventData.concat(playData);
+  console.log(scheduleData);
+  const [scheduleView, setScheduleView] = useState(scheduleData);
+  const commEvent = eventData.filter(function (posts) { return posts.post.catagory == 'goplay'; });
+  const mtrepEvent = eventData.filter(function (posts) { return posts.post.catagory == 'mtrep'; });
+
+  const [filter, setFilter] = useState();
+
+  useEffect(() => {
+    db.collection("plays").orderBy("startDate", "desc").onSnapshot((snapshot) => {
+      setPlayData(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
+      //console.log(playData);
+    })
+    db.collection("events").orderBy("startDate", "desc").onSnapshot((snapshot) => {
+      setEventData(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
+      //console.log(eventData);
+    })
+  }, []);
 
   function filterPosts(type) {
     //scroll.current.scrollToOffset({ offset: ITEM_HEIGHT, animated: true })

@@ -3,7 +3,7 @@ import React, { useState, useRef } from 'react';
 import { Animated, Text, View, StyleSheet, TouchableOpacity, Dimensions, StatusBar, ScrollView, Image, ImageBackground } from 'react-native';
 import Video from 'react-native-video';
 import Navigation from '../components/navigation/navigation';
-import Settings from '../components/Cog';
+//import Settings from '../components/Cog';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import playImage from '../assets/mountain.jpg';
@@ -11,8 +11,6 @@ import playImage from '../assets/mountain.jpg';
 const { width, height } = Dimensions.get('screen');
 const ITEM_WIDTH = width;
 const ITEM_HEIGHT = height * .88;
-
-
 
 // const HEADER_MAX_HEIGHT = ITEM_HEIGHT;
 // const HEADER_MIN_HEIGHT = 240;
