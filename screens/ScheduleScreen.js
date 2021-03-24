@@ -23,55 +23,6 @@ const { width, height } = Dimensions.get('screen');
 const ITEM_WIDTH = width;
 const ITEM_HEIGHT = height * .90;
 
-const PLAY_DATA = [
-  {
-    id: "1",
-    title: "The Phantom Bride",
-    source: 'https://res.cloudinary.com/claire-dev/image/upload/v1612076013/mountain_nonpge.jpg',
-    time: "Sep 25, 2025 15:00:00",
-    type: "goplay"
-  },
-  {
-    id: "6",
-    title: "Go Play!",
-    source: 'https://res.cloudinary.com/claire-dev/image/upload/v1612076013/creek_dadkt3.jpg',
-    time: "Sep 25, 2018 15:00:00",
-    type: 'goplay'
-  },
-]
-
-const EVENT_DATA = [
-  {
-    id: "2",
-    title: "Community",
-    source: 'https://res.cloudinary.com/claire-dev/image/upload/v1612076013/glacier_aqjz96.jpg',
-    time: "Sep 25, 2021 15:00:00",
-    type: "comm"
-  },
-  {
-    id: "3",
-    title: "Montana Rep",
-    source: 'https://res.cloudinary.com/claire-dev/image/upload/v1612076013/creek_dadkt3.jpg',
-    time: "",
-    type: 'mtrep'
-  },
-  {
-    id: "4",
-    title: "Montana Rep",
-    source: 'https://res.cloudinary.com/claire-dev/image/upload/v1612076013/mountain_nonpge.jpg',
-    time: "Sep 25, 2025 15:00:00",
-    type: 'mtrep'
-  },
-  {
-    id: "5",
-    title: "Community",
-    source: 'https://res.cloudinary.com/claire-dev/image/upload/v1612076013/glacier_aqjz96.jpg',
-    time: "",
-    type: "comm"
-
-  },
-]
-
 //Adjust size of title text based on content
 const AdjustTitle = ({
   fontSize, text, style, numberOfLines
@@ -97,34 +48,73 @@ const AdjustTitle = ({
   );
 };
 
-//Create List Item
-const Item = ({ item, onPress }) => (
-  <ImageBackground source={{ uri: item.source }} style={styles.play}>
+
+//Create Item
+const Play = ({ item, onPress }) => (
+  <ImageBackground source={{ uri: item.post.previewPhotoUrl }} style={styles.play}>
     <TouchableOpacity style={styles.play} onPress={onPress}>
       <View style={styles.overlay}>
-        <AdjustTitle fontSize={40} text={item.title} style={styles.title} numberOfLines={1} />
+        <AdjustTitle fontSize={40} text={item.post.playTitle} style={styles.title} numberOfLines={1} />
         {/* <Text numberOfLines={3} style={styles.title}>{item.title}</Text> */}
       </View>
     </TouchableOpacity>
 
     {/*Determine Event Type*/}
     {(function () {
-      if (item.type == 'mtrep') {
-        return <View style={[styles.time, { backgroundColor: '#747A21' }]}>
-          <Text style={styles.timeText}>Time</Text>
-        </View>
-      } else if (item.type == 'goplay') {
-        return <View style={styles.time}>
-          <Text style={styles.timeText}>Time</Text>
-        </View>
-      } else if (item.type == 'comm') {
-        return <View style={[styles.time, { backgroundColor: '#A5580C' }]}>
-          <Text style={styles.timeText}>Time</Text>
-        </View>
-      }
+
+
+      return <View style={styles.time}>
+        <Text style={styles.timeText}>Time</Text>
+      </View>
+
+
     })()}
   </ImageBackground>
 );
+
+//Create Event Item
+const Event = ({ item, onPress }) => (
+  <ImageBackground source={{ uri: item.post.photoUrl }} style={styles.play}>
+    <TouchableOpacity style={styles.play} onPress={onPress}>
+      <View style={styles.overlay}>
+        <AdjustTitle fontSize={40} text={item.post.eventTitle} style={styles.title} numberOfLines={1} />
+        {/* <Text numberOfLines={3} style={styles.title}>{item.title}</Text> */}
+      </View>
+    </TouchableOpacity>
+
+    {/*Determine Event Type*/}
+    {(function () {
+
+
+      return <View style={styles.time}>
+        <Text style={styles.timeText}>Time</Text>
+      </View>
+
+
+    })()}
+  </ImageBackground>
+);
+
+//Create Sponsered Item
+const Sponsored = ({ item, onPress }) => (
+  <ImageBackground source={{ uri: item.post.sponsoredUrl }} style={styles.play}>
+    <TouchableOpacity style={styles.play} onPress={onPress}>
+      <View style={styles.overlay}>
+        <AdjustTitle fontSize={40} text={item.post.sponsoredTitle} style={styles.title} numberOfLines={1} />
+        {/* <Text numberOfLines={3} style={styles.title}>{item.title}</Text> */}
+      </View>
+    </TouchableOpacity>
+
+    <View style={styles.time}>
+        <Text style={styles.timeText}>Time</Text>
+      </View>
+
+
+   
+  </ImageBackground>
+);
+
+
 
 export default ({ navigation }) => {
   const [filter, setFilter] = useState("all");
@@ -140,13 +130,15 @@ export default ({ navigation }) => {
 
   const [eventData, setEventData] = useState([]);
   const [playData, setPlayData] = useState([]);
-  const scheduleData = eventData.concat(playData);
+  const [sponsoredData, setSponsoredData] = useState([]);
+  const [scheduleData, setScheduleData] = useState([...eventData, ...playData]);
   console.log(scheduleData);
   const [scheduleView, setScheduleView] = useState(scheduleData);
-  const commEvent = eventData.filter(function (posts) { return posts.post.category == 'goplay'; });
+  const commEvent = eventData.filter(function (posts) { return posts.post.category == 'comm'; });
   const mtrepEvent = eventData.filter(function (posts) { return posts.post.category == 'mtrep'; });
 
   useEffect(() => {
+    setScheduleData([...eventData, ...playData]);
     db.collection("plays").orderBy("startDate", "desc").onSnapshot((snapshot) => {
       setPlayData(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
       //console.log(playData);
@@ -155,31 +147,39 @@ export default ({ navigation }) => {
       setEventData(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
       //console.log(eventData);
     })
+    db.collection("sponsored").orderBy("startDate", "desc").onSnapshot((snapshot) => {
+      setSponsoredData(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
+      //console.log(eventData);
+    })
   }, []);
 
   function filterPosts(type) {
-    //scroll.current.scrollToOffset({ offset: ITEM_HEIGHT, animated: true })
+    // scroll.current.scrollToOffset({ offset: 0, animated: true })
     if (filter !== type) {
       if (type == "mtrep") {
         setFilter("mtrep");
+        setScheduleView(mtrepEvent);
         selectGreen();
         setGreenSize(0);
         setGoldSize(1.5);
         setRedSize(1.5);
       } else if (type == "goplay") {
         setFilter("goplay");
+        setScheduleView(playData);
         selectGold();
         setGreenSize(1.5);
         setGoldSize(0);
         setRedSize(1.5);
       } else if (type == "comm") {
         setFilter("comm");
+        setScheduleView(commEvent);
         selectRed();
         setGreenSize(1.5);
         setGoldSize(1.5);
         setRedSize(0);
       }
     } else {
+      setScheduleView([...eventData, ...playData]);
       setFilter("all");
       setGreenSize(1.5);
       setGoldSize(1.5);
@@ -206,41 +206,27 @@ export default ({ navigation }) => {
   const [selectedId, setSelectedId] = useState(null);
 
   const renderItem = ({ item }) => {
-    if (filter == "all") {
-      return (
-        <Item
-          item={item}
-          //onPress={() => setSelectedId(item.id)  }
-          onPress={() => setModalVisible(!modalVisible)}
-        />
-      );
-    } else if (filter == "mtrep" && item.type == "mtrep") {
-      return (
-        <Item
-          item={item}
-          //onPress={() => setSelectedId(item.id)  }
-          onPress={() => setModalVisible(!modalVisible)}
-        />
-      );
-    } else if (filter == "goplay" && item.type == "goplay") {
-      return (
-        <Item
-          item={item}
-          //onPress={() => setSelectedId(item.id)  }
-          onPress={() => navigation.navigate('Play')}
-        />
-      );
-    } else if (filter == "comm" && item.type == "comm") {
-      return (
-        <Item
-          item={item}
-          //onPress={() => setSelectedId(item.id)  }
-          onPress={() => setModalVisible(!modalVisible)}
-        />
-      );
+    if (item.post.playTitle) {
+      return <Play
+        item={item}
+        onPress={() => setSelectedId(item.id)}
+      //onPress={() => setModalVisible(!modalVisible)}
+      />
+    } else if (item.post.eventTitle) {
+      return <Event
+        item={item}
+        //onPress={() => setSelectedId(item.id)  }
+        onPress={() => setModalVisible(!modalVisible)}
+      />
+    } else if (item.post.sponsoredTitle) {
+      return <Sponsored
+        item={item}
+        //onPress={() => setSelectedId(item.id)  }
+        onPress={() => setSelectedId(item.id)}
+      />
     }
-
   };
+
   const safeAreaInsets = useSafeAreaInsets()
   const [modalVisible, setModalVisible] = useState(false);
   return <View style={{
@@ -272,7 +258,7 @@ export default ({ navigation }) => {
       </View>
     </Modal>
     <FlatList
-      data={PLAY_DATA}
+      data={scheduleView}
       renderItem={renderItem}
       keyExtractor={(item) => item.id}
       extraData={selectedId}
