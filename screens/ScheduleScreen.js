@@ -143,8 +143,8 @@ export default ({ navigation }) => {
   const scheduleData = eventData.concat(playData);
   console.log(scheduleData);
   const [scheduleView, setScheduleView] = useState(scheduleData);
-  const commEvent = eventData.filter(function (posts) { return posts.post.catagory == 'goplay'; });
-  const mtrepEvent = eventData.filter(function (posts) { return posts.post.catagory == 'mtrep'; });
+  const commEvent = eventData.filter(function (posts) { return posts.post.category == 'goplay'; });
+  const mtrepEvent = eventData.filter(function (posts) { return posts.post.category == 'mtrep'; });
 
   useEffect(() => {
     db.collection("plays").orderBy("startDate", "desc").onSnapshot((snapshot) => {

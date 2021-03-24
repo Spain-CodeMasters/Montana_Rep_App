@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { useState, useRef, useEffect } from 'react';
-import { Animated, Text, View, Button, StyleSheet, TouchableOpacity, Dimensions, Platform, TextInput, StatusBar, ScrollView, FlatList, Image } from 'react-native';
+import { Animated, Text, View, Button, StyleSheet, TouchableOpacity, Dimensions, Platform, TextInput, StatusBar, ScrollView, FlatList, Image, Linking } from 'react-native';
 import { SocialIcon } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -46,20 +46,20 @@ const Post = ({ item }) => (
     <View style={styles.post}>
         <Text style={styles.text_title}>{item.post.postTitle}</Text>
 
-        {/* Check catagory for post label */}
+        {/* Check category for post label */}
         {(function () {
-            if (item.post.catagory == 'mtrep') {
+            if (item.post.category == 'mtrep') {
                 return <Text style={[styles.postLabel, { color: '#747A21' }]}>Montana Repertory Theatre</Text>
-            } else if (item.post.catagory == 'goplay') {
+            } else if (item.post.category == 'goplay') {
                 return <Text style={[styles.postLabel, { color: '#cc8a05' }]}>Go Play!</Text>
-            } else if (item.post.catagory == null || item.post.catagory == '' || item.post.catagory == ' ') {
+            } else if (item.post.subHeader == null || item.post.subHeader == '' || item.post.subHeader == ' ') {
                 return <Text style={[styles.postLabel, { color: '#A5580C' }]}>Community</Text>
             } else {
                 return <Text style={[styles.postLabel, { color: '#A5580C' }]}>
 
-                    {item.post.catagory}
-                    
-                    </Text>
+                    {item.post.subHeader}
+
+                </Text>
             }
         })()}
 
@@ -82,7 +82,31 @@ const Post = ({ item }) => (
             if (item.post.link == '' || item.post.link == null) {
                 return <></>
             } else {
-                return <Text style={[styles.postLabel, { color: 'red' }]}>{item.post.link}</Text>
+                if (item.post.linkName == '' || item.post.linkName == null) {
+                    return (
+                        <TouchableOpacity onPress={() => {
+                            Linking.openURL(item.post.link)
+                                .catch(err => {
+                                    console.error("Failed opening page because: ", err);
+                                    alert('Failed to open page');
+                                })
+                        }}>
+                            <Text style={[styles.postLabel, { color: 'grey' }]}>Learn More</Text>
+                        </TouchableOpacity>
+                    )
+                } else {
+                    return (
+                        <TouchableOpacity onPress={() => {
+                            Linking.openURL(item.post.link)
+                                .catch(err => {
+                                    console.error("Failed opening page because: ", err);
+                                    alert('Failed to open page');
+                                })
+                        }}>
+                            <Text style={[styles.postLabel, { color: 'grey' }]}>{item.post.linkName}</Text>
+                        </TouchableOpacity>
+                    )
+                }
             }
         })()}
 
@@ -104,9 +128,9 @@ export default ({ navigation }) => {
 
     const [postData, setPostData] = useState([]);
     const [postView, setPostView] = useState([]);
-    const commPosts = postData.filter(function(posts) { return posts.post.catagory !== 'mtrep' && posts.post.catagory !== 'goplay'; });
-    const mtrepPosts = postData.filter(function(posts) { return posts.post.catagory == 'mtrep'; });
-    const goplayPosts = postData.filter(function(posts) { return posts.post.catagory == 'goplay'; });
+    const commPosts = postData.filter(function (posts) { return posts.post.category !== 'mtrep' && posts.post.category !== 'goplay'; });
+    const mtrepPosts = postData.filter(function (posts) { return posts.post.category == 'mtrep'; });
+    const goplayPosts = postData.filter(function (posts) { return posts.post.category == 'goplay'; });
 
     const [filter, setFilter] = useState("all");
 
@@ -213,13 +237,13 @@ export default ({ navigation }) => {
 
     const renderItem = ({ item }) => {
 
-       
-            return (
-                <Post
-                    item={item}
-                />
-            );
-        
+
+        return (
+            <Post
+                item={item}
+            />
+        );
+
     };
 
 
@@ -244,7 +268,7 @@ export default ({ navigation }) => {
 
     }
 
-    
+
     const renderFooter = () => {
         {/* footer Module */ }
         return <View style={{ backgroundColor: '#747A21', marginTop: -3 }}>
