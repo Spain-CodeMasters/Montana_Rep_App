@@ -19,6 +19,7 @@ const { width, height } = Dimensions.get('screen');
 const ITEM_WIDTH = width;
 const ITEM_HEIGHT = height * .88;
 
+
 const HERO_DATA = [
     {
         background: 'https://res.cloudinary.com/claire-dev/image/upload/v1612076013/mountain_nonpge.jpg',
@@ -38,9 +39,6 @@ const HERO_DATA = [
         buttonText: "Available Now",
         buttonLink: "",
     }
-    // 'https://res.cloudinary.com/claire-dev/image/upload/v1612076013/glacier_aqjz96.jpg',
-    // 'https://res.cloudinary.com/claire-dev/image/upload/v1612076013/mountain_nonpge.jpg',
-    // 'https://res.cloudinary.com/claire-dev/image/upload/v1612076013/creek_dadkt3.jpg',
 ];
 
 
@@ -105,18 +103,25 @@ export default ({ navigation }) => {
     const scroll = useRef(null);
 
     const [postData, setPostData] = useState([]);
-    const [postView, setPostView] = useState(postData);
+    const [postView, setPostView] = useState([]);
     const commPosts = postData.filter(function(posts) { return posts.post.catagory !== 'mtrep' && posts.post.catagory !== 'goplay'; });
     const mtrepPosts = postData.filter(function(posts) { return posts.post.catagory == 'mtrep'; });
     const goplayPosts = postData.filter(function(posts) { return posts.post.catagory == 'goplay'; });
 
-    const [filter, setFilter] = useState()
+    const [filter, setFilter] = useState("all");
 
     useEffect(() => {
         db.collection("posts").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
+            /* BUG FIX: This data has to be set directly to run posts. Unsure why*/
             setPostData(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
+            setPostView(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
+            //setPostView(postData);
         })
     }, [])
+
+    // useEffect(() => {
+    //     setPostView(postData);    
+    // }, [postData])
 
     function filterPosts(type) {
         scroll.current.scrollToOffset({ offset: ITEM_HEIGHT, animated: true })
@@ -208,31 +213,13 @@ export default ({ navigation }) => {
 
     const renderItem = ({ item }) => {
 
-        if (filter == "all") {
+       
             return (
                 <Post
                     item={item}
                 />
             );
-        } else if (filter == "mtrep" && item.type == "mtrep") {
-            return (
-                <Post
-                    item={item}
-                />
-            );
-        } else if (filter == "goplay" && item.type == "goplay") {
-            return (
-                <Post
-                    item={item}
-                />
-            );
-        } else if (filter == "comm" && item.type !== "mtrep" && item.type !== "goplay") {
-            return (
-                <Post
-                    item={item}
-                />
-            );
-        }
+        
     };
 
 

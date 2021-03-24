@@ -127,7 +127,7 @@ const Item = ({ item, onPress }) => (
 );
 
 export default ({ navigation }) => {
-  //const [filter, setFilter] = useState("all");
+  const [filter, setFilter] = useState("all");
 
   const [greenAnimation, setGreenAnimation] = useState('fadeOut');
   const [goldAnimation, setGoldAnimation] = useState('fadeOut');
@@ -145,8 +145,6 @@ export default ({ navigation }) => {
   const [scheduleView, setScheduleView] = useState(scheduleData);
   const commEvent = eventData.filter(function (posts) { return posts.post.catagory == 'goplay'; });
   const mtrepEvent = eventData.filter(function (posts) { return posts.post.catagory == 'mtrep'; });
-
-  const [filter, setFilter] = useState();
 
   useEffect(() => {
     db.collection("plays").orderBy("startDate", "desc").onSnapshot((snapshot) => {
