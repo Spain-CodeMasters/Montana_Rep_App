@@ -3,6 +3,7 @@ import auth from '@react-native-firebase/auth';
 import firebase from '@react-native-firebase/app';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
+// import {handleUpload} from '../screens/SignupScreen';
 /**
  * This provider is created
  * to access user in whole app
@@ -35,6 +36,7 @@ export const AuthProvider = ({ children }) => {
           } catch (e) {
             console.log(e);
           }
+          
         },
         logout: async () => {
           try {

@@ -6,13 +6,29 @@ import * as Animatable from 'react-native-animatable';
 import { AuthContext } from '../navigation/AuthProvider';
 import { NavigationEvents } from 'react-navigation';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import BouncyCheckbox from "react-native-bouncy-checkbox";
+import { db } from '../components/Firebase/firebase';
+
 
 const SignupScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
   const { register } = useContext(AuthContext);
   const safeAreaInsets = useSafeAreaInsets();
 
+
+ const handleUpload = ()=> {
+   db.collection("users").add({
+    // createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    name: username,
+    email: email,
+    isAdmin: false,
+    isPremium: false,
+    // isSubscribed: subscribed,
+    // birthdate:
+  });
+ }
   return (
     <View style={{
       flex: 1,
@@ -41,7 +57,19 @@ const SignupScreen = ({ navigation }) => {
         <Animatable.View 
           animation="fadeInUpBig"
           style={styles.footer}>
-            <View style={styles.action}>
+
+      <View style={styles.action}>
+        <FormInput
+        value={username}
+        placeholderText='Name'
+        onChangeText={(setUserName) => setUsername(setUserName)}
+        autoCapitalize='none'
+        keyboardType='email-address'
+        autoCorrect={false}
+      />
+      </View>
+      <View style={styles.action}>
+        
       <FormInput
         value={email}
         placeholderText='Email'
@@ -59,9 +87,35 @@ const SignupScreen = ({ navigation }) => {
         secureTextEntry={true}
       />
       </View>
+      {/* birthdate */}
+      <View style={styles.action}>
+        <FormInput
+
+          placeholderText='DD'
+          >
+        </FormInput>
+        <FormInput
+          placeholderText='MM'
+          >
+        </FormInput>
+        <FormInput
+          
+          placeholderText='YYYY'
+          >
+        </FormInput>
+
+      </View>
+
+      <View style={styles.action}>
+        <BouncyCheckbox isChecked={true} onPress={() => {}} /><Text>Subscribe to our Email Newsletters</Text>
+      </View>
+
+      {/* subscribe */}
+      <Text>By signing up you agree to our Terms & Conditions</Text>
       <FormButton
         buttonTitle='Sign Up'
         onPress={() => register(email, password)}
+        onPress={handleUpload}
       />
       {/* </View> */}
       </Animatable.View>
