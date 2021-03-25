@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { Component, useState, useEffect } from 'react';
-import { Text, View, Image, Button, StyleSheet, TouchableOpacity, Dimensions, Platform, TextInput, StatusBar, PermissionsAndroid } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, Dimensions, PermissionsAndroid } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps';
 import * as Animatable from 'react-native-animatable';
 // import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -13,6 +13,8 @@ import Cog from '../components/Cog';
 import PlayingBanner from '../components/playingBanner';
 
 import Geolocation from 'react-native-geolocation-service';
+
+import { db } from '../components/Firebase/firebase';
 
 // onMarkerRecieved = (marker) => {
 //   this.setState(prevState => ({
@@ -31,11 +33,17 @@ export default ({ navigation }) => {
 
   const safeAreaInsets = useSafeAreaInsets()
 
-  const locationPermission = PermissionsAndroid.check( PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION );
-  const [deviceLatitude, setDeviceLatitude] = useState(46.87215);
-  const [deviceLongitude, setDeviceLongitude] = useState(-113.994);
-  const [deviceLatitudeDelta, setDeviceLatitudeDelta] = useState();
-  const [deviceLongitudeDelta, setDeviceLongitudeDelta] = useState();
+  const locationPermission = PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
+  const [devicePosition, setDevicePosition] = useState();
+  const [deviceLatitude, setDeviceLatitude] = useState();
+  const [deviceLongitude, setDeviceLongitude] = useState();
+
+  const [playData, setPlayData] = useState(null);
+  const [eventData, setEventData] = useState([]);
+  const [sponsoredData, setSponsoredData] = useState([]);
+
+  const [isLoading, setIsLoading] = useState(true);
+  // const [dataLoaded, setDataLoaded] = useState(false);
 
   const requestLocationPermission = async () => {
     try {
@@ -66,9 +74,11 @@ export default ({ navigation }) => {
     if (locationPermission) {
       Geolocation.getCurrentPosition(
         (position) => {
+          //setDevicePosition(position);
           setDeviceLatitude(position.coords.latitude);
           setDeviceLongitude(position.coords.longitude);
-          console.log(position);
+          setIsLoading(false);
+          //console.log(position);
         },
         (error) => {
           // See error code charts below.
@@ -83,12 +93,29 @@ export default ({ navigation }) => {
   }
 
   useEffect(() => {
-    requestLocationPermission();
-  }, [])
-
-  useEffect(() => {
     currentPosition();
   }, [deviceLatitude, deviceLongitude, locationPermission])
+
+
+  useEffect(() => {
+    db.collection("plays").orderBy("startDate", "desc").onSnapshot((snapshot) => {
+      setPlayData(snapshot.docs.map((doc) => ({ id: doc.id, play: doc.data() })));
+      //console.log(playData.length);
+
+    })
+    db.collection("events").orderBy("startDate", "desc").onSnapshot((snapshot) => {
+      setEventData(snapshot.docs.map((doc) => ({ id: doc.id, event: doc.data() })));
+      //console.log(eventData);
+    })
+    db.collection("sponsored").orderBy("startDate", "desc").onSnapshot((snapshot) => {
+      setSponsoredData(snapshot.docs.map((doc) => ({ id: doc.id, sponsored: doc.data() })));
+      //console.log(eventData);
+    })
+
+
+  }, []);
+
+
 
   return (
     <View style={{
@@ -99,101 +126,129 @@ export default ({ navigation }) => {
       paddingRight: safeAreaInsets.right,
     }}>
       <Cog onPress={() => navigation.navigate('Settings')} />
-      <MapView
-        provider={PROVIDER_GOOGLE}
-        style={styles.map}
 
-        region={{
-          latitude: deviceLatitude,
-          longitude: deviceLongitude,
-          latitudeDelta: 0.00922,
-          longitudeDelta: 0.00921,
-        }}
-      >
-        
-        {/* Device Location Marker */}
-        <Marker
-          // coordinate={marker.coordinate}
-          // title={marker.title}
-          // description={marker.description}>
-          coordinate={{
-            latitude: 46.87,
-            longitude: -113.987,
+      {!isLoading ? (
+        <MapView
+          provider={PROVIDER_GOOGLE}
+          style={styles.map}
+
+          region={{
+            latitude: deviceLatitude,
+            longitude: deviceLongitude,
+            latitudeDelta: 0.00220,
+            longitudeDelta: 0.00220,
           }}
-          image={require('../assets/map_marker.png')}
-        // title="Test Title"
-        // description= "This is the test description"
         >
-          <Callout tooltip>
-            <View>
-              <View style={styles.bubble}>
-                <Text style={styles.name}>Child's Play</Text>
-                <Text style={styles.nameDescription}> A Short description</Text>
-                {/* <Image
-                  style={styles.image}
-                  source={require('../assets/logo.png')}
-                  /> */}
+
+
+
+          {(function () {
+
+            if (playData !== null) {
+
+              const plays = playData.map(({ id, play }) => play.geopoints.map((geopoint, pointId) => {
+
+                //console.log(play);
+                return <Marker
+                  key={pointId}
+                  coordinate={geopoint}
+                  image={require('../assets/GoPlay_PinGold.png')}
+                >
+                  <Callout tooltip>
+                    <View>
+                      <View style={styles.bubble}>
+                        <Text style={styles.name}>{play.playTitle}</Text>
+                      </View>
+                      <View style={styles.arrowBorder} />
+                      <View style={styles.arrow} />
+                    </View>
+                  </Callout>
+                </Marker>
+
+              }))
+
+              return (
+                <>
+                  {plays}
+
+                </>
+              );
+            }
+            //   }
+            // }
+          })()}
+
+          {/* {(function () {
+
+            if (eventData !== null) {
+
+              const events = eventData.map(({ event }) => event.geopoints.map((geopoint, id) => {
+
+                //console.log(play);
+                return <Marker
+                  key={id}
+                  coordinate={geopoint}
+                  image={require('../assets/GoPlay_PinGreen.png')}
+                >
+                  <Callout tooltip>
+                    <View>
+                      <View style={styles.bubble}>
+                        <Text style={styles.name}>{event.eventTitle}</Text>
+                      </View>
+                      <View style={styles.arrowBorder} />
+                      <View style={styles.arrow} />
+                    </View>
+                  </Callout>
+                </Marker>
+
+              }))
+
+              return (
+                <>
+                  {events}
+
+                </>
+              );
+            }
+            //   }
+            // }
+          })()} */}
+
+          {/* Device Location Marker */}
+          <Marker
+            coordinate={{
+              latitude: deviceLatitude,
+              longitude: deviceLongitude,
+            }}
+            image={require('../assets/map_marker.png')}
+          >
+          </Marker>
+          {/* <Marker
+            // coordinate={marker.coordinate}
+            // title={marker.title}
+            // description={marker.description}>
+            coordinate={{
+              latitude: 46.79015,
+              longitude: -113.899,
+            }}
+            image={require('../assets/map_marker.png')}
+          // title="Test Title"
+          // description= "This is the test description"
+          >
+            <Callout tooltip>
+              <View>
+                <View style={styles.bubble}>
+                  <Text style={styles.name}>Child's Play</Text>
+                  <Text style={styles.nameDescription}> A Short description</Text>
+                </View>
+                <View style={styles.arrowBorder} />
+                <View style={styles.arrow} />
               </View>
-              <View style={styles.arrowBorder} />
-              <View style={styles.arrow} />
-            </View>
-          </Callout>
-        </Marker>
-        <Marker
-          // coordinate={marker.coordinate}
-          // title={marker.title}
-          // description={marker.description}>
-          coordinate={{
-            latitude: 46.87215,
-            longitude: -113.994,
-          }}
-          image={require('../assets/map_marker.png')}
-        // title="Test Title"
-        // description= "This is the test description"
-        >
-          <Callout tooltip>
-            <View>
-              <View style={styles.bubble}>
-                <Text style={styles.name}>Child's Play</Text>
-                <Text style={styles.nameDescription}> A Short description</Text>
-                {/* <Image
-                  style={styles.image}
-                  source={require('../assets/logo.png')}
-                  /> */}
-              </View>
-              <View style={styles.arrowBorder} />
-              <View style={styles.arrow} />
-            </View>
-          </Callout>
-        </Marker>
-        <Marker
-          // coordinate={marker.coordinate}
-          // title={marker.title}
-          // description={marker.description}>
-          coordinate={{
-            latitude: 46.79015,
-            longitude: -113.899,
-          }}
-          image={require('../assets/map_marker.png')}
-        // title="Test Title"
-        // description= "This is the test description"
-        >
-          <Callout tooltip>
-            <View>
-              <View style={styles.bubble}>
-                <Text style={styles.name}>Child's Play</Text>
-                <Text style={styles.nameDescription}> A Short description</Text>
-                {/* <Image
-                  style={styles.image}
-                  source={require('../assets/logo.png')}
-                  /> */}
-              </View>
-              <View style={styles.arrowBorder} />
-              <View style={styles.arrow} />
-            </View>
-          </Callout>
-        </Marker>
-      </MapView>
+            </Callout>
+          </Marker> */}
+
+        </MapView>
+      ) : (null)}
       {/* <Settings /> */}
       <Navigation navigation={navigation} />
     </View>
