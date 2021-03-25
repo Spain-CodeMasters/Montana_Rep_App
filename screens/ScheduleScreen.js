@@ -84,9 +84,9 @@ const Event = ({ item, onPress }) => (
 
     {/*Determine Event Type*/}
     {(function () {
+      //if (item.post.eventCategory)
 
-
-      return <View style={styles.time}>
+      return <View style={[styles.time, {backgroundColor: '#A5580C'}]}>
         <Text style={styles.timeText}>Time</Text>
       </View>
 
@@ -105,7 +105,7 @@ const Sponsored = ({ item, onPress }) => (
       </View>
     </TouchableOpacity>
 
-    <View style={styles.time}>
+    <View style={[styles.time, {color: '#A5580C'}]}>
         <Text style={styles.timeText}>Time</Text>
       </View>
 
@@ -113,6 +113,30 @@ const Sponsored = ({ item, onPress }) => (
    
   </ImageBackground>
 );
+
+const Info = ({item, selectedId, modalVisible, setModalVisible}) => {
+
+  return <Modal
+  animationType="fade"
+  transparent={true}
+  visible={modalVisible}
+  onRequestClose={() => {
+    setModalVisible(!modalVisible);
+  }}
+>
+  <View style={styles.centeredView}>
+    <View style={styles.modalView}>
+      <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={() => { setModalVisible(!modalVisible); }}>
+        <FontAwesome5 name='times' solid color="black" size={30} style={{}} />
+      </TouchableOpacity>
+      <Text style={styles.postLabel}>Event Information</Text>
+      {/* <Image source={{uri: "https://res.cloudinary.com/claire-dev/image/upload/v1612076013/glacier_aqjz96.jpg"}}></Image> */}
+      <Text allowFontScaling style={styles.subtext}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
+
+    </View>
+  </View>
+</Modal>
+}
 
 
 
@@ -132,7 +156,7 @@ export default ({ navigation }) => {
   const [playData, setPlayData] = useState([]);
   const [sponsoredData, setSponsoredData] = useState([]);
   const [scheduleData, setScheduleData] = useState([...eventData, ...playData]);
-  console.log(scheduleData);
+  //console.log(scheduleData);
   const [scheduleView, setScheduleView] = useState(scheduleData);
   const commEvent = eventData.filter(function (posts) { return posts.post.category == 'comm'; });
   const mtrepEvent = eventData.filter(function (posts) { return posts.post.category == 'mtrep'; });
@@ -229,6 +253,9 @@ export default ({ navigation }) => {
 
   const safeAreaInsets = useSafeAreaInsets()
   const [modalVisible, setModalVisible] = useState(false);
+
+  
+
   return <View style={{
     flex: 1,
     //paddingTop: safeAreaInsets.top,
@@ -237,26 +264,7 @@ export default ({ navigation }) => {
     paddingRight: safeAreaInsets.right,
   }}>
     <Cog onPress={() => navigation.navigate('Settings')} />
-    <Modal
-      animationType="fade"
-      transparent={true}
-      visible={modalVisible}
-      onRequestClose={() => {
-        setModalVisible(!modalVisible);
-      }}
-    >
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={() => { setModalVisible(!modalVisible); }}>
-            <FontAwesome5 name='times' solid color="black" size={30} style={{}} />
-          </TouchableOpacity>
-          <Text style={styles.postLabel}>Event Information</Text>
-          {/* <Image source={{uri: "https://res.cloudinary.com/claire-dev/image/upload/v1612076013/glacier_aqjz96.jpg"}}></Image> */}
-          <Text allowFontScaling style={styles.subtext}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
-
-        </View>
-      </View>
-    </Modal>
+    <Info modalVisible={modalVisible} setModalVisible={setModalVisible}/>
     <FlatList
       data={scheduleView}
       renderItem={renderItem}
