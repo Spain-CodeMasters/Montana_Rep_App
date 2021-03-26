@@ -14,9 +14,13 @@ const SignupScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
+  const [subscribed, setSubscribed] = useState(true);
   const { register } = useContext(AuthContext);
   const safeAreaInsets = useSafeAreaInsets();
 
+  const handleChecked = ({target}) => {
+    setSubscribed(target.subscribed);
+  }
 
  const handleUpload = ()=> {
    db.collection("users").add({
@@ -25,8 +29,9 @@ const SignupScreen = ({ navigation }) => {
     email: email,
     isAdmin: false,
     isPremium: false,
-    // isSubscribed: subscribed,
-    // birthdate:
+    isSubscribed: subscribed,
+    isSponsorBasic: false,
+    isSponsorPremium: false,
   });
  }
   return (
@@ -87,35 +92,18 @@ const SignupScreen = ({ navigation }) => {
         secureTextEntry={true}
       />
       </View>
-      {/* birthdate */}
-      <View style={styles.action}>
-        <FormInput
-
-          placeholderText='DD'
-          >
-        </FormInput>
-        <FormInput
-          placeholderText='MM'
-          >
-        </FormInput>
-        <FormInput
-          
-          placeholderText='YYYY'
-          >
-        </FormInput>
-
-      </View>
 
       <View style={styles.action}>
-        <BouncyCheckbox isChecked={true} onPress={() => {}} /><Text>Subscribe to our Email Newsletters</Text>
+        {/* <BouncyCheckbox status={subscribed ? 'subscribed' : 'unsubscribed'} onPress={() => setSubscribed(!subscribed)} /><Text>Subscribe to our Newsletter</Text> */}
       </View>
 
       {/* subscribe */}
-      <Text>By signing up you agree to our Terms & Conditions</Text>
+      <Text>By signing up you are over the age of 13 and you agree to our Terms & Conditions</Text>
       <FormButton
         buttonTitle='Sign Up'
-        onPress={() => register(email, password)}
         onPress={handleUpload}
+        onPress={() => register(email, password)}
+        
       />
       {/* </View> */}
       </Animatable.View>
