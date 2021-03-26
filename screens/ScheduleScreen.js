@@ -155,23 +155,27 @@ export default ({ navigation }) => {
   const [eventData, setEventData] = useState([]);
   const [playData, setPlayData] = useState([]);
   const [sponsoredData, setSponsoredData] = useState([]);
-  const [scheduleData, setScheduleData] = useState([...eventData, ...playData]);
+  const [scheduleData, setScheduleData] = useState([]);
   //console.log(scheduleData);
   const [scheduleView, setScheduleView] = useState(scheduleData);
   const commEvent = eventData.filter(function (posts) { return posts.post.category == 'comm'; });
   const mtrepEvent = eventData.filter(function (posts) { return posts.post.category == 'mtrep'; });
 
   useEffect(() => {
-    setScheduleData([...eventData, ...playData]);
-    db.collection("plays").orderBy("startDate", "desc").onSnapshot((snapshot) => {
-      setPlayData(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
-      //console.log(playData);
+    //setScheduleData([...eventData, ...playData]);
+    db.collection("content").orderBy("startDate", "desc").onSnapshot((snapshot) => {
+      setScheduleData(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
+      setScheduleView(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
     })
-    db.collection("events").orderBy("startDate", "desc").onSnapshot((snapshot) => {
+    db.collection("content").where("type", "==", "play").onSnapshot((snapshot) => {
+      setPlayData(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
+      //console.log(eventData);
+    })
+    db.collection("content").where("type", "==", "event").onSnapshot((snapshot) => {
       setEventData(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
       //console.log(eventData);
     })
-    db.collection("sponsored").orderBy("startDate", "desc").onSnapshot((snapshot) => {
+    db.collection("content").where("type", "==", "sponsored").onSnapshot((snapshot) => {
       setSponsoredData(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
       //console.log(eventData);
     })
