@@ -10,6 +10,7 @@ import Cog from '../components/Cog';
 // import Settings from '../components/settings/settings';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ImageBackground, LogBox } from 'react-native';
+import AutoHeightImage from 'react-native-auto-height-image';
 
 import { db } from '../components/Firebase/firebase';
 
@@ -70,7 +71,9 @@ const Post = ({ item }) => (
                 return <></>
             } else {
                 return <View style={{ flex: 1 }}>
-                    <Image source={{ uri: item.post.photoUrl }} style={{ width: 270, height: 200, marginTop: 10 }}></Image>
+                    <View style={{flexDirection: 'row'}}>
+                    <AutoHeightImage source={{ uri: item.post.photoUrl }} width={300}/>
+                    </View>
                 </View>
             }
         })()}

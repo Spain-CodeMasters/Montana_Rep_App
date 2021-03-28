@@ -98,7 +98,7 @@ const SignupScreen = ({ navigation }) => {
       </View>
 
       {/* subscribe */}
-      <Text>By signing up you are over the age of 13 and you agree to our Terms & Conditions</Text>
+      <Text>By signing up, you agree that you over the age of 13 and have read the Terms & Conditions</Text>
       <FormButton
         buttonTitle='Sign Up'
         onPress={handleUpload}
