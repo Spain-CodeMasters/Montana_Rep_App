@@ -207,7 +207,7 @@ export default ({ navigation }) => {
         setRedSize(0);
       }
     } else {
-      setScheduleView([...eventData, ...playData]);
+      setScheduleView(scheduleData);
       setFilter("all");
       setGreenSize(1.5);
       setGoldSize(1.5);

@@ -71,8 +71,8 @@ const Post = ({ item }) => (
                 return <></>
             } else {
                 return <View style={{ flex: 1 }}>
-                    <View style={{flexDirection: 'row'}}>
-                    <AutoHeightImage source={{ uri: item.post.photoUrl }} width={300}/>
+                    <View style={{flexDirection: 'row', paddingTop: 20}}>
+                    <AutoHeightImage source={{ uri: item.post.photoUrl }} width={280}/>
                     </View>
                 </View>
             }

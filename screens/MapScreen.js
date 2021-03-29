@@ -34,13 +34,11 @@ export default ({ navigation }) => {
   const safeAreaInsets = useSafeAreaInsets()
 
   const locationPermission = PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
-  const [devicePosition, setDevicePosition] = useState();
+  //const [devicePosition, setDevicePosition] = useState();
   const [deviceLatitude, setDeviceLatitude] = useState();
   const [deviceLongitude, setDeviceLongitude] = useState();
 
-  const [playData, setPlayData] = useState(null);
-  const [eventData, setEventData] = useState([]);
-  const [sponsoredData, setSponsoredData] = useState([]);
+  const [contentData, setContentData] = useState(null);
 
   const [isLoading, setIsLoading] = useState(true);
   // const [dataLoaded, setDataLoaded] = useState(false);
@@ -98,21 +96,11 @@ export default ({ navigation }) => {
 
 
   useEffect(() => {
-    db.collection("plays").orderBy("startDate", "desc").onSnapshot((snapshot) => {
-      setPlayData(snapshot.docs.map((doc) => ({ id: doc.id, play: doc.data() })));
+    db.collection("content").orderBy("startDate", "desc").onSnapshot((snapshot) => {
+      setContentData(snapshot.docs.map((doc) => ({ id: doc.id, content: doc.data() })));
       //console.log(playData.length);
 
     })
-    db.collection("events").orderBy("startDate", "desc").onSnapshot((snapshot) => {
-      setEventData(snapshot.docs.map((doc) => ({ id: doc.id, event: doc.data() })));
-      //console.log(eventData);
-    })
-    db.collection("sponsored").orderBy("startDate", "desc").onSnapshot((snapshot) => {
-      setSponsoredData(snapshot.docs.map((doc) => ({ id: doc.id, sponsored: doc.data() })));
-      //console.log(eventData);
-    })
-
-
   }, []);
 
 
@@ -144,76 +132,75 @@ export default ({ navigation }) => {
 
           {(function () {
 
-            if (playData !== null) {
+            if (contentData !== null) {
 
-              const plays = playData.map(({ id, play }) => play.geopoints.map((geopoint, pointId) => {
+              const contents = contentData.map(({ id, content }) => content.geopoints.map((geopoint, pointId) => {
+                if (geopoint.latitude !== '' && geopoint.longitude !== '') {
+                  if (content.category == "goplay") {
+                    //console.log(play);
+                    return <Marker
+                      key={pointId}
+                      coordinate={geopoint}
+                      image={require('../assets/GoPlay_PinGold.png')}
+                    >
+                      <Callout tooltip>
+                        <View>
+                          <View style={styles.bubble}>
+                            <Text style={styles.name}>{content.playTitle}</Text>
+                          </View>
+                          <View style={styles.arrowBorder} />
+                          <View style={styles.arrow} />
+                        </View>
+                      </Callout>
+                    </Marker>
+                  } else if (content.category == "mtrep") {
+                    return <Marker
+                      key={pointId}
+                      coordinate={geopoint}
+                      image={require('../assets/GoPlay_PinGreen.png')}
+                    >
+                      <Callout tooltip>
+                        <View>
+                          <View style={styles.bubble}>
+                            <Text style={styles.name}>{content.eventTitle}</Text>
+                          </View>
+                          <View style={styles.arrowBorder} />
+                          <View style={styles.arrow} />
+                        </View>
+                      </Callout>
+                    </Marker>
 
-                //console.log(play);
-                return <Marker
-                  key={pointId}
-                  coordinate={geopoint}
-                  image={require('../assets/GoPlay_PinGold.png')}
-                >
-                  <Callout tooltip>
-                    <View>
-                      <View style={styles.bubble}>
-                        <Text style={styles.name}>{play.playTitle}</Text>
-                      </View>
-                      <View style={styles.arrowBorder} />
-                      <View style={styles.arrow} />
-                    </View>
-                  </Callout>
-                </Marker>
-
+                  } else {
+                    return <Marker
+                      key={pointId}
+                      coordinate={geopoint}
+                      image={require('../assets/GoPlay_PinCopper.png')}
+                    >
+                      <Callout tooltip>
+                        <View>
+                          <View style={styles.bubble}>
+                            <Text style={styles.name}>{content.eventTitle}</Text>
+                          </View>
+                          <View style={styles.arrowBorder} />
+                          <View style={styles.arrow} />
+                        </View>
+                      </Callout>
+                    </Marker>
+                  }
+                }
               }))
 
               return (
                 <>
-                  {plays}
+                  {contents}
 
                 </>
               );
             }
-            //   }
-            // }
+            
           })()}
 
-          {/* {(function () {
-
-            if (eventData !== null) {
-
-              const events = eventData.map(({ event }) => event.geopoints.map((geopoint, id) => {
-
-                //console.log(play);
-                return <Marker
-                  key={id}
-                  coordinate={geopoint}
-                  image={require('../assets/GoPlay_PinGreen.png')}
-                >
-                  <Callout tooltip>
-                    <View>
-                      <View style={styles.bubble}>
-                        <Text style={styles.name}>{event.eventTitle}</Text>
-                      </View>
-                      <View style={styles.arrowBorder} />
-                      <View style={styles.arrow} />
-                    </View>
-                  </Callout>
-                </Marker>
-
-              }))
-
-              return (
-                <>
-                  {events}
-
-                </>
-              );
-            }
-            //   }
-            // }
-          })()} */}
-
+          
           {/* Device Location Marker */}
           <Marker
             coordinate={{
@@ -223,29 +210,7 @@ export default ({ navigation }) => {
             image={require('../assets/map_marker.png')}
           >
           </Marker>
-          {/* <Marker
-            // coordinate={marker.coordinate}
-            // title={marker.title}
-            // description={marker.description}>
-            coordinate={{
-              latitude: 46.79015,
-              longitude: -113.899,
-            }}
-            image={require('../assets/map_marker.png')}
-          // title="Test Title"
-          // description= "This is the test description"
-          >
-            <Callout tooltip>
-              <View>
-                <View style={styles.bubble}>
-                  <Text style={styles.name}>Child's Play</Text>
-                  <Text style={styles.nameDescription}> A Short description</Text>
-                </View>
-                <View style={styles.arrowBorder} />
-                <View style={styles.arrow} />
-              </View>
-            </Callout>
-          </Marker> */}
+         
 
         </MapView>
       ) : (null)}
