@@ -140,7 +140,10 @@ export default ({ navigation }) => {
                     //console.log(play);
                     return <Marker
                       key={pointId}
-                      coordinate={geopoint}
+                      coordinate={{
+                        latitude: geopoint.latitude * 1,
+                        longitude: geopoint.longitude *1,
+                      }}
                       image={require('../assets/GoPlay_PinGold.png')}
                     >
                       <Callout tooltip>
@@ -156,7 +159,10 @@ export default ({ navigation }) => {
                   } else if (content.category == "mtrep") {
                     return <Marker
                       key={pointId}
-                      coordinate={geopoint}
+                      coordinate={{
+                        latitude: geopoint.latitude * 1,
+                        longitude: geopoint.longitude *1,
+                      }}
                       image={require('../assets/GoPlay_PinGreen.png')}
                     >
                       <Callout tooltip>
@@ -173,7 +179,10 @@ export default ({ navigation }) => {
                   } else {
                     return <Marker
                       key={pointId}
-                      coordinate={geopoint}
+                      coordinate={{
+                        latitude: geopoint.latitude * 1,
+                        longitude: geopoint.longitude * 1,
+                      }}
                       image={require('../assets/GoPlay_PinCopper.png')}
                     >
                       <Callout tooltip>
