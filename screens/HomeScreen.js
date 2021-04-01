@@ -215,21 +215,25 @@ export default ({ navigation }) => {
                 pagingEnabled
                 renderItem={({ item }) => {
                     return <View style={{ width }}>
-                        <ImageBackground source={{ uri: item.backgroundImg }} style={styles.image} >
+                        <ImageBackground source={{ uri: item.hero.backgroundImg }} style={styles.image} >
                             <View style={styles.overlay}>
                                 <View style={{ flex: 1, marginTop: 200 }}>
-                                    <Image source={require('../assets/WhiteLandscape_Logo.png')} style={{
+                                    <Image source={{ uri: item.hero.logo}} style={{
                                         flex: 1,
                                         aspectRatio: 1,
                                         resizeMode: 'center',
                                     }} />
                                 </View>
                                 <View style={{ flex: 1 }}>
-                                    <TouchableOpacity
-                                    // onPress={() => navigation.navigate([{hero.buttonLink})}
-                                    >
+                                <TouchableOpacity onPress={() => {
+                                        Linking.openURL(item.hero.buttonLink)
+                                            .catch(err => {
+                                                console.error("Failed opening page because: ", err);
+                                                alert('Failed to open page');
+                                            })
+                                    }}>
                                         <View style={styles.button}>
-                                            <Text style={styles.buttonText}>{item.buttonText}</Text>
+                                            <Text style={styles.buttonText}>{item.hero.buttonText}</Text>
                                         </View>
                                     </TouchableOpacity>
                                 </View>
