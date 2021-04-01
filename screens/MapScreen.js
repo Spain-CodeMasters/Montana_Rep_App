@@ -105,9 +105,16 @@ export default ({ navigation }) => {
 
   const [selectedId, setSelectedId] = useState(null);
 
-  function selectPlay(id){
+  function selectPlay(id) {
     setSelectedId(id);
     navigation.navigate('Play', {
+      id: id,
+    })
+  }
+
+  function selectSponsor(id) {
+    setSelectedId(id);
+    navigation.navigate('Sponsor', {
       id: id,
     })
   }
@@ -194,6 +201,7 @@ export default ({ navigation }) => {
                         longitude: geopoints.longitude * 1,
                       }}
                       image={require('../assets/GoPlay_PinCopper.png')}
+                      onPress={() => selectSponsor(id)}
                     >
                       <Callout tooltip>
                         <View>
@@ -216,10 +224,10 @@ export default ({ navigation }) => {
                 </>
               );
             }
-            
+
           })()}
 
-          
+
           {/* Device Location Marker */}
           <Marker
             coordinate={{
@@ -229,7 +237,7 @@ export default ({ navigation }) => {
             image={require('../assets/map_marker.png')}
           >
           </Marker>
-         
+
 
         </MapView>
       ) : (null)}

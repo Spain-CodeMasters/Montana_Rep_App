@@ -246,9 +246,9 @@ export default ({ navigation }) => {
 
   function selectSponsor(id) {
     setSelectedId(id);
-    // navigation.navigate('Play', {
-    //   id: id,
-    // })
+    navigation.navigate('Sponsor', {
+      id: id,
+    })
   }
 
 
