@@ -71,8 +71,8 @@ const Post = ({ item }) => (
                 return <></>
             } else {
                 return <View style={{ flex: 1 }}>
-                    <View style={{flexDirection: 'row'}}>
-                    <AutoHeightImage source={{ uri: item.post.photoUrl }} width={300}/>
+                    <View style={{flexDirection: 'row', paddingTop: 20}}>
+                    <AutoHeightImage source={{ uri: item.post.photoUrl }} width={280}/>
                     </View>
                 </View>
             }
@@ -132,10 +132,6 @@ export default ({ navigation }) => {
     const [postData, setPostData] = useState([]);
     const [postView, setPostView] = useState([]);
     const [heroData, setHeroData] = useState([]);
-    const commPosts = postData.filter(function (posts) { return posts.post.category !== 'mtrep' && posts.post.category !== 'goplay'; });
-    const mtrepPosts = postData.filter(function (posts) { return posts.post.category == 'mtrep'; });
-    const goplayPosts = postData.filter(function (posts) { return posts.post.category == 'goplay'; });
-
     const [filter, setFilter] = useState("all");
 
     useEffect(() => {
@@ -164,21 +160,21 @@ export default ({ navigation }) => {
         if (filter !== type) {
             if (type == "mtrep") {
                 setFilter("mtrep");
-                setPostView(mtrepPosts);
+                setPostView(postData.filter(function (posts) { return posts.post.category == 'mtrep'; }));
                 selectGreen();
                 setGreenSize(0);
                 setGoldSize(1.5);
                 setRedSize(1.5);
             } else if (type == "goplay") {
                 setFilter("goplay");
-                setPostView(goplayPosts);
+                setPostView(postData.filter(function (posts) { return posts.post.category == 'goplay'; }));
                 selectGold();
                 setGreenSize(1.5);
                 setGoldSize(0);
                 setRedSize(1.5);
             } else if (type == "comm") {
                 setFilter("comm");
-                setPostView(commPosts);
+                setPostView(postData.filter(function (posts) { return posts.post.category !== 'mtrep' && posts.post.category !== 'goplay'; }));
                 selectRed();
                 setGreenSize(1.5);
                 setGoldSize(1.5);
