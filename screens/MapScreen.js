@@ -96,7 +96,7 @@ export default ({ navigation }) => {
 
 
   useEffect(() => {
-    db.collection("content").orderBy("startDate", "desc").onSnapshot((snapshot) => {
+    db.collection("content").onSnapshot((snapshot) => {
       setContentData(snapshot.docs.map((doc) => ({ id: doc.id, content: doc.data() })));
       //console.log(playData.length);
 
@@ -134,22 +134,23 @@ export default ({ navigation }) => {
 
             if (contentData !== null) {
 
-              const contents = contentData.map(({ id, content }) => content.geopoints.map((geopoint, pointId) => {
-                if (geopoint.latitude !== '' && geopoint.longitude !== '') {
+              const contents = contentData.map(({ id, content }) => content.geopoints.map((geopoints, pointId) => {
+                if (geopoints.latitude !== '' && geopoints.longitude !== '') {
+                  //console.log(geopoints);
                   if (content.category == "goplay") {
                     //console.log(play);
                     return <Marker
                       key={pointId}
                       coordinate={{
-                        latitude: geopoint.latitude * 1,
-                        longitude: geopoint.longitude *1,
+                        latitude: geopoints.latitude * 1,
+                        longitude: geopoints.longitude * 1,
                       }}
                       image={require('../assets/GoPlay_PinGold.png')}
                     >
                       <Callout tooltip>
                         <View>
                           <View style={styles.bubble}>
-                            <Text style={styles.name}>{content.playTitle}</Text>
+                            <Text style={styles.name}>{content.title}</Text>
                           </View>
                           <View style={styles.arrowBorder} />
                           <View style={styles.arrow} />
@@ -160,15 +161,15 @@ export default ({ navigation }) => {
                     return <Marker
                       key={pointId}
                       coordinate={{
-                        latitude: geopoint.latitude * 1,
-                        longitude: geopoint.longitude *1,
+                        latitude: geopoints.latitude * 1,
+                        longitude: geopoints.longitude * 1,
                       }}
                       image={require('../assets/GoPlay_PinGreen.png')}
                     >
                       <Callout tooltip>
                         <View>
                           <View style={styles.bubble}>
-                            <Text style={styles.name}>{content.eventTitle}</Text>
+                            <Text style={styles.name}>{content.title}</Text>
                           </View>
                           <View style={styles.arrowBorder} />
                           <View style={styles.arrow} />
@@ -180,15 +181,15 @@ export default ({ navigation }) => {
                     return <Marker
                       key={pointId}
                       coordinate={{
-                        latitude: geopoint.latitude * 1,
-                        longitude: geopoint.longitude * 1,
+                        latitude: geopoints.latitude * 1,
+                        longitude: geopoints.longitude * 1,
                       }}
                       image={require('../assets/GoPlay_PinCopper.png')}
                     >
                       <Callout tooltip>
                         <View>
                           <View style={styles.bubble}>
-                            <Text style={styles.name}>{content.eventTitle}</Text>
+                            <Text style={styles.name}>{content.title}</Text>
                           </View>
                           <View style={styles.arrowBorder} />
                           <View style={styles.arrow} />

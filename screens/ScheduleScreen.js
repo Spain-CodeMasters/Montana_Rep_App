@@ -24,9 +24,8 @@ const ITEM_WIDTH = width;
 const ITEM_HEIGHT = height * .90;
 
 //Adjust size of title text based on content
-const AdjustTitle = ({
-  fontSize, text, style, numberOfLines
-}) => {
+const AdjustTitle = ({ fontSize, text, style, numberOfLines }) => {
+
   const [currentFont, setCurrentFont] = useState(fontSize);
   const [currentLines, setCurrentLines] = useState(numberOfLines);
 
@@ -48,94 +47,104 @@ const AdjustTitle = ({
   );
 };
 
+const GetTime = ({ start, end }) => {
+  //console.log(start);
+  if (start !== null && start !== undefined) {
+    const today = new Date();
+    const time = (start.getMonth() + 1) + '/' + start.getDate() + " " + start.getHours() + ":" + start.getMinutes();
+    //if (today < start) {
+    return (
+      <Text style={styles.timeText}>
+        {time}
+      </Text>
+    );
+    //} else if (today > start && today < end){
+  }
+  //}
+};
+
 
 //Create Item
 const Play = ({ item, onPress }) => (
+
   <ImageBackground source={{ uri: item.post.previewPhotoUrl }} style={styles.play}>
     <TouchableOpacity style={styles.play} onPress={onPress}>
       <View style={styles.overlay}>
-        <AdjustTitle fontSize={40} text={item.post.playTitle} style={styles.title} numberOfLines={1} />
-        {/* <Text numberOfLines={3} style={styles.title}>{item.title}</Text> */}
+        <AdjustTitle fontSize={40} text={item.post.title} style={styles.title} numberOfLines={1} />
       </View>
     </TouchableOpacity>
 
-    {/*Determine Event Type*/}
-    {(function () {
-
-
-      return <View style={styles.time}>
-        <Text style={styles.timeText}>Time</Text>
-      </View>
-
-
-    })()}
+    <View style={[styles.time, { backgroundColor: '#cc8a05' }]}>
+      <GetTime start={item.post.start.toDate()} end={item.post.end.toDate()}></GetTime>
+    </View>
   </ImageBackground>
+
 );
 
 //Create Event Item
 const Event = ({ item, onPress }) => (
   <ImageBackground source={{ uri: item.post.photoUrl }} style={styles.play}>
-    <TouchableOpacity style={styles.play} onPress={onPress}>
+    <TouchableOpacity style={styles.play} onPress={onPress} >
       <View style={styles.overlay}>
-        <AdjustTitle fontSize={40} text={item.post.eventTitle} style={styles.title} numberOfLines={1} />
-        {/* <Text numberOfLines={3} style={styles.title}>{item.title}</Text> */}
+        <AdjustTitle fontSize={40} text={item.post.title} style={styles.title} numberOfLines={1} />
       </View>
     </TouchableOpacity>
 
     {/*Determine Event Type*/}
     {(function () {
-      //if (item.post.eventCategory)
+      if (item.post.category == 'mtrep') {
 
-      return <View style={[styles.time, {backgroundColor: '#A5580C'}]}>
-        <Text style={styles.timeText}>Time</Text>
-      </View>
-
+        return <View style={[styles.time, { backgroundColor: '#747A21' }]}>
+          <GetTime start={item.post.start.toDate()} end={item.post.end.toDate()}></GetTime>
+        </View>
+      } else {
+        return <View style={[styles.time, { backgroundColor: '#A5580C' }]}>
+          <GetTime start={item.post.start.toDate()} end={item.post.end.toDate()}></GetTime>
+        </View>
+      }
 
     })()}
   </ImageBackground>
 );
 
-//Create Sponsered Item
-const Sponsored = ({ item, onPress }) => (
-  <ImageBackground source={{ uri: item.post.sponsoredUrl }} style={styles.play}>
+//Create Sponsored Item
+const Sponsor = ({ item, onPress }) => (
+  <ImageBackground source={{ uri: item.post.previewPhotoUrl }} style={styles.play}>
     <TouchableOpacity style={styles.play} onPress={onPress}>
       <View style={styles.overlay}>
-        <AdjustTitle fontSize={40} text={item.post.sponsoredTitle} style={styles.title} numberOfLines={1} />
-        {/* <Text numberOfLines={3} style={styles.title}>{item.title}</Text> */}
+        <AdjustTitle fontSize={40} text={item.post.title} style={styles.title} numberOfLines={1} />
       </View>
     </TouchableOpacity>
 
-    <View style={[styles.time, {color: '#A5580C'}]}>
-        <Text style={styles.timeText}>Time</Text>
-      </View>
+    <View style={[styles.time, { color: '#A5580C' }]}>
+      <GetTime start={item.post.start.toDate()} end={item.post.end.toDate()}></GetTime>
+    </View>
 
-
-   
   </ImageBackground>
 );
 
-const Info = ({item, selectedId, modalVisible, setModalVisible}) => {
-
+const Info = ({ item, selectedId, modalVisible, setModalVisible }) => {
+  console.log(selectedId);
   return <Modal
-  animationType="fade"
-  transparent={true}
-  visible={modalVisible}
-  onRequestClose={() => {
-    setModalVisible(!modalVisible);
-  }}
->
-  <View style={styles.centeredView}>
-    <View style={styles.modalView}>
-      <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={() => { setModalVisible(!modalVisible); }}>
-        <FontAwesome5 name='times' solid color="black" size={30} style={{}} />
-      </TouchableOpacity>
-      <Text style={styles.postLabel}>Event Information</Text>
-      {/* <Image source={{uri: "https://res.cloudinary.com/claire-dev/image/upload/v1612076013/glacier_aqjz96.jpg"}}></Image> */}
-      <Text allowFontScaling style={styles.subtext}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
+    animationType="fade"
+    transparent={true}
+    visible={modalVisible}
+    onRequestClose={() => {
+      setModalVisible(!modalVisible);
+    }}
+  >
+    <View style={styles.centeredView}>
+      <View style={styles.modalView}>
+        <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={() => { setModalVisible(!modalVisible); }}>
+          <FontAwesome5 name='times' solid color="black" size={30} style={{}} />
+        </TouchableOpacity>
+        <Text style={styles.postLabel}>Text</Text>
+        {/* <Image source={{uri: "https://res.cloudinary.com/claire-dev/image/upload/v1612076013/glacier_aqjz96.jpg"}}></Image> */}
+        <Text allowFontScaling style={styles.subtext}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
 
+      </View>
     </View>
-  </View>
-</Modal>
+  </Modal>
 }
 
 
@@ -152,55 +161,36 @@ export default ({ navigation }) => {
 
   const scroll = useRef(null);
 
-  const [eventData, setEventData] = useState([]);
-  const [playData, setPlayData] = useState([]);
-  const [sponsoredData, setSponsoredData] = useState([]);
   const [scheduleData, setScheduleData] = useState([]);
-  //console.log(scheduleData);
   const [scheduleView, setScheduleView] = useState(scheduleData);
-  const commEvent = eventData.filter(function (posts) { return posts.post.category == 'comm'; });
-  const mtrepEvent = eventData.filter(function (posts) { return posts.post.category == 'mtrep'; });
 
   useEffect(() => {
-    //setScheduleData([...eventData, ...playData]);
-    db.collection("content").orderBy("startDate", "desc").onSnapshot((snapshot) => {
+    db.collection("content").orderBy("start", "desc").onSnapshot((snapshot) => {
       setScheduleData(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
       setScheduleView(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
-    })
-    db.collection("content").where("type", "==", "play").onSnapshot((snapshot) => {
-      setPlayData(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
-      //console.log(eventData);
-    })
-    db.collection("content").where("type", "==", "event").onSnapshot((snapshot) => {
-      setEventData(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
-      //console.log(eventData);
-    })
-    db.collection("content").where("type", "==", "sponsored").onSnapshot((snapshot) => {
-      setSponsoredData(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
-      //console.log(eventData);
     })
   }, []);
 
   function filterPosts(type) {
-    // scroll.current.scrollToOffset({ offset: 0, animated: true })
+    scroll.current.scrollToOffset({ offset: 0, animated: true })
     if (filter !== type) {
       if (type == "mtrep") {
         setFilter("mtrep");
-        setScheduleView(mtrepEvent);
+        setScheduleView(scheduleData.filter(function (posts) { return posts.post.category == 'mtrep'; }));
         selectGreen();
         setGreenSize(0);
         setGoldSize(1.5);
         setRedSize(1.5);
       } else if (type == "goplay") {
         setFilter("goplay");
-        setScheduleView(playData);
+        setScheduleView(scheduleData.filter(function (posts) { return posts.post.category == 'goplay'; }));
         selectGold();
         setGreenSize(1.5);
         setGoldSize(0);
         setRedSize(1.5);
       } else if (type == "comm") {
         setFilter("comm");
-        setScheduleView(commEvent);
+        setScheduleView(scheduleData.filter(function (posts) { return posts.post.category == 'community'; }));
         selectRed();
         setGreenSize(1.5);
         setGoldSize(1.5);
@@ -234,20 +224,20 @@ export default ({ navigation }) => {
   const [selectedId, setSelectedId] = useState(null);
 
   const renderItem = ({ item }) => {
-    if (item.post.playTitle) {
+    if (item.post.type == 'play') {
       return <Play
         item={item}
         onPress={() => setSelectedId(item.id)}
       //onPress={() => setModalVisible(!modalVisible)}
       />
-    } else if (item.post.eventTitle) {
+    } else if (item.post.type == 'event') {
       return <Event
         item={item}
-        //onPress={() => setSelectedId(item.id)  }
-        onPress={() => setModalVisible(!modalVisible)}
+        //onPress={() => setSelectedId(item.id)}
+        open={() => setModalVisible(!modalVisible)}
       />
-    } else if (item.post.sponsoredTitle) {
-      return <Sponsored
+    } else if (item.post.type == "sponsor") {
+      return <Sponsor
         item={item}
         //onPress={() => setSelectedId(item.id)  }
         onPress={() => setSelectedId(item.id)}
@@ -258,7 +248,7 @@ export default ({ navigation }) => {
   const safeAreaInsets = useSafeAreaInsets()
   const [modalVisible, setModalVisible] = useState(false);
 
-  
+
 
   return <View style={{
     flex: 1,
@@ -268,8 +258,9 @@ export default ({ navigation }) => {
     paddingRight: safeAreaInsets.right,
   }}>
     <Cog onPress={() => navigation.navigate('Settings')} />
-    <Info modalVisible={modalVisible} setModalVisible={setModalVisible}/>
+    <Info item={scheduleView} selectedId={selectedId} modalVisible={modalVisible} setModalVisible={setModalVisible} />
     <FlatList
+      ref={scroll}
       data={scheduleView}
       renderItem={renderItem}
       keyExtractor={(item) => item.id}
@@ -289,6 +280,7 @@ export default ({ navigation }) => {
     <Navigation navigation={navigation} />
   </View>
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -326,7 +318,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   time: {
-    backgroundColor: '#cc8a05',
+    backgroundColor: '#A5580C',
     width: 177,
     height: 44,
     justifyContent: 'center',
