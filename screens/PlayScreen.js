@@ -122,7 +122,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                                 {/* title */}
                                 <Text style={styles.title}>{play.title}</Text>
 
-                                {/* preview */}
+                                {/* preview
                                 {
                                     locked ? <TouchableOpacity
                                         onPress={() => setPaused(false)}
@@ -133,7 +133,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
 
                                         </View>
                                     </TouchableOpacity> : <View style={{ width: 177, height: 44, }}></View>
-                                }
+                                } */}
 
                                 {/* controls */}
                                 {

@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { Component, useState, useEffect } from 'react';
-import { Text, View, Image, StyleSheet, TouchableOpacity, Dimensions, PermissionsAndroid } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, Dimensions, PermissionsAndroid, Modal,} from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps';
 import * as Animatable from 'react-native-animatable';
 // import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -9,25 +9,41 @@ import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 //tooltip
 import Navigation from '../components/navigation/navigation';
 import Cog from '../components/Cog';
-// import Settings from '../components/Cog';
 import PlayingBanner from '../components/playingBanner';
-
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Geolocation from 'react-native-geolocation-service';
 
 import { db } from '../components/Firebase/firebase';
 
-// onMarkerRecieved = (marker) => {
-//   this.setState(prevState => ({
-//     marker: prevState.marker = marker
-//   }));
-// }
 
+const Info = ({ item, selectedId, modalVisible, setModalVisible }) => {
+  if (selectedId !== null) {
+    const getIndex = item.findIndex(item => item.id == selectedId)
+    //if (item[getIndex].post.type == 'event') {
+    return <Modal
+      animationType="fade"
+      transparent={true}
+      visible={modalVisible}
+      onRequestClose={() => {
+        setModalVisible(!modalVisible);
+      }}
+    >
+      <View style={styles.centeredView}>
+        <View style={styles.modalView}>
+          <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={() => { setModalVisible(!modalVisible); }}>
+            <FontAwesome5 name='times' solid color="black" size={30} style={{}} />
+          </TouchableOpacity>
+          {/* <Image source={{ uri: item[getIndex].post.photoUrl }}></Image> */}
+          <Text style={styles.postLabel}>{item[getIndex].content.title}</Text>
+          <Text allowFontScaling style={styles.subtext}>{item[getIndex].content.body}</Text>
+        </View>
+      </View>
+    </Modal>
+  } else {
+    return <></>
+  }
 
-
-// const {width, height} = Dimensions.get('screen');
-
-// const ITEM_WIDTH = width;
-// const ITEM_HEIGHT = height;
+}
 
 export default ({ navigation }) => {
 
@@ -104,16 +120,22 @@ export default ({ navigation }) => {
   }, []);
 
   const [selectedId, setSelectedId] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
 
   function selectPlay(id) {
-    setSelectedId(id);
+    //setSelectedId(id);
     navigation.navigate('Play', {
       id: id,
     })
   }
 
-  function selectSponsor(id) {
+  function selectEvent(id) {
     setSelectedId(id);
+    //setModalVisible(!modalVisible);
+  }
+
+  function selectSponsor(id) {
+    //setSelectedId(id);
     navigation.navigate('Sponsor', {
       id: id,
     })
@@ -129,6 +151,7 @@ export default ({ navigation }) => {
       paddingRight: safeAreaInsets.right,
     }}>
       <Cog onPress={() => navigation.navigate('Settings')} />
+      <Info item={contentData} selectedId={selectedId} modalVisible={modalVisible} setModalVisible={setModalVisible} />
 
       {!isLoading ? (
         <MapView
@@ -181,6 +204,8 @@ export default ({ navigation }) => {
                         longitude: geopoints.longitude * 1,
                       }}
                       image={require('../assets/GoPlay_PinGreen.png')}
+                      onPress={e => selectEvent(id)}
+
                     >
                       <Callout tooltip>
                         <View>
@@ -193,6 +218,26 @@ export default ({ navigation }) => {
                       </Callout>
                     </Marker>
 
+                  } else if (content.type == "sponsor") {
+                    return <Marker
+                      key={pointId}
+                      coordinate={{
+                        latitude: geopoints.latitude * 1,
+                        longitude: geopoints.longitude * 1,
+                      }}
+                      image={require('../assets/GoPlay_PinCopper.png')}
+                      onPress={e => selectSponsor(id)}
+                    >
+                      <Callout tooltip>
+                        <View>
+                          <View style={styles.bubble}>
+                            <Text style={styles.name}>{content.title}</Text>
+                          </View>
+                          <View style={styles.arrowBorder} />
+                          <View style={styles.arrow} />
+                        </View>
+                      </Callout>
+                    </Marker>
                   } else {
                     return <Marker
                       key={pointId}
@@ -201,7 +246,7 @@ export default ({ navigation }) => {
                         longitude: geopoints.longitude * 1,
                       }}
                       image={require('../assets/GoPlay_PinCopper.png')}
-                      onPress={() => selectSponsor(id)}
+                      onPress={e => selectEvent(id)}
                     >
                       <Callout tooltip>
                         <View>

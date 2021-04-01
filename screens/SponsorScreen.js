@@ -181,6 +181,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                                                     alert('Failed to open page');
                                                 })
                                         }}>
+
                                             <View style={[styles.subButton]}>
 
                                                 <Text style={styles.subButtonText}>Learn More</Text>
@@ -351,6 +352,8 @@ const styles = StyleSheet.create({
     },
 
     subButton: {
+        padding: 10,
+        marginTop: 40,
         backgroundColor: '#004E47',
         width: ITEM_WIDTH * .75,
         height: 44,

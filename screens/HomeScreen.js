@@ -21,28 +21,6 @@ const ITEM_WIDTH = width;
 const ITEM_HEIGHT = height * .75;
 
 
-const HERO_DATA = [
-    {
-        background: 'https://res.cloudinary.com/claire-dev/image/upload/v1612076013/mountain_nonpge.jpg',
-        logo: "../assets/WhiteLandscape_Logo.png",
-        buttonText: "About Us",
-        buttonLink: "",
-    },
-    {
-        background: 'https://res.cloudinary.com/claire-dev/image/upload/v1612076013/glacier_aqjz96.jpg',
-        logo: "../assets/WhiteLandscape_Logo.png",
-        buttonText: "Join Now",
-        buttonLink: "",
-    },
-    {
-        background: 'https://res.cloudinary.com/claire-dev/image/upload/v1612076013/glacier_aqjz96.jpg',
-        logo: "../assets/WhiteLandscape_Logo.png",
-        buttonText: "Available Now",
-        buttonLink: "",
-    }
-];
-
-
 const Post = ({ item }) => (
     <View style={styles.post}>
         <Text style={styles.text_title}>{item.post.postTitle}</Text>
@@ -71,8 +49,8 @@ const Post = ({ item }) => (
                 return <></>
             } else {
                 return <View style={{ flex: 1 }}>
-                    <View style={{flexDirection: 'row', paddingTop: 20}}>
-                    <AutoHeightImage source={{ uri: item.post.photoUrl }} width={280}/>
+                    <View style={{ flexDirection: 'row', paddingTop: 20 }}>
+                        <AutoHeightImage source={{ uri: item.post.photoUrl }} width={280} />
                     </View>
                 </View>
             }
@@ -144,9 +122,9 @@ export default ({ navigation }) => {
 
     }, [])
 
-    useEffect(() => { 
-        db.collection("carousel").orderBy("carouselOrder", "asc").onSnapshot((snapshot)=> {
-            setHeroData(snapshot.docs.map((doc) => ({id: doc.id, hero: doc.data()})));
+    useEffect(() => {
+        db.collection("carousel").orderBy("carouselOrder", "asc").onSnapshot((snapshot) => {
+            setHeroData(snapshot.docs.map((doc) => ({ id: doc.id, hero: doc.data() })));
 
         })
     }, [])
@@ -218,14 +196,14 @@ export default ({ navigation }) => {
                         <ImageBackground source={{ uri: item.hero.backgroundImg }} style={styles.image} >
                             <View style={styles.overlay}>
                                 <View style={{ flex: 1, marginTop: 200 }}>
-                                    <Image source={{ uri: item.hero.logo}} style={{
+                                    <Image source={{ uri: item.hero.logo }} style={{
                                         flex: 1,
                                         aspectRatio: 1,
                                         resizeMode: 'center',
                                     }} />
                                 </View>
                                 <View style={{ flex: 1 }}>
-                                <TouchableOpacity onPress={() => {
+                                    <TouchableOpacity onPress={() => {
                                         Linking.openURL(item.hero.buttonLink)
                                             .catch(err => {
                                                 console.error("Failed opening page because: ", err);
@@ -287,9 +265,33 @@ export default ({ navigation }) => {
             <View style={styles.header}>
                 <Image source={require('../assets/WhiteLandscape_Logo.png')} style={styles.footer_logo} />
                 <View style={{ flexDirection: 'row' }}>
-                    <FontAwesome5 name='facebook' solid color="#fff" size={30} style={{ padding: 10, }} onPress={() => { alert('facebook'); }} />
-                    <FontAwesome5 name='instagram' solid color="#fff" size={30} style={{ padding: 10, }} onPress={() => { alert('instagram'); }} />
-                    <FontAwesome5 name='envelope' solid color="#fff" size={30} style={{ padding: 10, }} onPress={() => { alert('email'); }} />
+                    <TouchableOpacity onPress={() => {
+                        Linking.openURL("https://www.facebook.com/MontanaRep")
+                            .catch(err => {
+                                console.error("Failed opening page because: ", err);
+                                alert('Failed to open page');
+                            })
+                    }}>
+                        <FontAwesome5 name='facebook' solid color="#fff" size={30} style={{ padding: 10, }} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => {
+                        Linking.openURL("https://www.instagram.com/mtreptheatre/?hl=en")
+                            .catch(err => {
+                                console.error("Failed opening page because: ", err);
+                                alert('Failed to open page');
+                            })
+                    }}>
+                        <FontAwesome5 name='instagram' solid color="#fff" size={30} style={{ padding: 10, }} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => {
+                        Linking.openURL("https://www.instagram.com/mtreptheatre/?hl=en")
+                            .catch(err => {
+                                console.error("Failed opening page because: ", err);
+                                alert('Failed to open page');
+                            })
+                    }}>
+                        <FontAwesome5 name='envelope' solid color="#fff" size={30} style={{ padding: 10, }} onPress={() => { alert('email'); }} />
+                    </TouchableOpacity>
                 </View>
                 <Text style={styles.footer_text}>©2021 Montana Repertory Theatre</Text>
                 <Text style={styles.footer_text}>All Right Reserved</Text>

@@ -127,33 +127,31 @@ const Sponsor = ({ item, onPress }) => (
 const Info = ({ item, selectedId, modalVisible, setModalVisible }) => {
   if (selectedId !== null) {
     const getIndex = item.findIndex(item => item.id == selectedId)
-    if (item[getIndex].post.type == 'event') {
-      return <Modal
-        animationType="fade"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={() => { setModalVisible(!modalVisible); }}>
-              <FontAwesome5 name='times' solid color="black" size={30} style={{}} />
-            </TouchableOpacity>
-            {/* <Image source={{ uri: item[getIndex].post.photoUrl }}></Image> */}
-            <Text style={styles.postLabel}>{item[getIndex].post.title}</Text>
-            <Text allowFontScaling style={styles.subtext}>{item[getIndex].post.body}</Text>
+    //if (item[getIndex].post.type == 'event') {
+    return <Modal
+      animationType="fade"
+      transparent={true}
+      visible={modalVisible}
+      onRequestClose={() => {
+        setModalVisible(!modalVisible);
+      }}
+    >
+      <View style={styles.centeredView}>
+        <View style={styles.modalView}>
+          <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={() => { setModalVisible(!modalVisible); }}>
+            <FontAwesome5 name='times' solid color="black" size={30} style={{}} />
+          </TouchableOpacity>
+          {/* <Image source={{ uri: item[getIndex].post.photoUrl }}></Image> */}
+          <Text style={styles.postLabel}>{item[getIndex].post.title}</Text>
+          <Text allowFontScaling style={styles.subtext}>{item[getIndex].post.body}</Text>
 
-          </View>
         </View>
-      </Modal>
-    } else {
-      return <></>
-    }
+      </View>
+    </Modal>
   } else {
     return <></>
   }
+
 }
 
 
@@ -199,7 +197,7 @@ export default ({ navigation }) => {
         setRedSize(1.5);
       } else if (type == "comm") {
         setFilter("comm");
-        setScheduleView(scheduleData.filter(function (posts) { return posts.post.category == 'community'; }));
+        setScheduleView(scheduleData.filter(function (posts) { return posts.post.category !== 'goplay' && posts.post.category !== 'mtrep'; }));
         selectRed();
         setGreenSize(1.5);
         setGoldSize(1.5);
@@ -233,7 +231,7 @@ export default ({ navigation }) => {
   const [selectedId, setSelectedId] = useState(null);
 
   function selectPlay(id) {
-    setSelectedId(id);
+    //setSelectedId(id);
     navigation.navigate('Play', {
       id: id,
     })
@@ -245,7 +243,7 @@ export default ({ navigation }) => {
   }
 
   function selectSponsor(id) {
-    setSelectedId(id);
+    //setSelectedId(id);
     navigation.navigate('Sponsor', {
       id: id,
     })
@@ -273,7 +271,6 @@ export default ({ navigation }) => {
 
   const safeAreaInsets = useSafeAreaInsets()
   const [modalVisible, setModalVisible] = useState(false);
-
 
 
   return <View style={{
