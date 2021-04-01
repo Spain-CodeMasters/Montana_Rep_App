@@ -18,7 +18,7 @@ import { db } from '../components/Firebase/firebase';
 const { width, height } = Dimensions.get('screen');
 
 const ITEM_WIDTH = width;
-const ITEM_HEIGHT = height * .88;
+const ITEM_HEIGHT = height * .75;
 
 
 const HERO_DATA = [
@@ -131,6 +131,7 @@ export default ({ navigation }) => {
 
     const [postData, setPostData] = useState([]);
     const [postView, setPostView] = useState([]);
+    const [heroData, setHeroData] = useState([]);
     const commPosts = postData.filter(function (posts) { return posts.post.category !== 'mtrep' && posts.post.category !== 'goplay'; });
     const mtrepPosts = postData.filter(function (posts) { return posts.post.category == 'mtrep'; });
     const goplayPosts = postData.filter(function (posts) { return posts.post.category == 'goplay'; });
@@ -143,6 +144,14 @@ export default ({ navigation }) => {
             setPostData(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
             setPostView(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
             //setPostView(postData);
+        })
+
+    }, [])
+
+    useEffect(() => { 
+        db.collection("carousel").orderBy("carouselOrder", "asc").onSnapshot((snapshot)=> {
+            setHeroData(snapshot.docs.map((doc) => ({id: doc.id, hero: doc.data()})));
+
         })
     }, [])
 
@@ -204,13 +213,13 @@ export default ({ navigation }) => {
         {/* Carousel Module */ }
         return <View>
             <FlatList
-                data={HERO_DATA}
-                keyExtractor={(_, index) => index.toString()}
+                data={heroData}
+                keyExtractor={(item) => item.id}
                 horizontal
                 pagingEnabled
                 renderItem={({ item }) => {
                     return <View style={{ width }}>
-                        <ImageBackground source={{ uri: item.background }} style={styles.image} >
+                        <ImageBackground source={{ uri: item.backgroundImg }} style={styles.image} >
                             <View style={styles.overlay}>
                                 <View style={{ flex: 1, marginTop: 200 }}>
                                     <Image source={require('../assets/WhiteLandscape_Logo.png')} style={{
@@ -221,7 +230,7 @@ export default ({ navigation }) => {
                                 </View>
                                 <View style={{ flex: 1 }}>
                                     <TouchableOpacity
-                                    //onPress={() => navigation.navigate([{item.buttonLink})}
+                                    // onPress={() => navigation.navigate([{hero.buttonLink})}
                                     >
                                         <View style={styles.button}>
                                             <Text style={styles.buttonText}>{item.buttonText}</Text>
