@@ -8,6 +8,7 @@ import {
   Dimensions,
   FlatList,
   ImageBackground,
+  Image,
   Animated,
   Modal,
 } from 'react-native';
@@ -124,27 +125,35 @@ const Sponsor = ({ item, onPress }) => (
 );
 
 const Info = ({ item, selectedId, modalVisible, setModalVisible }) => {
-  console.log(selectedId);
-  return <Modal
-    animationType="fade"
-    transparent={true}
-    visible={modalVisible}
-    onRequestClose={() => {
-      setModalVisible(!modalVisible);
-    }}
-  >
-    <View style={styles.centeredView}>
-      <View style={styles.modalView}>
-        <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={() => { setModalVisible(!modalVisible); }}>
-          <FontAwesome5 name='times' solid color="black" size={30} style={{}} />
-        </TouchableOpacity>
-        <Text style={styles.postLabel}>Text</Text>
-        {/* <Image source={{uri: "https://res.cloudinary.com/claire-dev/image/upload/v1612076013/glacier_aqjz96.jpg"}}></Image> */}
-        <Text allowFontScaling style={styles.subtext}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
+  if (selectedId !== null) {
+    const getIndex = item.findIndex(item => item.id == selectedId)
+    if (item[getIndex].post.type == 'event') {
+      return <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={() => { setModalVisible(!modalVisible); }}>
+              <FontAwesome5 name='times' solid color="black" size={30} style={{}} />
+            </TouchableOpacity>
+            {/* <Image source={{ uri: item[getIndex].post.photoUrl }}></Image> */}
+            <Text style={styles.postLabel}>{item[getIndex].post.title}</Text>
+            <Text allowFontScaling style={styles.subtext}>{item[getIndex].post.body}</Text>
 
-      </View>
-    </View>
-  </Modal>
+          </View>
+        </View>
+      </Modal>
+    } else {
+      return <></>
+    }
+  } else {
+    return <></>
+  }
 }
 
 
@@ -223,24 +232,41 @@ export default ({ navigation }) => {
 
   const [selectedId, setSelectedId] = useState(null);
 
+  function selectPlay(id) {
+    setSelectedId(id);
+    navigation.navigate('Play', {
+      id: id,
+    })
+  }
+
+  function selectEvent(id) {
+    setSelectedId(id);
+    setModalVisible(!modalVisible);
+  }
+
+  function selectSponsor(id) {
+    setSelectedId(id);
+    // navigation.navigate('Play', {
+    //   id: id,
+    // })
+  }
+
+
   const renderItem = ({ item }) => {
     if (item.post.type == 'play') {
       return <Play
         item={item}
-        onPress={() => setSelectedId(item.id)}
-      //onPress={() => setModalVisible(!modalVisible)}
+        onPress={() => selectPlay(item.id)}
       />
     } else if (item.post.type == 'event') {
       return <Event
         item={item}
-        //onPress={() => setSelectedId(item.id)}
-        open={() => setModalVisible(!modalVisible)}
+        onPress={() => selectEvent(item.id)}
       />
     } else if (item.post.type == "sponsor") {
       return <Sponsor
         item={item}
-        //onPress={() => setSelectedId(item.id)  }
-        onPress={() => setSelectedId(item.id)}
+        onPress={() => selectSponsor(item.id)}
       />
     }
   };

@@ -103,6 +103,14 @@ export default ({ navigation }) => {
     })
   }, []);
 
+  const [selectedId, setSelectedId] = useState(null);
+
+  function selectPlay(id){
+    setSelectedId(id);
+    navigation.navigate('Play', {
+      id: id,
+    })
+  }
 
 
   return (
@@ -146,6 +154,7 @@ export default ({ navigation }) => {
                         longitude: geopoints.longitude * 1,
                       }}
                       image={require('../assets/GoPlay_PinGold.png')}
+                      onPress={e => selectPlay(id)}
                     >
                       <Callout tooltip>
                         <View>

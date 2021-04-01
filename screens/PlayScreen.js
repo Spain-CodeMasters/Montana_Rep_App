@@ -1,12 +1,13 @@
 import 'react-native-gesture-handler';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Animated, Text, View, StyleSheet, TouchableOpacity, Dimensions, StatusBar, ScrollView, Image, ImageBackground } from 'react-native';
 import Video from 'react-native-video';
 import Navigation from '../components/navigation/navigation';
 //import Settings from '../components/Cog';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-import playImage from '../assets/mountain.jpg';
+import { db } from '../components/Firebase/firebase';
+
 
 const { width, height } = Dimensions.get('screen');
 const ITEM_WIDTH = width;
@@ -16,27 +17,29 @@ const ITEM_HEIGHT = height * .88;
 // const HEADER_MIN_HEIGHT = 240;
 // const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
-var author = 'Author';
-var title = 'Title';
-var discription = "Play Discription";
-var transcript = "Play Transcript";
-var actors = "Actor Information";
-var addInfo = "Additional Information"
-var copyright = "Copyright"
-
 {/* Video Testing */ }
-var source = 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4';
+//var source = 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4';
 
 {/* Audio Testing */ }
 //var source = 'https://actions.google.com/sounds/v1/crowds/voices_angry.ogg';
 
-export default ({ navigation }) => {
+export default ({ navigation: { goBack }, navigation, route }) => {
     // const [scrollY, setScrollY] = useState(new Animated.Value(0));
     // const headerHeight = scrollY.interpolate({
     //     inputRange: [0, HEADER_SCROLL_DISTANCE],
     //     outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
     //     extrapolate: 'clamp',
     // });
+
+    const [play, setPlay] = useState(null);
+
+    useEffect(() => {
+        db.collection("content").doc(route.params.id).onSnapshot((snapshot) => {
+            setPlay(snapshot._data);
+            //console.log(snapshot._data.mainPhotoUrl);
+        })
+        //console.log("This is " + route.params.id);
+    }, []);
 
     const video = useRef(null);
     const [locked, setLocked] = useState(true);
@@ -72,127 +75,141 @@ export default ({ navigation }) => {
 
 
         {/* MAIN CONTENT */}
-        <ScrollView
-        // style={{ position: 'relative' }}
-        // scrollEventThrottle={16}
-        // onScroll={Animated.event(
-        //     [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-        //     { useNativeDriver: false }
-        // )}
-        >
+        {(function () {
 
-            {/* <StatusBar backgroundColor='#fff' barStyle="dark-content" /> */}
-            <StatusBar translucent={true} hidden={true} />
-            {/* AUDIO/VIDEO HEADER */}
-            <View style={styles.header} >
-                {/* <Animated.View style={[styles.header, { height: headerHeight }]} ></Animated.View> */}
-                <ImageBackground source={playImage} style={styles.image}>
-                    <View style={styles.overlay}>
+            if (play !== null) {
+                return <ScrollView
+                // style={{ position: 'relative' }}
+                // scrollEventThrottle={16}
+                // onScroll={Animated.event(
+                //     [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+                //     { useNativeDriver: false }
+                // )}
+                >
 
-                        {/* video */}
-                        <Video source={{ uri: source }}
-                            ref={video}
-                            rate={1.0}
-                            volume={1.0}
-                            paused={paused}
-                            muted={false}
-                            resizeMode={"contain"}
-                            style={styles.video}
-                            onProgress={onProgress}
-                            onLoad={onLoad}
-                            onEnd={onEnd}
-                        />
+                    {/* <StatusBar backgroundColor='#fff' barStyle="dark-content" /> */}
+                    <StatusBar translucent={true} hidden={true} />
+                    {/* AUDIO/VIDEO HEADER */}
+                    <View style={styles.header} >
+                        {/* <Animated.View style={[styles.header, { height: headerHeight }]} ></Animated.View> */}
+                        <ImageBackground source={{ uri: play.mainPhotoUrl }} style={styles.image}>
+                            <View style={styles.overlay}>
 
-                        {/* title */}
-                        <Text style={styles.title}>{title}</Text>
+                                {/* video */}
+                                <Video source={{ uri: play.playUrl }}
+                                    ref={video}
+                                    rate={1.0}
+                                    volume={1.0}
+                                    paused={paused}
+                                    muted={false}
+                                    resizeMode={"contain"}
+                                    style={styles.video}
+                                    onProgress={onProgress}
+                                    onLoad={onLoad}
+                                    onEnd={onEnd}
+                                />
 
-                        {/* preview */}
+                                <TouchableOpacity style={styles.back} onPress={() => goBack()}>
+                                    <FontAwesome5
+                                        name="chevron-left"
+                                        solid
+                                        color="#fff"
+                                        size={30}
+                                        style={{ padding: 20, }}
+                                    />
+                                </TouchableOpacity>
+
+                                {/* title */}
+                                <Text style={styles.title}>{play.title}</Text>
+
+                                {/* preview */}
+                                {
+                                    locked ? <TouchableOpacity
+                                        onPress={() => setPaused(false)}
+                                    >
+                                        <View style={styles.button}>
+
+                                            <Text style={styles.buttonText}>Preview</Text>
+
+                                        </View>
+                                    </TouchableOpacity> : <View style={{ width: 177, height: 44, }}></View>
+                                }
+
+                                {/* controls */}
+                                {
+                                    locked ? <TouchableOpacity onPress={() => { setLocked(false), alert('Unlocked') }}>
+                                        <FontAwesome5
+                                            name="lock"
+                                            solid
+                                            color="#fff"
+                                            size={40}
+                                            style={{ padding: 10, }}
+                                        />
+                                    </TouchableOpacity> : null
+                                }
+
+                                {
+                                    !locked ? <TouchableOpacity onPress={() => { paused ? setPaused(false) : setPaused(true) }}>
+                                        <FontAwesome5
+                                            name={paused ? "play" : "pause"}
+                                            solid
+                                            color="#fff"
+                                            size={40}
+                                            style={{ padding: 10, }}
+                                        />
+                                    </TouchableOpacity> : null
+                                }
+
+                                <View style={styles.progressBar}>
+                                    <Animated.View style={[styles.progressBarFill]}>
+                                        <View style={styles.progressDot}></View>
+                                    </Animated.View>
+                                </View>
+
+
+
+                            </View>
+                        </ImageBackground>
+                    </View>
+
+                    {/* spacer */}
+                    {/* <View style={{ height: HEADER_MAX_HEIGHT }}></View> */}
+
+                    {/* discription */}
+                    <View style={styles.discription}>
+                        <Text style={styles.text_title}>{play.title}</Text>
+                        <Text allowFontScaling style={styles.author}>Written by {play.screenwriter}</Text>
+                        <Text allowFontScaling style={styles.subtext}>{play.body}</Text>
+                        {!locked ? <Text allowFontScaling style={styles.subtext}></Text> : null}
                         {
                             locked ? <TouchableOpacity
-                                onPress={() => setPaused(false)}
+                                onPress={() => [setLocked(false), alert('Unlocked')]}
                             >
-                                <View style={styles.button}>
+                                <View style={[styles.subButton]}>
 
-                                    <Text style={styles.buttonText}>Preview</Text>
+                                    <Text style={styles.subButtonText}>Unlock</Text>
 
                                 </View>
-                            </TouchableOpacity> : <View style={{ width: 177, height: 44, }}></View>
-                        }
-
-                        {/* controls */}
-                        {
-                            locked ? <TouchableOpacity onPress={() => { setLocked(false), alert('Unlocked') }}>
-                                <FontAwesome5
-                                    name="lock"
-                                    solid
-                                    color="#fff"
-                                    size={40}
-                                    style={{ padding: 10, }}
-                                />
                             </TouchableOpacity> : null
                         }
-
-                        {
-                            !locked ? <TouchableOpacity onPress={() => { paused ? setPaused(false) : setPaused(true) }}>
-                                <FontAwesome5
-                                    name={paused ? "play" : "pause"}
-                                    solid
-                                    color="#fff"
-                                    size={40}
-                                    style={{ padding: 10, }}
-                                />
-                            </TouchableOpacity> : null
-                        }
-
-                        <View style={styles.progressBar}>
-                            <Animated.View style={[styles.progressBarFill]}>
-                                <View style={styles.progressDot}></View>
-                            </Animated.View>
-                        </View>
-
-
+                        <Text allowFontScaling style={styles.subtext}>{play.actorInfo}</Text>
+                        <Text allowFontScaling style={styles.subtext}>{play.addInfo}</Text>
+                        <Text allowFontScaling style={styles.subtext}>{play.copyrightDate}</Text>
 
                     </View>
-                </ImageBackground>
-            </View>
 
-            {/* spacer */}
-            {/* <View style={{ height: HEADER_MAX_HEIGHT }}></View> */}
+                    {/* footer */}
+                    <View style={styles.footer}>
+                        <Image source={require('../assets/1_MontanaRep_PrimaryLogo_GreenLandscape.png')} style={styles.footer_logo} />
 
-            {/* discription */}
-            <View style={styles.discription}>
-                <Text style={styles.text_title}>{title}</Text>
-                <Text allowFontScaling style={styles.author}>Written by {author}</Text>
-                <Text allowFontScaling style={styles.subtext}>{discription}</Text>
-                {!locked ? <Text allowFontScaling style={styles.subtext}>{transcript}</Text> : null}
-                {
-                    locked ? <TouchableOpacity
-                        onPress={() => [setLocked(false), alert('Unlocked')]}
-                    >
-                        <View style={[styles.subButton]}>
-
-                            <Text style={styles.subButtonText}>Unlock</Text>
-
-                        </View>
-                    </TouchableOpacity> : null
-                }
-                <Text allowFontScaling style={styles.subtext}>{actors}</Text>
-                <Text allowFontScaling style={styles.subtext}>{addInfo}</Text>
-                <Text allowFontScaling style={styles.subtext}>{copyright}</Text>
-
-            </View>
-
-            {/* footer */}
-            <View style={styles.footer}>
-                <Image source={require('../assets/1_MontanaRep_PrimaryLogo_GreenLandscape.png')} style={styles.footer_logo} />
-
-            </View>
+                    </View>
 
 
 
-        </ScrollView>
+                </ScrollView>
+            }
 
-
+        })()}
 
         {/* <Settings /> */}
         <Navigation navigation={navigation} />
@@ -277,6 +294,13 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginBottom: 10,
         lineHeight: 20
+    },
+
+    back: {
+        position: 'absolute',
+        top: 0,
+        alignSelf: "flex-start",
+        //paddingBottom: 200,
     },
 
     title: {
