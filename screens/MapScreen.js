@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import React, { Component, useState, useEffect } from 'react';
-import { Text, View, Image, StyleSheet, TouchableOpacity, Dimensions, PermissionsAndroid, Modal,} from 'react-native';
-import MapView, { PROVIDER_GOOGLE, Marker, Callout,  Animated, AnimatedRegion } from 'react-native-maps';
+import { Text, View, Image, StyleSheet, TouchableOpacity, Dimensions, PermissionsAndroid, Modal, } from 'react-native';
+import MapView, { PROVIDER_GOOGLE, Marker, Callout, Animated, AnimatedRegion } from 'react-native-maps';
 import * as Animatable from 'react-native-animatable';
 // import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
@@ -50,7 +50,7 @@ export default ({ navigation }) => {
   const safeAreaInsets = useSafeAreaInsets()
 
   const locationPermission = PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
-  const [devicePosition, setDevicePosition] = useState();
+  //const [devicePosition, setDevicePosition] = useState();
   const [deviceLatitude, setDeviceLatitude] = useState();
   const [deviceLongitude, setDeviceLongitude] = useState();
 
@@ -75,7 +75,6 @@ export default ({ navigation }) => {
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         console.log("Location Permission Granted");
-        currentPosition();
       } else {
         console.log("Location Permission Denied");
       }
@@ -84,11 +83,13 @@ export default ({ navigation }) => {
     }
   };
 
-  const currentPosition = () => {
+
+
+  useEffect(() => {
     if (locationPermission) {
       Geolocation.getCurrentPosition(
         (position) => {
-          setDevicePosition(position.coords);
+          //setDevicePosition(position);
           setDeviceLatitude(position.coords.latitude);
           setDeviceLongitude(position.coords.longitude);
           setIsLoading(false);
@@ -101,15 +102,31 @@ export default ({ navigation }) => {
         { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
       );
 
+      const currentPosition = //() => {
+        Geolocation.watchPosition(
+          (position) => {
+            //setDevicePosition(position);
+            setDeviceLatitude(position.coords.latitude);
+            setDeviceLongitude(position.coords.longitude);
+            console.log(position);
+          },
+          (error) => {
+            // See error code charts below.
+            console.log(error.code, error.message);
+          },
+          { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000, distanceFilter: 1 }
+        );
+      return () => {
+        if (currentPosition) {
+          Geolocation.clearWatch(currentPosition);
+        }
+      };
+
     } else {
       requestLocationPermission();
     }
-
-  }
-
-  useEffect(() => {
-    currentPosition();
-  }, [deviceLatitude, deviceLongitude, locationPermission])
+    //}
+  }, [])
 
 
   useEffect(() => {
@@ -166,9 +183,12 @@ export default ({ navigation }) => {
             longitudeDelta: 0.00220,
           }}
         >
-           {/* Device Location Marker */}
-           <Marker.Animated
-            coordinate={devicePosition}
+          {/* Device Location Marker */}
+          <Marker.Animated
+            coordinate={{
+              latitude: deviceLatitude,
+              longitude: deviceLongitude,
+            }}
             image={require('../assets/map_marker.png')}
           />
 
@@ -277,7 +297,7 @@ export default ({ navigation }) => {
           })()}
 
 
-         
+
 
 
         </MapView>
@@ -354,7 +374,7 @@ const styles = StyleSheet.create({
     width: 120,
     height: 80,
   },
-   centeredView: {
+  centeredView: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
