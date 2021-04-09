@@ -114,7 +114,7 @@ export default ({ navigation }) => {
             // See error code charts below.
             console.log(error.code, error.message);
           },
-          { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000, distanceFilter: 1 }
+          { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
         );
       return () => {
         if (currentPosition) {
