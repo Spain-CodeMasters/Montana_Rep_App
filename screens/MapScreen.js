@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import React, { Component, useState, useEffect } from 'react';
 import { Text, View, Image, StyleSheet, TouchableOpacity, Dimensions, PermissionsAndroid, Modal,} from 'react-native';
-import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Marker, Callout,  Animated, AnimatedRegion } from 'react-native-maps';
 import * as Animatable from 'react-native-animatable';
 // import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
@@ -50,7 +50,7 @@ export default ({ navigation }) => {
   const safeAreaInsets = useSafeAreaInsets()
 
   const locationPermission = PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
-  //const [devicePosition, setDevicePosition] = useState();
+  const [devicePosition, setDevicePosition] = useState();
   const [deviceLatitude, setDeviceLatitude] = useState();
   const [deviceLongitude, setDeviceLongitude] = useState();
 
@@ -88,7 +88,7 @@ export default ({ navigation }) => {
     if (locationPermission) {
       Geolocation.getCurrentPosition(
         (position) => {
-          //setDevicePosition(position);
+          setDevicePosition(position.coords);
           setDeviceLatitude(position.coords.latitude);
           setDeviceLongitude(position.coords.longitude);
           setIsLoading(false);
@@ -100,6 +100,7 @@ export default ({ navigation }) => {
         },
         { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
       );
+
     } else {
       requestLocationPermission();
     }
@@ -120,7 +121,7 @@ export default ({ navigation }) => {
   }, []);
 
   const [selectedId, setSelectedId] = useState(null);
-  const [modalVisible, setModalVisible] = useState(false);
+  //const [modalVisible, setModalVisible] = useState(false);
 
   function selectPlay(id) {
     //setSelectedId(id);
@@ -151,12 +152,12 @@ export default ({ navigation }) => {
       paddingRight: safeAreaInsets.right,
     }}>
       <Cog onPress={() => navigation.navigate('Settings')} />
-      <Info item={contentData} selectedId={selectedId} modalVisible={modalVisible} setModalVisible={setModalVisible} />
 
       {!isLoading ? (
         <MapView
           provider={PROVIDER_GOOGLE}
           style={styles.map}
+          //showsUserLocation={true}
 
           region={{
             latitude: deviceLatitude,
@@ -165,8 +166,11 @@ export default ({ navigation }) => {
             longitudeDelta: 0.00220,
           }}
         >
-
-
+           {/* Device Location Marker */}
+           <Marker.Animated
+            coordinate={devicePosition}
+            image={require('../assets/map_marker.png')}
+          />
 
           {(function () {
 
@@ -273,19 +277,13 @@ export default ({ navigation }) => {
           })()}
 
 
-          {/* Device Location Marker */}
-          <Marker
-            coordinate={{
-              latitude: deviceLatitude,
-              longitude: deviceLongitude,
-            }}
-            image={require('../assets/map_marker.png')}
-          >
-          </Marker>
+         
 
 
         </MapView>
       ) : (null)}
+      {/* <Info item={contentData} selectedId={selectedId} modalVisible={modalVisible} setModalVisible={setModalVisible} /> */}
+
       {/* <Settings /> */}
       <Navigation navigation={navigation} />
     </View>
@@ -355,7 +353,30 @@ const styles = StyleSheet.create({
     // alignSelf: 'center',
     width: 120,
     height: 80,
-  }
+  },
+   centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: -100,
+  },
+  modalView: {
+    margin: 0,
+    backgroundColor: "white",
+    borderRadius: 10,
+    padding: 40,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+    width: 300,
+    height: 550,
+  },
 
 });
 
