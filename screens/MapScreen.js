@@ -183,14 +183,7 @@ export default ({ navigation }) => {
             longitudeDelta: 0.00220,
           }}
         >
-          {/* Device Location Marker */}
-          <Marker.Animated
-            coordinate={{
-              latitude: deviceLatitude,
-              longitude: deviceLongitude,
-            }}
-            image={require('../assets/map_marker.png')}
-          />
+
 
           {(function () {
 
@@ -296,7 +289,14 @@ export default ({ navigation }) => {
 
           })()}
 
-
+          {/* Device Location Marker */}
+          <Marker.Animated
+            coordinate={{
+              latitude: deviceLatitude,
+              longitude: deviceLongitude,
+            }}
+            image={require('../assets/map_marker.png')}
+          />
 
 
 

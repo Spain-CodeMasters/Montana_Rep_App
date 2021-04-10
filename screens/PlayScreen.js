@@ -1,11 +1,15 @@
 import 'react-native-gesture-handler';
 import React, { useState, useRef, useEffect } from 'react';
-import { Animated, Text, View, StyleSheet, TouchableOpacity, Dimensions, StatusBar, ScrollView, Image, ImageBackground } from 'react-native';
+import { Animated, Text, View, StyleSheet, TouchableOpacity, Dimensions, StatusBar, ScrollView, Image, ImageBackground, PermissionsAndroid, } from 'react-native';
 import Video from 'react-native-video';
 import Navigation from '../components/navigation/navigation';
 //import Settings from '../components/Cog';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
+import Geolocation from 'react-native-geolocation-service';
+import * as geolib from 'geolib';
+
+
 import { db } from '../components/Firebase/firebase';
 
 
@@ -31,7 +35,59 @@ export default ({ navigation: { goBack }, navigation, route }) => {
     //     extrapolate: 'clamp',
     // });
 
+    const locationPermission = PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
+
+    const [distance, setDistance] = useState('');
     const [play, setPlay] = useState(null);
+
+    const requestLocationPermission = async () => {
+        try {
+            const granted = await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+                {
+                    title: "Montana Repertory Theatre Location Permission",
+                    message:
+                        "We need access to your location " +
+                        "to use the community map",
+                    buttonNeutral: "Ask Me Later",
+                    buttonNegative: "Cancel",
+                    buttonPositive: "OK"
+                }
+            );
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                console.log("Location Permission Granted");
+            } else {
+                console.log("Location Permission Denied");
+            }
+        } catch (err) {
+            console.warn(err);
+        }
+    };
+
+
+
+    useEffect(() => {
+        if (locationPermission) {
+            Geolocation.getCurrentPosition(
+                (position) => {
+                    //setDevicePosition(position);
+                    // setDeviceLatitude(position.coords.latitude);
+                    // setDeviceLongitude(position.coords.longitude);
+                    checkPosition(position.coords);
+                    //console.log(play.geopoints[0]);
+                },
+                (error) => {
+                    // See error code charts below.
+                    console.log(error.code, error.message);
+                },
+                { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+            );
+
+        } else {
+            requestLocationPermission();
+        }
+        //}
+    }, [play])
 
     useEffect(() => {
         db.collection("content").doc(route.params.id).onSnapshot((snapshot) => {
@@ -40,6 +96,36 @@ export default ({ navigation: { goBack }, navigation, route }) => {
         })
         //console.log("This is " + route.params.id);
     }, []);
+
+    function checkPosition(currentPosition) {
+        if (play !== null) {
+            const distance = (geolib.getDistance(currentPosition, play.geopoints[0]));
+            console.log(play.geopoints)
+            if (distance < 400) {
+                const feet = Math.floor((geolib.convertDistance(distance, "ft")))
+                if (feet == 1) {
+                    setDistance(
+                        feet + ' foot away'
+                    );
+                } else {
+                    setDistance(
+                        feet + ' feet away'
+                    );
+                }
+            } else {
+                const miles = Math.round((geolib.convertDistance(distance, "mi") + Number.EPSILON) * 100) / 100;
+                if (miles == 1) {
+                    setDistance(
+                        miles + 'mile away'
+                    );
+                } else {
+                    setDistance(
+                        miles + ' miles away'
+                    );
+                }
+            }
+        }
+    }
 
     const video = useRef(null);
     const [locked, setLocked] = useState(true);
@@ -178,7 +264,8 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                     {/* discription */}
                     <View style={styles.discription}>
                         <Text style={styles.text_title}>{play.title}</Text>
-                        <Text allowFontScaling style={styles.author}>Written by {play.screenwriter}</Text>
+                        <Text allowFontScaling style={styles.author}>By {play.screenwriter}</Text>
+                        <Text allowFontScaling style={styles.subtext}>{distance}</Text>
                         <Text allowFontScaling style={styles.subtext}>{play.body}</Text>
                         {!locked ? <Text allowFontScaling style={styles.subtext}></Text> : null}
                         {

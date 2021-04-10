@@ -50,7 +50,7 @@ const Post = ({ item }) => (
             } else {
                 return <View style={{ flex: 1 }}>
                     <View style={{ flexDirection: 'row', paddingTop: 20 }}>
-                        <AutoHeightImage source={{ uri: item.post.photoUrl }} width={280} />
+                        <AutoHeightImage source={{ uri: item.post.photoUrl }} width={ITEM_WIDTH * 0.7} />
                     </View>
                 </View>
             }
@@ -264,6 +264,7 @@ export default ({ navigation }) => {
         return <View style={{ backgroundColor: '#747A21', marginTop: -3 }}>
             <View style={styles.header}>
                 <Image source={require('../assets/WhiteLandscape_Logo.png')} style={styles.footer_logo} />
+                <Image source={require('../assets/CAMLogo.png')} style={styles.cam_logo} />
                 <View style={{ flexDirection: 'row' }}>
                     <TouchableOpacity onPress={() => {
                         Linking.openURL("https://www.facebook.com/MontanaRep")
@@ -410,9 +411,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 50,
-        marginBottom: 70,
+        //marginBottom: 70,
         width: 212,
         height: 90,
+    },
+    cam_logo: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 50,
+        marginBottom: 30,
+        width: 300,
+        height: 20,
     },
 
     footer_text: {

@@ -287,7 +287,6 @@ export default ({ navigation }) => {
       data={scheduleView}
       renderItem={renderItem}
       keyExtractor={(item) => item.id}
-      extraData={selectedId}
     />
     <View style={{ height: 55 }}></View>
 
