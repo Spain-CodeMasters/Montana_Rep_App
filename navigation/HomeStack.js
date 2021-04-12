@@ -5,6 +5,7 @@ import MapScreen from '../screens/MapScreen';
 import ScheduleScreen from '../screens/ScheduleScreen';
 import PlayScreen from '../screens/PlayScreen';
 import SponsorScreen from '../screens/SponsorScreen';
+import EventScreen from '../screens/EventScreen';
 
 import SettingsScreen from '../screens/SettingsScreen';
 
@@ -28,6 +29,7 @@ export default function HomeStack() {
       <Stack.Screen name='Schedule' component={ScheduleScreen} options={{ header: () => null }}/>
       <Stack.Screen name='Play' component={PlayScreen} options={{ header: () => null }}/>
       <Stack.Screen name='Sponsor' component={SponsorScreen} options={{ header: () => null }}/>
+      <Stack.Screen name='Event' component={EventScreen} options={{ header: () => null }}/>
 
       <Stack.Screen name='About' component={AboutScreen} />
       <Stack.Screen name='Privacy Policy' component={PrivacyScreen} />

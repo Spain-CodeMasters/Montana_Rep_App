@@ -119,13 +119,8 @@ export default ({ navigation }) => {
             setPostView(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
             //setPostView(postData);
         })
-
-    }, [])
-
-    useEffect(() => {
         db.collection("carousel").orderBy("carouselOrder", "asc").onSnapshot((snapshot) => {
             setHeroData(snapshot.docs.map((doc) => ({ id: doc.id, hero: doc.data() })));
-
         })
     }, [])
 
@@ -219,6 +214,13 @@ export default ({ navigation }) => {
                         </ImageBackground>
                     </View>
                 }}
+            />
+
+            {/* PINNED POST */}
+            <FlatList
+                data={postData.filter(function (posts) { return posts.post.pinned == true; })}
+                renderItem={renderItem}
+                keyExtractor={(item) => item.id}
             />
         </View>
 

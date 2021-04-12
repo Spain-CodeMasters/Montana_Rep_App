@@ -132,31 +132,26 @@ export default ({ navigation }) => {
   useEffect(() => {
     db.collection("content").onSnapshot((snapshot) => {
       setContentData(snapshot.docs.map((doc) => ({ id: doc.id, content: doc.data() })));
-      //console.log(playData.length);
 
     })
   }, []);
 
-  const [selectedId, setSelectedId] = useState(null);
-  //const [modalVisible, setModalVisible] = useState(false);
-
   function selectPlay(id) {
-    //setSelectedId(id);
     navigation.navigate('Play', {
       id: id,
-    })
+    });
   }
 
   function selectEvent(id) {
-    setSelectedId(id);
-    //setModalVisible(!modalVisible);
+    navigation.navigate('Event', {
+      id: id,
+    });
   }
 
   function selectSponsor(id) {
-    //setSelectedId(id);
     navigation.navigate('Sponsor', {
       id: id,
-    })
+    });
   }
 
 
@@ -302,7 +297,6 @@ export default ({ navigation }) => {
 
         </MapView>
       ) : (null)}
-      {/* <Info item={contentData} selectedId={selectedId} modalVisible={modalVisible} setModalVisible={setModalVisible} /> */}
 
       {/* <Settings /> */}
       <Navigation navigation={navigation} />
@@ -310,7 +304,6 @@ export default ({ navigation }) => {
   );
 };
 
-//export default MapScreen;
 
 const styles = StyleSheet.create({
   map: {
@@ -400,18 +393,3 @@ const styles = StyleSheet.create({
 
 });
 
-
-{/* <View style={{ flex: 1 }}>
-                    <MapView 
-                        provider={PROVIDER_GOOGLE} 
-                        mapType='hybrid'   
-                        showsUserLocation style={{flex: 1}}>
-                    {this.state.marker.map(item     => (
-                    <MapView.Marker        
-                        coordinate={{latitude: item.geopoint.latitude,                         
-                        longitude: item.geopoint.longitude}}
-                        title={("Test")}
-                        description={("Test")} 
-                    /> 
-                    )}
-                    </MapView> */}

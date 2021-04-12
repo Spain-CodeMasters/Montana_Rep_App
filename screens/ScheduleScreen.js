@@ -67,7 +67,7 @@ const GetTime = ({ start, end }) => {
 
 //Create Item
 const Play = ({ item, onPress }) => (
-
+  
   <ImageBackground source={{ uri: item.post.previewPhotoUrl }} style={styles.play}>
     <TouchableOpacity style={styles.play} onPress={onPress}>
       <View style={styles.overlay}>
@@ -94,7 +94,6 @@ const Event = ({ item, onPress }) => (
     {/*Determine Event Type*/}
     {(function () {
       if (item.post.category == 'mtrep') {
-
         return <View style={[styles.time, { backgroundColor: '#747A21' }]}>
           <GetTime start={item.post.start.toDate()} end={item.post.end.toDate()}></GetTime>
         </View>
@@ -110,6 +109,7 @@ const Event = ({ item, onPress }) => (
 
 //Create Sponsored Item
 const Sponsor = ({ item, onPress }) => (
+
   <ImageBackground source={{ uri: item.post.previewPhotoUrl }} style={styles.play}>
     <TouchableOpacity style={styles.play} onPress={onPress}>
       <View style={styles.overlay}>
@@ -124,39 +124,41 @@ const Sponsor = ({ item, onPress }) => (
   </ImageBackground>
 );
 
-const Info = ({ item, selectedId, modalVisible, setModalVisible }) => {
-  if (selectedId !== null) {
-    const getIndex = item.findIndex(item => item.id == selectedId)
-    //if (item[getIndex].post.type == 'event') {
-    return <Modal
-      animationType="fade"
-      transparent={true}
-      visible={modalVisible}
-      onRequestClose={() => {
-        setModalVisible(!modalVisible);
-      }}
-    >
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={() => { setModalVisible(!modalVisible); }}>
-            <FontAwesome5 name='times' solid color="black" size={30} style={{}} />
-          </TouchableOpacity>
-          {/* <Image source={{ uri: item[getIndex].post.photoUrl }}></Image> */}
-          <Text style={styles.postLabel}>{item[getIndex].post.title}</Text>
-          <Text allowFontScaling style={styles.subtext}>{item[getIndex].post.body}</Text>
+// const Info = ({ item, selectedId, modalVisible, setModalVisible }) => {
+//   if (selectedId !== null) {
+//     const getIndex = item.findIndex(item => item.id == selectedId)
+//     //if (item[getIndex].post.type == 'event') {
+//     return <Modal
+//       animationType="fade"
+//       transparent={true}
+//       visible={modalVisible}
+//       onRequestClose={() => {
+//         setModalVisible(!modalVisible);
+//       }}
+//     >
+//       <View style={styles.centeredView}>
+//         <View style={styles.modalView}>
+//           <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={() => { setModalVisible(!modalVisible); }}>
+//             <FontAwesome5 name='times' solid color="black" size={30} style={{}} />
+//           </TouchableOpacity>
+//           {/* <Image source={{ uri: item[getIndex].post.photoUrl }}></Image> */}
+//           <Text style={styles.postLabel}>{item[getIndex].post.title}</Text>
+//           <Text allowFontScaling style={styles.subtext}>{item[getIndex].post.body}</Text>
 
-        </View>
-      </View>
-    </Modal>
-  } else {
-    return <></>
-  }
+//         </View>
+//       </View>
+//     </Modal>
+//   } else {
+//     return <></>
+//   }
 
-}
+// }
 
 
 
 export default ({ navigation }) => {
+  const safeAreaInsets = useSafeAreaInsets()
+
   const [filter, setFilter] = useState("all");
 
   const [greenAnimation, setGreenAnimation] = useState('fadeOut');
@@ -231,19 +233,18 @@ export default ({ navigation }) => {
   const [selectedId, setSelectedId] = useState(null);
 
   function selectPlay(id) {
-    //setSelectedId(id);
     navigation.navigate('Play', {
       id: id,
     })
   }
 
   function selectEvent(id) {
-    setSelectedId(id);
-    setModalVisible(!modalVisible);
+    navigation.navigate('Event', {
+      id: id,
+    })
   }
 
   function selectSponsor(id) {
-    //setSelectedId(id);
     navigation.navigate('Sponsor', {
       id: id,
     })
@@ -269,8 +270,7 @@ export default ({ navigation }) => {
     }
   };
 
-  const safeAreaInsets = useSafeAreaInsets()
-  const [modalVisible, setModalVisible] = useState(false);
+  //const [modalVisible, setModalVisible] = useState(false);
 
 
   return <View style={{
@@ -281,7 +281,7 @@ export default ({ navigation }) => {
     paddingRight: safeAreaInsets.right,
   }}>
     <Cog onPress={() => navigation.navigate('Settings')} />
-    <Info item={scheduleView} selectedId={selectedId} modalVisible={modalVisible} setModalVisible={setModalVisible} />
+    {/* <Info item={scheduleView} selectedId={selectedId} modalVisible={modalVisible} setModalVisible={setModalVisible} /> */}
     <FlatList
       ref={scroll}
       data={scheduleView}
