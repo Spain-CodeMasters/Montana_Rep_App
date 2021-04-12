@@ -9,9 +9,7 @@ import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import Geolocation from 'react-native-geolocation-service';
 import * as geolib from 'geolib';
 
-
 import { db } from '../components/Firebase/firebase';
-
 
 const { width, height } = Dimensions.get('screen');
 const ITEM_WIDTH = width;
@@ -34,6 +32,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
     //     outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
     //     extrapolate: 'clamp',
     // });
+    const safeAreaInsets = useSafeAreaInsets()
 
     const locationPermission = PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
 
@@ -48,7 +47,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                     title: "Montana Repertory Theatre Location Permission",
                     message:
                         "We need access to your location " +
-                        "to use the community map",
+                        "to show your distance from this play",
                     buttonNeutral: "Ask Me Later",
                     buttonNegative: "Cancel",
                     buttonPositive: "OK"
@@ -87,21 +86,40 @@ export default ({ navigation: { goBack }, navigation, route }) => {
             requestLocationPermission();
         }
         //}
-    }, [play])
+    }, [play]);
 
     useEffect(() => {
         db.collection("content").doc(route.params.id).onSnapshot((snapshot) => {
             setPlay(snapshot._data);
-            //console.log(snapshot._data.mainPhotoUrl);
         })
         //console.log("This is " + route.params.id);
     }, []);
 
     function checkPosition(currentPosition) {
         if (play !== null) {
-            const distance = (geolib.getDistance(currentPosition, play.geopoints[0]));
-            console.log(play.geopoints)
-            if (distance < 400) {
+            let pointId = 0
+            //CHECK for null
+            if (route.params.pointId !== null) {
+                pointId = route.params.pointId;
+
+            } else { //If null, choose closest
+                var arr = [];
+
+                for (var i = 0; i < play.geopoints.length; i++) {
+                    arr.push(geolib.getDistance(currentPosition, play.geopoints[i]))
+
+                    for (var j = 1; j < arr.length; j++) {
+                        if (arr[j] < arr[0]) {
+                            pointId = j;
+                        }
+                    }
+                }
+
+            }
+            // const pointId = route.params.pointId;
+            const distance = (geolib.getDistance(currentPosition, play.geopoints[pointId]));
+            //console.log(distance, currentPosition, play.geopoints[pointId])
+            if (distance < 90) {
                 const feet = Math.floor((geolib.convertDistance(distance, "ft")))
                 if (feet == 1) {
                     setDistance(
@@ -148,9 +166,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
 
     const onEnd = () => [video.current.seek(0), setPaused(true)];
 
-    // const [progress, setProgress] = useState(ITEM_WIDTH * 0.9 / duration * currentTime);
 
-    const safeAreaInsets = useSafeAreaInsets()
     return <View style={{
         flex: 1,
         //paddingTop: safeAreaInsets.top,
@@ -194,16 +210,6 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                                     onLoad={onLoad}
                                     onEnd={onEnd}
                                 />
-
-                                <TouchableOpacity style={styles.back} onPress={() => goBack()}>
-                                    <FontAwesome5
-                                        name="chevron-left"
-                                        solid
-                                        color="#fff"
-                                        size={30}
-                                        style={{ padding: 20, }}
-                                    />
-                                </TouchableOpacity>
 
                                 {/* title */}
                                 <Text style={styles.title}>{play.title}</Text>
@@ -297,6 +303,16 @@ export default ({ navigation: { goBack }, navigation, route }) => {
             }
 
         })()}
+
+        <TouchableOpacity style={styles.back} onPress={() => goBack()}>
+            <FontAwesome5
+                name="chevron-left"
+                solid
+                color="#fff"
+                size={30}
+                style={{ padding: 20, }}
+            />
+        </TouchableOpacity>
 
         {/* <Settings /> */}
         <Navigation navigation={navigation} />

@@ -218,7 +218,7 @@ export default ({ navigation }) => {
 
             {/* PINNED POST */}
             <FlatList
-                data={postData.filter(function (posts) { return posts.post.pinned == true; })}
+                data={postView.filter(function (posts) { return posts.post.pinned == true; })}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.id}
             />

@@ -52,7 +52,41 @@ const GetTime = ({ start, end }) => {
   //console.log(start);
   if (start !== null && start !== undefined) {
     const today = new Date();
-    const time = (start.getMonth() + 1) + '/' + start.getDate() + " " + start.getHours() + ":" + start.getMinutes();
+
+    const h = start.getHours();
+    const m = start.getMinutes();
+
+    var time = (start.getMonth() + 1) + '/' + start.getDate() + " " + hours() + ":" + minutes() + ' ' + period();
+
+    function hours(){
+      if (h > 12){
+        return h - 12;
+      } else {
+        return h;
+      }
+    }
+
+    function minutes(){
+      if (m < 10){
+        return "0" + m;
+      } else {
+        return m;
+      }
+    }
+
+    function period(){
+      if (h > 12){
+        return 'PM';
+      } else {
+        return 'AM';
+      }
+    }
+
+
+    // if (start < today && end > today) {
+    //   time = "Going On Now"
+    // }
+
     //if (today < start) {
     return (
       <Text style={styles.timeText}>
@@ -66,9 +100,16 @@ const GetTime = ({ start, end }) => {
 
 
 //Create Item
-const Play = ({ item, onPress }) => (
+const Play = ({ item, onPress }) => {
+  function source() { 
+    if (item.post.previewPhotoUrl !== '') {
+      return item.post.previewPhotoUrl;
+    } else {
+      return item.post.mainPhotoUrl;
+    }; 
+  }
   
-  <ImageBackground source={{ uri: item.post.previewPhotoUrl }} style={styles.play}>
+  return <ImageBackground source={{ uri: source()}} style={styles.play}>
     <TouchableOpacity style={styles.play} onPress={onPress}>
       <View style={styles.overlay}>
         <AdjustTitle fontSize={40} text={item.post.title} style={styles.title} numberOfLines={1} />
@@ -80,11 +121,11 @@ const Play = ({ item, onPress }) => (
     </View>
   </ImageBackground>
 
-);
+};
 
 //Create Event Item
-const Event = ({ item, onPress }) => (
-  <ImageBackground source={{ uri: item.post.photoUrl }} style={styles.play}>
+const Event = ({ item, onPress }) => {
+  return <ImageBackground source={{ uri: item.post.photoUrl }} style={styles.play}>
     <TouchableOpacity style={styles.play} onPress={onPress} >
       <View style={styles.overlay}>
         <AdjustTitle fontSize={40} text={item.post.title} style={styles.title} numberOfLines={1} />
@@ -105,12 +146,19 @@ const Event = ({ item, onPress }) => (
 
     })()}
   </ImageBackground>
-);
+};
 
 //Create Sponsored Item
-const Sponsor = ({ item, onPress }) => (
+const Sponsor = ({ item, onPress }) => {
+  function source() { 
+    if (item.post.previewPhotoUrl !== '') {
+      return item.post.previewPhotoUrl;
+    } else {
+      return item.post.mainPhotoUrl;
+    }; 
+  }
 
-  <ImageBackground source={{ uri: item.post.previewPhotoUrl }} style={styles.play}>
+  return <ImageBackground source={{ uri: source() }} style={styles.play}>
     <TouchableOpacity style={styles.play} onPress={onPress}>
       <View style={styles.overlay}>
         <AdjustTitle fontSize={40} text={item.post.title} style={styles.title} numberOfLines={1} />
@@ -122,7 +170,7 @@ const Sponsor = ({ item, onPress }) => (
     </View>
 
   </ImageBackground>
-);
+};
 
 // const Info = ({ item, selectedId, modalVisible, setModalVisible }) => {
 //   if (selectedId !== null) {
@@ -235,18 +283,21 @@ export default ({ navigation }) => {
   function selectPlay(id) {
     navigation.navigate('Play', {
       id: id,
+      pointId: null,
     })
   }
 
   function selectEvent(id) {
     navigation.navigate('Event', {
       id: id,
+      pointId: null,
     })
   }
 
   function selectSponsor(id) {
     navigation.navigate('Sponsor', {
       id: id,
+      pointId: null,
     })
   }
 

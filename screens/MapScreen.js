@@ -15,36 +15,6 @@ import Geolocation from 'react-native-geolocation-service';
 
 import { db } from '../components/Firebase/firebase';
 
-
-const Info = ({ item, selectedId, modalVisible, setModalVisible }) => {
-  if (selectedId !== null) {
-    const getIndex = item.findIndex(item => item.id == selectedId)
-    //if (item[getIndex].post.type == 'event') {
-    return <Modal
-      animationType="fade"
-      transparent={true}
-      visible={modalVisible}
-      onRequestClose={() => {
-        setModalVisible(!modalVisible);
-      }}
-    >
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={() => { setModalVisible(!modalVisible); }}>
-            <FontAwesome5 name='times' solid color="black" size={30} style={{}} />
-          </TouchableOpacity>
-          {/* <Image source={{ uri: item[getIndex].post.photoUrl }}></Image> */}
-          <Text style={styles.postLabel}>{item[getIndex].content.title}</Text>
-          <Text allowFontScaling style={styles.subtext}>{item[getIndex].content.body}</Text>
-        </View>
-      </View>
-    </Modal>
-  } else {
-    return <></>
-  }
-
-}
-
 export default ({ navigation }) => {
 
   const safeAreaInsets = useSafeAreaInsets()
@@ -111,7 +81,6 @@ export default ({ navigation }) => {
             console.log(position);
           },
           (error) => {
-            // See error code charts below.
             console.log(error.code, error.message);
           },
           { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
@@ -136,21 +105,24 @@ export default ({ navigation }) => {
     })
   }, []);
 
-  function selectPlay(id) {
+  function selectPlay(id, pointId) {
     navigation.navigate('Play', {
       id: id,
+      pointId: pointId,
     });
   }
 
-  function selectEvent(id) {
+  function selectEvent(id, pointId) {
     navigation.navigate('Event', {
       id: id,
+      pointId: pointId,
     });
   }
 
-  function selectSponsor(id) {
+  function selectSponsor(id, pointId) {
     navigation.navigate('Sponsor', {
       id: id,
+      pointId: pointId,
     });
   }
 
@@ -188,7 +160,6 @@ export default ({ navigation }) => {
                 if (geopoints.latitude !== '' && geopoints.longitude !== '') {
                   //console.log(geopoints);
                   if (content.category == "goplay") {
-                    //console.log(play);
                     return <Marker
                       key={pointId}
                       coordinate={{
@@ -196,7 +167,7 @@ export default ({ navigation }) => {
                         longitude: geopoints.longitude * 1,
                       }}
                       image={require('../assets/GoPlay_PinGold.png')}
-                      onPress={e => selectPlay(id)}
+                      onPress={e => selectPlay(id, pointId)}
                     >
                       <Callout tooltip>
                         <View>
@@ -216,7 +187,7 @@ export default ({ navigation }) => {
                         longitude: geopoints.longitude * 1,
                       }}
                       image={require('../assets/GoPlay_PinGreen.png')}
-                      onPress={e => selectEvent(id)}
+                      onPress={e => selectEvent(id, pointId)}
 
                     >
                       <Callout tooltip>
@@ -238,7 +209,7 @@ export default ({ navigation }) => {
                         longitude: geopoints.longitude * 1,
                       }}
                       image={require('../assets/GoPlay_PinCopper.png')}
-                      onPress={e => selectSponsor(id)}
+                      onPress={e => selectSponsor(id, pointId)}
                     >
                       <Callout tooltip>
                         <View>
@@ -258,7 +229,7 @@ export default ({ navigation }) => {
                         longitude: geopoints.longitude * 1,
                       }}
                       image={require('../assets/GoPlay_PinCopper.png')}
-                      onPress={e => selectEvent(id)}
+                      onPress={e => selectEvent(id, pointId)}
                     >
                       <Callout tooltip>
                         <View>

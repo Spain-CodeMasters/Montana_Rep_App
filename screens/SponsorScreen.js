@@ -1,13 +1,15 @@
 import 'react-native-gesture-handler';
 import React, { useState, useRef, useEffect } from 'react';
-import { Animated, Text, View, StyleSheet, TouchableOpacity, Dimensions, StatusBar, ScrollView, Image, ImageBackground, Linking } from 'react-native';
+import { Animated, Text, View, StyleSheet, TouchableOpacity, Dimensions, StatusBar, ScrollView, Image, ImageBackground, Linking, PermissionsAndroid, } from 'react-native';
 import Video from 'react-native-video';
 import Navigation from '../components/navigation/navigation';
 //import Settings from '../components/Cog';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { db } from '../components/Firebase/firebase';
+import Geolocation from 'react-native-geolocation-service';
+import * as geolib from 'geolib';
 
+import { db } from '../components/Firebase/firebase';
 
 const { width, height } = Dimensions.get('screen');
 const ITEM_WIDTH = width;
@@ -30,16 +32,111 @@ export default ({ navigation: { goBack }, navigation, route }) => {
     //     outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
     //     extrapolate: 'clamp',
     // });
+    const safeAreaInsets = useSafeAreaInsets()
 
+    const locationPermission = PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
+
+    const [distance, setDistance] = useState('');
     const [sponsor, setSponsor] = useState(null);
+
+    const requestLocationPermission = async () => {
+        try {
+            const granted = await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+                {
+                    title: "Montana Repertory Theatre Location Permission",
+                    message:
+                        "We need access to your location " +
+                        "to show your distance from this event",
+                    buttonNeutral: "Ask Me Later",
+                    buttonNegative: "Cancel",
+                    buttonPositive: "OK"
+                }
+            );
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                console.log("Location Permission Granted");
+            } else {
+                console.log("Location Permission Denied");
+            }
+        } catch (err) {
+            console.warn(err);
+        }
+    };
+
+
+
+    useEffect(() => {
+        if (locationPermission) {
+            Geolocation.getCurrentPosition(
+                (position) => {
+                    checkPosition(position.coords);
+                },
+                (error) => {
+                    console.log(error.code, error.message);
+                },
+                { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+            );
+
+        } else {
+            requestLocationPermission();
+        }
+    }, [sponsor]);
 
     useEffect(() => {
         db.collection("content").doc(route.params.id).onSnapshot((snapshot) => {
             setSponsor(snapshot._data);
-            //console.log(snapshot._data.mainPhotoUrl);
         })
-        //console.log("This is " + route.params.id);
     }, []);
+
+    function checkPosition(currentPosition) {
+        if (sponsor !== null && sponsor.geopoints[0].latitude !== '') {
+            let pointId = 0
+            //CHECK for null
+            if (route.params.pointId !== null) {
+                pointId = route.params.pointId;
+
+            } else { //If null, choose closest
+                var arr = [];
+
+                for (var i = 0; i < sponsor.geopoints.length; i++) {
+                    arr.push(geolib.getDistance(currentPosition, sponsor.geopoints[i]))
+
+                    for (var j = 1; j < arr.length; j++) {
+                        if (arr[j] < arr[0]) {
+                            pointId = j;
+                        }
+                    }
+                }
+
+            }
+
+            const distance = (geolib.getDistance(currentPosition, sponsor.geopoints[pointId]));
+            if (distance < 90) {
+                const feet = Math.floor((geolib.convertDistance(distance, "ft")))
+                if (feet == 1) {
+                    setDistance(
+                        feet + ' foot away'
+                    );
+                } else {
+                    setDistance(
+                        feet + ' feet away'
+                    );
+                }
+            } else {
+                const miles = Math.round((geolib.convertDistance(distance, "mi") + Number.EPSILON) * 100) / 100;
+                if (miles == 1) {
+                    setDistance(
+                        miles + 'mile away'
+                    );
+                } else {
+                    setDistance(
+                        miles + ' miles away'
+                    );
+                }
+            }
+        }
+    }
+
 
     const video = useRef(null);
     const [locked, setLocked] = useState(true);
@@ -62,9 +159,6 @@ export default ({ navigation: { goBack }, navigation, route }) => {
 
     const onEnd = () => [video.current.seek(0), setPaused(true)];
 
-    // const [progress, setProgress] = useState(ITEM_WIDTH * 0.9 / duration * currentTime);
-
-    const safeAreaInsets = useSafeAreaInsets()
     return <View style={{
         flex: 1,
         //paddingTop: safeAreaInsets.top,
@@ -108,16 +202,6 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                                     onLoad={onLoad}
                                     onEnd={onEnd}
                                 />
-
-                                <TouchableOpacity style={styles.back} onPress={() => goBack()}>
-                                    <FontAwesome5
-                                        name="chevron-left"
-                                        solid
-                                        color="#fff"
-                                        size={30}
-                                        style={{ padding: 20, }}
-                                    />
-                                </TouchableOpacity>
 
                                 {/* title */}
                                 <Text style={styles.title}>{sponsor.title}</Text>
@@ -166,6 +250,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                     {/* discription */}
                     <View style={styles.discription}>
                         <Text style={styles.text_title}>{sponsor.title}</Text>
+                        <Text allowFontScaling style={styles.subtext}>{distance}</Text>
                         <Text allowFontScaling style={styles.subtext}>{sponsor.body}</Text>
                         {/* Check for Link */}
                         {(function () {
@@ -223,6 +308,17 @@ export default ({ navigation: { goBack }, navigation, route }) => {
             }
 
         })()}
+
+
+        <TouchableOpacity style={styles.back} onPress={() => goBack()}>
+            <FontAwesome5
+                name="chevron-left"
+                solid
+                color="#fff"
+                size={30}
+                style={{ padding: 20, }}
+            />
+        </TouchableOpacity>
 
         {/* <Settings /> */}
         <Navigation navigation={navigation} />
