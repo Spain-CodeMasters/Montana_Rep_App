@@ -119,7 +119,19 @@ export default ({ navigation: { goBack }, navigation, route }) => {
             // const pointId = route.params.pointId;
             const distance = (geolib.getDistance(currentPosition, play.geopoints[pointId]));
             //console.log(distance, currentPosition, play.geopoints[pointId])
-            if (distance < 90) {
+            if (distance < 10) {
+                setLocked(false);
+                const feet = Math.floor((geolib.convertDistance(distance, "ft")))
+                if (feet == 1) {
+                    setDistance(
+                        feet + ' foot away'
+                    );
+                } else {
+                    setDistance(
+                        feet + ' feet away'
+                    );
+                }
+            } else if (distance < 90) {
                 const feet = Math.floor((geolib.convertDistance(distance, "ft")))
                 if (feet == 1) {
                     setDistance(
@@ -229,7 +241,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
 
                                 {/* controls */}
                                 {
-                                    locked ? <TouchableOpacity onPress={() => { setLocked(false), alert('Unlocked') }}>
+                                    locked ? //<TouchableOpacity onPress={() => { setLocked(false), alert('Unlocked') }}>
                                         <FontAwesome5
                                             name="lock"
                                             solid
@@ -237,11 +249,8 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                                             size={40}
                                             style={{ padding: 10, }}
                                         />
-                                    </TouchableOpacity> : null
-                                }
-
-                                {
-                                    !locked ? <TouchableOpacity onPress={() => { paused ? setPaused(false) : setPaused(true) }}>
+                                    //</TouchableOpacity> 
+                                    : <TouchableOpacity onPress={() => { paused ? setPaused(false) : setPaused(true) }}>
                                         <FontAwesome5
                                             name={paused ? "play" : "pause"}
                                             solid
@@ -249,7 +258,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                                             size={40}
                                             style={{ padding: 10, }}
                                         />
-                                    </TouchableOpacity> : null
+                                    </TouchableOpacity>
                                 }
 
                                 <View style={styles.progressBar}>
@@ -270,7 +279,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                     {/* discription */}
                     <View style={styles.discription}>
                         <Text style={styles.text_title}>{play.title}</Text>
-                        <Text allowFontScaling style={styles.author}>By {play.screenwriter}</Text>
+                        <Text allowFontScaling style={styles.author}>{play.screenwriter}</Text>
                         <Text allowFontScaling style={styles.subtext}>{distance}</Text>
                         <Text allowFontScaling style={styles.subtext}>{play.body}</Text>
                         {!locked ? <Text allowFontScaling style={styles.subtext}></Text> : null}

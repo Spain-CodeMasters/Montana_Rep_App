@@ -17,7 +17,7 @@ import { db } from '../components/Firebase/firebase';
 
 export default ({ navigation }) => {
 
-  const safeAreaInsets = useSafeAreaInsets()
+  const safeAreaInsets = useSafeAreaInsets();
 
   const locationPermission = PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
   //const [devicePosition, setDevicePosition] = useState();
@@ -141,7 +141,8 @@ export default ({ navigation }) => {
         <MapView
           provider={PROVIDER_GOOGLE}
           style={styles.map}
-          //showsUserLocation={true}
+          showsUserLocation={true}
+          followsUserLocation={true}
 
           region={{
             latitude: deviceLatitude,
@@ -255,14 +256,14 @@ export default ({ navigation }) => {
 
           })()}
 
-          {/* Device Location Marker */}
+          {/* Device Location Marker
           <Marker.Animated
             coordinate={{
               latitude: deviceLatitude,
               longitude: deviceLongitude,
             }}
             image={require('../assets/map_marker.png')}
-          />
+          /> */}
 
 
 

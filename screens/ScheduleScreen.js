@@ -83,9 +83,9 @@ const GetTime = ({ start, end }) => {
     }
 
 
-    // if (start < today && end > today) {
-    //   time = "Going On Now"
-    // }
+    if (start < today && end > today) {
+      time = "Going On Now"
+    }
 
     //if (today < start) {
     return (
@@ -172,40 +172,9 @@ const Sponsor = ({ item, onPress }) => {
   </ImageBackground>
 };
 
-// const Info = ({ item, selectedId, modalVisible, setModalVisible }) => {
-//   if (selectedId !== null) {
-//     const getIndex = item.findIndex(item => item.id == selectedId)
-//     //if (item[getIndex].post.type == 'event') {
-//     return <Modal
-//       animationType="fade"
-//       transparent={true}
-//       visible={modalVisible}
-//       onRequestClose={() => {
-//         setModalVisible(!modalVisible);
-//       }}
-//     >
-//       <View style={styles.centeredView}>
-//         <View style={styles.modalView}>
-//           <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={() => { setModalVisible(!modalVisible); }}>
-//             <FontAwesome5 name='times' solid color="black" size={30} style={{}} />
-//           </TouchableOpacity>
-//           {/* <Image source={{ uri: item[getIndex].post.photoUrl }}></Image> */}
-//           <Text style={styles.postLabel}>{item[getIndex].post.title}</Text>
-//           <Text allowFontScaling style={styles.subtext}>{item[getIndex].post.body}</Text>
-
-//         </View>
-//       </View>
-//     </Modal>
-//   } else {
-//     return <></>
-//   }
-
-// }
-
-
 
 export default ({ navigation }) => {
-  const safeAreaInsets = useSafeAreaInsets()
+  const safeAreaInsets = useSafeAreaInsets();
 
   const [filter, setFilter] = useState("all");
 
@@ -278,8 +247,6 @@ export default ({ navigation }) => {
     setTimeout(function () { setRedAnimation("fadeOutLeft"); }, 2000);
   }
 
-  const [selectedId, setSelectedId] = useState(null);
-
   function selectPlay(id) {
     navigation.navigate('Play', {
       id: id,
@@ -301,6 +268,17 @@ export default ({ navigation }) => {
     })
   }
 
+  const renderHeader = () => {
+    return <View>
+        {/* PINNED POST */}
+        <FlatList
+            data={scheduleData.filter(function (posts) { return posts.post.pinned == true; })}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+        />
+    </View>
+  
+  }
 
   const renderItem = ({ item }) => {
     if (item.post.type == 'play') {
@@ -321,8 +299,6 @@ export default ({ navigation }) => {
     }
   };
 
-  //const [modalVisible, setModalVisible] = useState(false);
-
 
   return <View style={{
     flex: 1,
@@ -332,13 +308,15 @@ export default ({ navigation }) => {
     paddingRight: safeAreaInsets.right,
   }}>
     <Cog onPress={() => navigation.navigate('Settings')} />
-    {/* <Info item={scheduleView} selectedId={selectedId} modalVisible={modalVisible} setModalVisible={setModalVisible} /> */}
+
     <FlatList
       ref={scroll}
       data={scheduleView}
-      renderItem={renderItem}
       keyExtractor={(item) => item.id}
+      renderItem={renderItem}
+      ListHeaderComponent={renderHeader}
     />
+
     <View style={{ height: 55 }}></View>
 
     <View style={{ position: "absolute", left: ITEM_WIDTH - 63, flexDirection: 'column', alignItems: 'flex-end', padding: 10, paddingTop: 55 }}>
