@@ -10,7 +10,6 @@ import {
   ImageBackground,
   Image,
   Animated,
-  Modal,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';

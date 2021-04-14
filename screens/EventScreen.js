@@ -1,11 +1,9 @@
 import 'react-native-gesture-handler';
 import React, { useState, useRef, useEffect } from 'react';
-import { Animated, Text, View, StyleSheet, TouchableOpacity, Dimensions, StatusBar, ScrollView, Image, ImageBackground, Linking, PermissionsAndroid, } from 'react-native';
-import Video from 'react-native-video';
+import { Text, View, StyleSheet, TouchableOpacity, Dimensions, StatusBar, ScrollView, Image, ImageBackground, Linking, PermissionsAndroid, } from 'react-native';
 import Navigation from '../components/navigation/navigation';
-//import Settings from '../components/Cog';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Geolocation from 'react-native-geolocation-service';
 import * as geolib from 'geolib';
 
@@ -19,12 +17,6 @@ const ITEM_HEIGHT = height * .88;
 // const HEADER_MAX_HEIGHT = ITEM_HEIGHT;
 // const HEADER_MIN_HEIGHT = 240;
 // const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
-
-{/* Video Testing */ }
-//var source = 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4';
-
-{/* Audio Testing */ }
-//var source = 'https://actions.google.com/sounds/v1/crowds/voices_angry.ogg';
 
 export default ({ navigation: { goBack }, navigation, route }) => {
     // const [scrollY, setScrollY] = useState(new Animated.Value(0));
@@ -86,9 +78,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
     useEffect(() => {
         db.collection("content").doc(route.params.id).onSnapshot((snapshot) => {
             setEvent(snapshot._data);
-            //console.log(snapshot._data.mainPhotoUrl);
         })
-        //console.log("This is " + route.params.id);
     }, []);
 
     function checkPosition(currentPosition) {
@@ -146,7 +136,6 @@ export default ({ navigation: { goBack }, navigation, route }) => {
 
     return <View style={{
         flex: 1,
-        //paddingTop: safeAreaInsets.top,
         paddingBottom: safeAreaInsets.bottom,
         paddingLeft: safeAreaInsets.left,
         paddingRight: safeAreaInsets.right,
@@ -167,7 +156,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                 >
 
                     <StatusBar translucent={true} hidden={true} />
-                    {/* AUDIO/VIDEO HEADER */}
+                    {/* HEADER */}
                     <View style={styles.header} >
                         {/* <Animated.View style={[styles.header, { height: headerHeight }]} ></Animated.View> */}
                         <ImageBackground source={{ uri: event.photoUrl }} style={styles.image}>
@@ -180,12 +169,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                             </View>
                         </ImageBackground>
                     </View>
-
-
-
-
-                    {/* spacer */}
-                    {/* <View style={{ height: HEADER_MAX_HEIGHT }}></View> */}
+        
 
                     {/* discription */}
                     <View style={styles.discription}>
@@ -308,7 +292,6 @@ const styles = StyleSheet.create({
     image: {
         width: "100%",
         height: "100%",
-        //resizeMode: 'cover'
     },
     footer: {
         flex: 1,
@@ -353,7 +336,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 0,
         alignSelf: "flex-start",
-        //paddingBottom: 200,
     },
 
     title: {
@@ -377,12 +359,11 @@ const styles = StyleSheet.create({
         position: "relative",
         zIndex: 99,
     },
+
     buttonText: {
         fontFamily: 'FuturaPTBook',
         fontSize: 24,
         color: "white",
-        //fontWeight: 'bold',
-
     },
 
     subButton: {
@@ -395,16 +376,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         alignSelf: 'center',
         borderRadius: 5,
-        //margin: 10,
         position: "relative",
         zIndex: 99,
     },
+
     subButtonText: {
         fontFamily: 'FuturaPTBook',
         fontSize: 20,
         color: "white",
-        //fontWeight: 'bold',
-
     },
 
     progressBar: {
@@ -415,6 +394,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         width: ITEM_WIDTH * 0.83,
     },
+
     progressBarFill: {
         backgroundColor: '#CC8A05',
         height: 9,
@@ -423,6 +403,7 @@ const styles = StyleSheet.create({
         flexDirection: "row-reverse",
         alignItems: "center"
     },
+    
     progressDot: {
         backgroundColor: '#CC8A05',
         height: 20,

@@ -1,15 +1,24 @@
 import 'react-native-gesture-handler';
 import React, { useState, useRef, useEffect } from 'react';
-import { Animated, Text, View, Button, StyleSheet, TouchableOpacity, Dimensions, Platform, TextInput, StatusBar, ScrollView, FlatList, Image, Linking } from 'react-native';
-import { SocialIcon } from 'react-native-elements';
+import {
+    Animated,
+    Text,
+    View,
+    StyleSheet,
+    TouchableOpacity,
+    Dimensions,
+    StatusBar,
+    FlatList,
+    Image,
+    Linking,
+    ImageBackground,
+    LogBox
+} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Navigation from '../components/navigation/navigation';
-import { AuthContext } from '../navigation/AuthProvider';
 import Cog from '../components/Cog';
-// import Settings from '../components/settings/settings';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ImageBackground, LogBox } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AutoHeightImage from 'react-native-auto-height-image';
 
 import { db } from '../components/Firebase/firebase';
@@ -124,9 +133,6 @@ export default ({ navigation }) => {
         })
     }, [])
 
-    // useEffect(() => {
-    //     setPostView(postData);    
-    // }, [postData])
 
     function filterPosts(type) {
         scroll.current.scrollToOffset({ offset: ITEM_HEIGHT, animated: true })
@@ -179,8 +185,9 @@ export default ({ navigation }) => {
 
 
     const renderHeader = () => {
-        {/* Carousel Module */ }
+
         return <View>
+            {/* Carousel Module */}
             <FlatList
                 data={heroData}
                 keyExtractor={(item) => item.id}
@@ -231,14 +238,11 @@ export default ({ navigation }) => {
 
 
     const renderItem = ({ item }) => {
-
-
         return (
             <Post
                 item={item}
             />
         );
-
     };
 
 
@@ -312,13 +316,11 @@ export default ({ navigation }) => {
     const safeAreaInsets = useSafeAreaInsets();
     return <View style={{
         flex: 1,
-        //paddingTop: safeAreaInsets.top,
         paddingBottom: safeAreaInsets.bottom,
         paddingLeft: safeAreaInsets.left,
         paddingRight: safeAreaInsets.right,
     }}>
 
-        {/* <ScrollView stickyHeaderIndices={[2]}> */}
         <StatusBar hidden />
 
         <FlatList
@@ -333,6 +335,7 @@ export default ({ navigation }) => {
         />
 
         <Cog onPress={() => navigation.navigate('Settings')} />
+
         <View style={{ position: "absolute", left: ITEM_WIDTH - 63, flexDirection: 'column', alignItems: 'flex-end', padding: 10, paddingTop: 55 }}>
             <Animatable.View animation={greenAnimation} duration={500} style={[{ backgroundColor: '#747A21', position: "absolute", left: -107, top: 65, width: 117, paddingLeft: 5, paddingRight: 5, borderRadius: 5 }]}><Text style={[styles.postLabel, { color: "white" }]}>Montana Rep</Text></Animatable.View>
             <TouchableOpacity onPress={() => filterPosts('mtrep')}><Animated.View style={[styles.postNavi, { backgroundColor: '#747A21', borderColor: "#0000", borderWidth: greenSize }]}></Animated.View></TouchableOpacity>
@@ -341,6 +344,7 @@ export default ({ navigation }) => {
             <Animatable.View animation={redAnimation} duration={500} style={[{ backgroundColor: '#A5580C', position: "absolute", left: -92, top: 152, width: 102, paddingLeft: 5, paddingRight: 5, borderRadius: 5 }]}><Text style={[styles.postLabel, { color: "white" }]}>Community</Text></Animatable.View>
             <TouchableOpacity onPress={() => filterPosts('comm')}><Animated.View style={[styles.postNavi, { backgroundColor: '#A5580C', borderColor: "#0000", borderWidth: redSize }]}></Animated.View></TouchableOpacity>
         </View>
+
         <Navigation navigation={navigation} />
     </View>
 }
@@ -416,7 +420,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 50,
-        //marginBottom: 70,
         width: 212,
         height: 90,
     },
@@ -475,8 +478,6 @@ const styles = StyleSheet.create({
         fontFamily: 'FuturaPTBook',
         fontSize: 24,
         color: "white",
-        //fontWeight: 'bold',
-
     },
 
 

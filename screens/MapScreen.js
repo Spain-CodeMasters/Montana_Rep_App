@@ -1,16 +1,12 @@
 import 'react-native-gesture-handler';
-import React, { Component, useState, useEffect } from 'react';
-import { Text, View, Image, StyleSheet, TouchableOpacity, Dimensions, PermissionsAndroid, Modal, } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Text, View, Image, StyleSheet, TouchableOpacity, Dimensions, PermissionsAndroid, } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker, Callout, Animated, AnimatedRegion } from 'react-native-maps';
 import * as Animatable from 'react-native-animatable';
-// import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Feather from 'react-native-vector-icons/Feather';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-//tooltip
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Navigation from '../components/navigation/navigation';
 import Cog from '../components/Cog';
 import PlayingBanner from '../components/playingBanner';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Geolocation from 'react-native-geolocation-service';
 
 import { db } from '../components/Firebase/firebase';
@@ -130,7 +126,6 @@ export default ({ navigation }) => {
   return (
     <View style={{
       flex: 1,
-      //paddingTop: safeAreaInsets.top,
       paddingBottom: safeAreaInsets.bottom,
       paddingLeft: safeAreaInsets.left,
       paddingRight: safeAreaInsets.right,
@@ -270,7 +265,6 @@ export default ({ navigation }) => {
         </MapView>
       ) : (null)}
 
-      {/* <Settings /> */}
       <Navigation navigation={navigation} />
     </View>
   );
@@ -335,7 +329,6 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 3,
-    // alignSelf: 'center',
     width: 120,
     height: 80,
   },

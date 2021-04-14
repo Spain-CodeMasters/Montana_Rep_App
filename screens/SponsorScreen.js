@@ -1,11 +1,23 @@
 import 'react-native-gesture-handler';
 import React, { useState, useRef, useEffect } from 'react';
-import { Animated, Text, View, StyleSheet, TouchableOpacity, Dimensions, StatusBar, ScrollView, Image, ImageBackground, Linking, PermissionsAndroid, } from 'react-native';
+import { 
+    Animated, 
+    Text, 
+    View, 
+    StyleSheet, 
+    TouchableOpacity, 
+    Dimensions, 
+    StatusBar, 
+    ScrollView, 
+    Image, 
+    ImageBackground, 
+    Linking, 
+    PermissionsAndroid, 
+} from 'react-native';
 import Video from 'react-native-video';
 import Navigation from '../components/navigation/navigation';
-//import Settings from '../components/Cog';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Geolocation from 'react-native-geolocation-service';
 import * as geolib from 'geolib';
 
@@ -146,6 +158,8 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                     );
                 }
             }
+        } else {
+            setLocked(false);
         }
     }
 
@@ -424,7 +438,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 0,
         alignSelf: "flex-start",
-        //paddingBottom: 200,
     },
 
     title: {
@@ -448,12 +461,11 @@ const styles = StyleSheet.create({
         position: "relative",
         zIndex: 99,
     },
+
     buttonText: {
         fontFamily: 'FuturaPTBook',
         fontSize: 24,
         color: "white",
-        //fontWeight: 'bold',
-
     },
 
     subButton: {
@@ -466,7 +478,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         alignSelf: 'center',
         borderRadius: 5,
-        //margin: 10,
         position: "relative",
         zIndex: 99,
     },
@@ -474,8 +485,6 @@ const styles = StyleSheet.create({
         fontFamily: 'FuturaPTBook',
         fontSize: 20,
         color: "white",
-        //fontWeight: 'bold',
-
     },
 
     progressBar: {
@@ -486,6 +495,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         width: ITEM_WIDTH * 0.83,
     },
+
     progressBarFill: {
         backgroundColor: '#CC8A05',
         height: 9,
@@ -494,6 +504,7 @@ const styles = StyleSheet.create({
         flexDirection: "row-reverse",
         alignItems: "center"
     },
+
     progressDot: {
         backgroundColor: '#CC8A05',
         height: 20,

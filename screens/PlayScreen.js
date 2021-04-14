@@ -1,11 +1,21 @@
 import 'react-native-gesture-handler';
 import React, { useState, useRef, useEffect } from 'react';
-import { Animated, Text, View, StyleSheet, TouchableOpacity, Dimensions, StatusBar, ScrollView, Image, ImageBackground, PermissionsAndroid, } from 'react-native';
+import { 
+    Animated, 
+    Text, 
+    View, 
+    StyleSheet, 
+    TouchableOpacity, 
+    Dimensions, 
+    StatusBar, 
+    ScrollView, 
+    Image, 
+    ImageBackground, 
+    PermissionsAndroid, } from 'react-native';
 import Video from 'react-native-video';
 import Navigation from '../components/navigation/navigation';
-//import Settings from '../components/Cog';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import Geolocation from 'react-native-geolocation-service';
 import * as geolib from 'geolib';
 
@@ -18,12 +28,6 @@ const ITEM_HEIGHT = height * .88;
 // const HEADER_MAX_HEIGHT = ITEM_HEIGHT;
 // const HEADER_MIN_HEIGHT = 240;
 // const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
-
-{/* Video Testing */ }
-//var source = 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4';
-
-{/* Audio Testing */ }
-//var source = 'https://actions.google.com/sounds/v1/crowds/voices_angry.ogg';
 
 export default ({ navigation: { goBack }, navigation, route }) => {
     // const [scrollY, setScrollY] = useState(new Animated.Value(0));
@@ -64,19 +68,13 @@ export default ({ navigation: { goBack }, navigation, route }) => {
     };
 
 
-
     useEffect(() => {
         if (locationPermission) {
             Geolocation.getCurrentPosition(
                 (position) => {
-                    //setDevicePosition(position);
-                    // setDeviceLatitude(position.coords.latitude);
-                    // setDeviceLongitude(position.coords.longitude);
                     checkPosition(position.coords);
-                    //console.log(play.geopoints[0]);
                 },
                 (error) => {
-                    // See error code charts below.
                     console.log(error.code, error.message);
                 },
                 { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
@@ -85,15 +83,15 @@ export default ({ navigation: { goBack }, navigation, route }) => {
         } else {
             requestLocationPermission();
         }
-        //}
     }, [play]);
+
 
     useEffect(() => {
         db.collection("content").doc(route.params.id).onSnapshot((snapshot) => {
             setPlay(snapshot._data);
         })
-        //console.log("This is " + route.params.id);
     }, []);
+
 
     function checkPosition(currentPosition) {
         if (play !== null) {
@@ -116,9 +114,9 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                 }
 
             }
-            // const pointId = route.params.pointId;
+
             const distance = (geolib.getDistance(currentPosition, play.geopoints[pointId]));
-            //console.log(distance, currentPosition, play.geopoints[pointId])
+
             if (distance < 10) {
                 setLocked(false);
                 const feet = Math.floor((geolib.convertDistance(distance, "ft")))
@@ -157,8 +155,10 @@ export default ({ navigation: { goBack }, navigation, route }) => {
         }
     }
 
+
     const video = useRef(null);
     const [locked, setLocked] = useState(true);
+    const [premium, setPremium] = useState(true);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
     const [fullScreen, setFullScreen] = useState(false);
@@ -181,7 +181,6 @@ export default ({ navigation: { goBack }, navigation, route }) => {
 
     return <View style={{
         flex: 1,
-        //paddingTop: safeAreaInsets.top,
         paddingBottom: safeAreaInsets.bottom,
         paddingLeft: safeAreaInsets.left,
         paddingRight: safeAreaInsets.right,
@@ -192,20 +191,12 @@ export default ({ navigation: { goBack }, navigation, route }) => {
         {(function () {
 
             if (play !== null) {
-                return <ScrollView
-                // style={{ position: 'relative' }}
-                // scrollEventThrottle={16}
-                // onScroll={Animated.event(
-                //     [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-                //     { useNativeDriver: false }
-                // )}
-                >
+                return <ScrollView>
 
-                    {/* <StatusBar backgroundColor='#fff' barStyle="dark-content" /> */}
                     <StatusBar translucent={true} hidden={true} />
+
                     {/* AUDIO/VIDEO HEADER */}
                     <View style={styles.header} >
-                        {/* <Animated.View style={[styles.header, { height: headerHeight }]} ></Animated.View> */}
                         <ImageBackground source={{ uri: play.mainPhotoUrl }} style={styles.image}>
                             <View style={styles.overlay}>
 
@@ -273,19 +264,16 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                         </ImageBackground>
                     </View>
 
-                    {/* spacer */}
-                    {/* <View style={{ height: HEADER_MAX_HEIGHT }}></View> */}
-
                     {/* discription */}
                     <View style={styles.discription}>
                         <Text style={styles.text_title}>{play.title}</Text>
-                        <Text allowFontScaling style={styles.author}>{play.screenwriter}</Text>
                         <Text allowFontScaling style={styles.subtext}>{distance}</Text>
+                        <Text allowFontScaling style={styles.author}>{play.screenwriter}</Text>
                         <Text allowFontScaling style={styles.subtext}>{play.body}</Text>
                         {!locked ? <Text allowFontScaling style={styles.subtext}></Text> : null}
                         {
-                            locked ? <TouchableOpacity
-                                onPress={() => [setLocked(false), alert('Unlocked')]}
+                            !premium ? <TouchableOpacity
+                                //onPress={() => [setLocked(false), alert('Unlocked')]}
                             >
                                 <View style={[styles.subButton]}>
 
@@ -323,7 +311,6 @@ export default ({ navigation: { goBack }, navigation, route }) => {
             />
         </TouchableOpacity>
 
-        {/* <Settings /> */}
         <Navigation navigation={navigation} />
     </View>
 }
@@ -333,10 +320,6 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     header: {
-        // position: 'absolute',
-        // top: 0,
-        // left: 0,
-        // right: 0,
         backgroundColor: '#fff',
         overflow: 'hidden',
         height: ITEM_HEIGHT,
@@ -367,7 +350,6 @@ const styles = StyleSheet.create({
     image: {
         width: "100%",
         height: "100%",
-        //resizeMode: 'cover'
     },
     footer: {
         flex: 1,
@@ -412,7 +394,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 0,
         alignSelf: "flex-start",
-        //paddingBottom: 200,
     },
 
     title: {
@@ -452,7 +433,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         alignSelf: 'center',
         borderRadius: 5,
-        //margin: 10,
         position: "relative",
         zIndex: 99,
     },
@@ -460,8 +440,6 @@ const styles = StyleSheet.create({
         fontFamily: 'FuturaPTBook',
         fontSize: 20,
         color: "white",
-        //fontWeight: 'bold',
-
     },
 
     progressBar: {
