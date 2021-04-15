@@ -1,17 +1,18 @@
 import 'react-native-gesture-handler';
 import React, { useState, useRef, useEffect } from 'react';
-import { 
-    Animated, 
-    Text, 
-    View, 
-    StyleSheet, 
-    TouchableOpacity, 
-    Dimensions, 
-    StatusBar, 
-    ScrollView, 
-    Image, 
-    ImageBackground, 
-    PermissionsAndroid, } from 'react-native';
+import {
+    Animated,
+    Text,
+    View,
+    StyleSheet,
+    TouchableOpacity,
+    Dimensions,
+    StatusBar,
+    ScrollView,
+    Image,
+    ImageBackground,
+    PermissionsAndroid,
+} from 'react-native';
 import Video from 'react-native-video';
 import Navigation from '../components/navigation/navigation';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -164,6 +165,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
     const [fullScreen, setFullScreen] = useState(false);
     const [loading, setLoading] = useState(true);
     const [paused, setPaused] = useState(true);
+    const [progress, setProgress] = useState(new Animated.Value(currentTime));
 
     const onProgress = (data) => {
         if (!loading) {
@@ -177,6 +179,10 @@ export default ({ navigation: { goBack }, navigation, route }) => {
     };
 
     const onEnd = () => [video.current.seek(0), setPaused(true)];
+
+    useEffect(() => {
+        setProgress(new Animated.Value(currentTime));
+    }, [currentTime])
 
 
     return <View style={{
@@ -240,21 +246,27 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                                             size={40}
                                             style={{ padding: 10, }}
                                         />
-                                    //</TouchableOpacity> 
-                                    : <TouchableOpacity onPress={() => { paused ? setPaused(false) : setPaused(true) }}>
-                                        <FontAwesome5
-                                            name={paused ? "play" : "pause"}
-                                            solid
-                                            color="#fff"
-                                            size={40}
-                                            style={{ padding: 10, }}
-                                        />
-                                    </TouchableOpacity>
+                                        //</TouchableOpacity> 
+                                        : <TouchableOpacity onPress={() => { paused ? setPaused(false) : setPaused(true) }}>
+                                            <FontAwesome5
+                                                name={paused ? "play" : "pause"}
+                                                solid
+                                                color="#fff"
+                                                size={40}
+                                                style={{ padding: 10, }}
+                                            />
+                                        </TouchableOpacity>
                                 }
 
                                 <View style={styles.progressBar}>
-                                    <Animated.View style={[styles.progressBarFill]}>
-                                        <View style={styles.progressDot}></View>
+                                    <Animated.View style={[styles.progressBarFill, {
+                                        width: progress.interpolate({
+                                            inputRange: [0, duration],
+                                            outputRange: ['0%', '100%'],
+                                        })
+                                    }
+                                    ]}>
+                                        <Animated.View style={styles.progressDot}></Animated.View>
                                     </Animated.View>
                                 </View>
 
@@ -273,7 +285,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                         {!locked ? <Text allowFontScaling style={styles.subtext}></Text> : null}
                         {
                             !premium ? <TouchableOpacity
-                                //onPress={() => [setLocked(false), alert('Unlocked')]}
+                            //onPress={() => [setLocked(false), alert('Unlocked')]}
                             >
                                 <View style={[styles.subButton]}>
 
@@ -421,8 +433,6 @@ const styles = StyleSheet.create({
         fontFamily: 'FuturaPTBook',
         fontSize: 24,
         color: "white",
-        //fontWeight: 'bold',
-
     },
 
     subButton: {
@@ -454,15 +464,15 @@ const styles = StyleSheet.create({
         backgroundColor: '#CC8A05',
         height: 9,
         borderRadius: 5,
-        width: 10,
+        width: 0,
         flexDirection: "row-reverse",
-        alignItems: "center"
+        alignItems: "center",
     },
     progressDot: {
         backgroundColor: '#CC8A05',
         height: 20,
         borderRadius: 15,
-
+        marginRight: -10,
         width: 20,
     }
 

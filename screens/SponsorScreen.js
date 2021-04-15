@@ -171,6 +171,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
     const [fullScreen, setFullScreen] = useState(false);
     const [loading, setLoading] = useState(true);
     const [paused, setPaused] = useState(true);
+    const [progress, setProgress] = useState(new Animated.Value(currentTime));
 
     const onProgress = (data) => {
         if (!loading) {
@@ -184,6 +185,10 @@ export default ({ navigation: { goBack }, navigation, route }) => {
     };
 
     const onEnd = () => [video.current.seek(0), setPaused(true)];
+
+    useEffect(() => {
+        setProgress(new Animated.Value(currentTime));
+    }, [currentTime])
 
     return <View style={{
         flex: 1,
@@ -256,7 +261,12 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                                 }
 
                                 <View style={styles.progressBar}>
-                                    <Animated.View style={[styles.progressBarFill]}>
+                                    <Animated.View style={[styles.progressBarFill, {
+                                        width: progress.interpolate({
+                                            inputRange: [0, duration],
+                                            outputRange: ['0%', '100%'],
+                                        })
+                                    }]}>
                                         <View style={styles.progressDot}></View>
                                     </Animated.View>
                                 </View>
@@ -500,7 +510,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#CC8A05',
         height: 9,
         borderRadius: 5,
-        width: 10,
+        width: 0,
         flexDirection: "row-reverse",
         alignItems: "center"
     },
@@ -509,7 +519,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#CC8A05',
         height: 20,
         borderRadius: 15,
-
+        marginRight: -10,
         width: 20,
     }
 
