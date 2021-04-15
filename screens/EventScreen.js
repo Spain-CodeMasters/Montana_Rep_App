@@ -386,31 +386,4 @@ const styles = StyleSheet.create({
         color: "white",
     },
 
-    progressBar: {
-        position: 'absolute',
-        bottom: 40,
-        backgroundColor: 'white',
-        height: 9,
-        borderRadius: 5,
-        width: ITEM_WIDTH * 0.83,
-    },
-
-    progressBarFill: {
-        backgroundColor: '#CC8A05',
-        height: 9,
-        borderRadius: 5,
-        width: 10,
-        flexDirection: "row-reverse",
-        alignItems: "center"
-    },
-    
-    progressDot: {
-        backgroundColor: '#CC8A05',
-        height: 20,
-        borderRadius: 15,
-
-        width: 20,
-    }
-
-
 })

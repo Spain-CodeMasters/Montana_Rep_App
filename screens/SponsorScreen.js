@@ -517,10 +517,10 @@ const styles = StyleSheet.create({
 
     progressDot: {
         backgroundColor: '#CC8A05',
-        height: 20,
+        height: 14,
         borderRadius: 15,
-        marginRight: -10,
-        width: 20,
+        marginRight: -7,
+        width: 14,
     }
 
 
