@@ -27,7 +27,7 @@ import { db } from '../components/Firebase/firebase';
 const { width, height } = Dimensions.get('screen');
 
 const ITEM_WIDTH = width;
-const ITEM_HEIGHT = height * .75;
+const ITEM_HEIGHT = height * 0.88;
 
 
 const Post = ({ item }) => (
@@ -135,7 +135,7 @@ export default ({ navigation }) => {
 
 
     function filterPosts(type) {
-        scroll.current.scrollToOffset({ offset: ITEM_HEIGHT, animated: true })
+        scroll.current.scrollToOffset({ offset: ITEM_HEIGHT, animated: true });
         if (filter !== type) {
             if (type == "mtrep") {
                 setFilter("mtrep");
@@ -218,10 +218,24 @@ export default ({ navigation }) => {
                                     </TouchableOpacity>
                                 </View>
                             </View>
+
                         </ImageBackground>
                     </View>
                 }}
             />
+
+
+            <Animatable.View animation="slideInDown" easing="ease-in" iterationCount={'infinite'} direction="alternate" style={{ position: 'absolute', top: ITEM_HEIGHT * 0.9, left: ITEM_WIDTH / 2 - 18 }}>
+                <TouchableOpacity onPress={() => scroll.current.scrollToOffset({ offset: ITEM_HEIGHT, animated: true })}>
+                    <FontAwesome5
+                        name="chevron-down"
+                        solid
+                        color="white"
+                        size={40}
+                    />
+                </TouchableOpacity>
+
+            </Animatable.View>
 
             {/* PINNED POST */}
             <FlatList
