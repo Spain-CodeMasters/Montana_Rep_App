@@ -20,6 +20,7 @@ export default ({ navigation }) => {
 
   const locationPermission = PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
   const [currentPosition, setCurrentPosition] = useState();
+  const [currentRegion, setCurrentRegion] = useState();
   const [contentData, setContentData] = useState(null);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -108,6 +109,10 @@ export default ({ navigation }) => {
       id: id,
       pointId: pointId,
     });
+  }
+
+  function onRegionChange(region){
+    setCurrentRegion(region);
   }
 
   const Markers = () => {
@@ -237,7 +242,6 @@ export default ({ navigation }) => {
     }
   }
 
-
   return (
     <View style={{
       flex: 1,
@@ -247,19 +251,19 @@ export default ({ navigation }) => {
     }}>
       <Cog onPress={() => navigation.navigate('Settings')} />
 
-      {!isLoading ? (
+      {!isLoading ? ( 
         <MapView
           provider={PROVIDER_GOOGLE}
           style={styles.map}
           showsUserLocation={true}
-          followsUserLocation={true}
-
-          region={{
+          initialRegion={{
             latitude: currentPosition.latitude,
             longitude: currentPosition.longitude,
             latitudeDelta: 0.00220,
             longitudeDelta: 0.00220,
           }}
+          region={currentRegion}
+          onRegionChangeComplete={onRegionChange}
         >
 
           <Markers />

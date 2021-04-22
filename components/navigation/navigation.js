@@ -19,28 +19,30 @@ function Navigation({ navigation }) {
     <SafeAreaView>
       <View style={styles.navBar}>
         <TouchableOpacity style={{ alignSelf: 'center', margin: 25, marginTop: 30, }} onPress={() => navigation.navigate('Home')}>
-        <FontAwesome5
-          name = "home"
-          solid
-          color="#747A21"
-          size={30}
-        />
+          <FontAwesome5
+            name="home"
+            solid
+            color="#747A21"
+            size={30}
+          />
         </TouchableOpacity>
         <TouchableOpacity style={{ alignSelf: 'flex-end', margin: 5, }} onPress={() => navigation.navigate('Map')}>
-        <FontAwesome5
-          name = "map-marker-alt"
-          solid
-          color="#747A21"
-          size={40}
-        />
+          <View style={styles.circle}>
+            <FontAwesome5
+              name="map-marker-alt"
+              solid
+              color="white"
+              size={40}
+            />
+          </View>
         </TouchableOpacity>
         <TouchableOpacity style={{ alignSelf: 'center', margin: 25, marginTop: 30, }} onPress={() => navigation.navigate('Schedule')}>
-        <FontAwesome5
-          name = "calendar-alt"
-          solid
-          color="#747A21"
-          size={30}
-        />
+          <FontAwesome5
+            name="calendar-alt"
+            solid
+            color="#747A21"
+            size={30}
+          />
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -70,6 +72,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  circle: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: "#747A21",
+    padding: 10,
+    alignItems: 'center',
+
+  }
 });
 
 export default Navigation;
