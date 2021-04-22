@@ -28,11 +28,17 @@ function Navigation({ navigation }) {
         </TouchableOpacity>
         <TouchableOpacity style={{ alignSelf: 'flex-end', margin: 5, }} onPress={() => navigation.navigate('Map')}>
         <FontAwesome5
+          name = "circle"
+          solid
+          color="#747A21"
+          size={60}
+        />
+        {/* <FontAwesome5
           name = "map-marker-alt"
           solid
           color="#747A21"
           size={40}
-        />
+        /> */}
         </TouchableOpacity>
         <TouchableOpacity style={{ alignSelf: 'center', margin: 25, marginTop: 30, }} onPress={() => navigation.navigate('Schedule')}>
         <FontAwesome5
