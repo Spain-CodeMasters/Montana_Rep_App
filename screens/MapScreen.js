@@ -70,7 +70,7 @@ export default ({ navigation }) => {
           getCurrentLocation();
           //console.log('This will run every 5 seconds');
         }, 5000);
-        
+
         return () => clearInterval(interval);
 
       } else {
@@ -81,6 +81,7 @@ export default ({ navigation }) => {
 
 
   useEffect(() => {
+    requestLocationPermission();
     db.collection("content").onSnapshot((snapshot) => {
       setContentData(snapshot.docs.map((doc) => ({ id: doc.id, content: doc.data() })));
 
@@ -126,7 +127,7 @@ export default ({ navigation }) => {
                   latitude: geopoints.latitude * 1,
                   longitude: geopoints.longitude * 1,
                 }}
-                image={require('../assets/GoPlay_PinGold.png')}
+                image={require('../assets/GoPlay_PinGift.png')}
                 onPress={e => selectPlay(id, pointId)}
               >
                 <Callout tooltip>
