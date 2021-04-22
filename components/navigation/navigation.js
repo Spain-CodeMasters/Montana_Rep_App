@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+
 import home from './assets/homeIcon.png'
 import map from './assets/mapIcon.png'
 import cal from './assets/upcomingIcon.png'
@@ -17,13 +19,28 @@ function Navigation({ navigation }) {
     <SafeAreaView>
       <View style={styles.navBar}>
         <TouchableOpacity style={{ alignSelf: 'center', margin: 25, marginTop: 30, }} onPress={() => navigation.navigate('Home')}>
-          <Image source={home} />
+        <FontAwesome5
+          name = "home"
+          solid
+          color="#747A21"
+          size={30}
+        />
         </TouchableOpacity>
         <TouchableOpacity style={{ alignSelf: 'flex-end', margin: 5, }} onPress={() => navigation.navigate('Map')}>
-          <Image source={map} />
+        <FontAwesome5
+          name = "map-marker-alt"
+          solid
+          color="#747A21"
+          size={40}
+        />
         </TouchableOpacity>
         <TouchableOpacity style={{ alignSelf: 'center', margin: 25, marginTop: 30, }} onPress={() => navigation.navigate('Schedule')}>
-          <Image source={cal} />
+        <FontAwesome5
+          name = "calendar-alt"
+          solid
+          color="#747A21"
+          size={30}
+        />
         </TouchableOpacity>
       </View>
     </SafeAreaView>
