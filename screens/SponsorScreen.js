@@ -158,9 +158,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                     );
                 }
             }
-        } else {
-            setLocked(false);
-        }
+        } 
     }
 
 

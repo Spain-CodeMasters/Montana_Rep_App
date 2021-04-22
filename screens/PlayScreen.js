@@ -26,17 +26,8 @@ const { width, height } = Dimensions.get('screen');
 const ITEM_WIDTH = width;
 const ITEM_HEIGHT = height * .88;
 
-// const HEADER_MAX_HEIGHT = ITEM_HEIGHT;
-// const HEADER_MIN_HEIGHT = 240;
-// const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
-
 export default ({ navigation: { goBack }, navigation, route }) => {
-    // const [scrollY, setScrollY] = useState(new Animated.Value(0));
-    // const headerHeight = scrollY.interpolate({
-    //     inputRange: [0, HEADER_SCROLL_DISTANCE],
-    //     outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
-    //     extrapolate: 'clamp',
-    // });
+
     const safeAreaInsets = useSafeAreaInsets()
 
     const locationPermission = PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
@@ -95,7 +86,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
 
 
     function checkPosition(currentPosition) {
-        if (play !== null) {
+        if (play !== null && play.geopoints[0].latitude !== '') {
             let pointId = 0
             //CHECK for null
             if (route.params.pointId !== null) {
@@ -120,7 +111,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
 
             if (distance < 10) {
                 setLocked(false);
-                const feet = Math.floor((geolib.convertDistance(distance, "ft")))
+                const feet = Math.floor((geolib.convertDistance(distance, "ft")));
                 if (feet == 1) {
                     setDistance(
                         feet + ' foot away'
@@ -153,7 +144,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                     );
                 }
             }
-        }
+        } 
     }
 
 

@@ -51,6 +51,7 @@ const GetTime = ({ start, end }) => {
   //console.log(start);
   if (start !== null && start !== undefined) {
     const today = new Date();
+    //console.log(start.toString());
 
     const h = start.getHours();
     const m = start.getMinutes();
@@ -86,15 +87,12 @@ const GetTime = ({ start, end }) => {
       time = "Going On Now"
     }
 
-    //if (today < start) {
     return (
       <Text style={styles.timeText}>
         {time}
       </Text>
     );
-    //} else if (today > start && today < end){
   }
-  //}
 };
 
 

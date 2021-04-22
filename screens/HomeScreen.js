@@ -54,7 +54,7 @@ const Post = ({ item }) => (
 
         {/* Check for Image */}
         {(function () {
-            if (item.post.photoUrl == '' || item.post.photoUrl == null) {
+            if (item.post.photoUrl == '' || item.post.photoUrl == ' ' || item.post.photoUrl == null) {
                 return <></>
             } else {
                 return <View style={{ flex: 1 }}>
@@ -69,10 +69,10 @@ const Post = ({ item }) => (
 
         {/* Check for Link */}
         {(function () {
-            if (item.post.link == '' || item.post.link == null) {
+            if (item.post.link == '' || item.post.link == ' ' || item.post.link == null) {
                 return <></>
             } else {
-                if (item.post.linkName == '' || item.post.linkName == null) {
+                if (item.post.linkName == '' || item.post.linkName == ' ' || item.post.linkName == null) {
                     return (
                         <TouchableOpacity onPress={() => {
                             Linking.openURL(item.post.link)

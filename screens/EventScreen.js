@@ -107,7 +107,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
 
             const distance = (geolib.getDistance(currentPosition, event.geopoints[pointId]));
             if (distance < 90) {
-                const feet = Math.floor((geolib.convertDistance(distance, "ft")))
+                const feet = Math.floor((geolib.convertDistance(distance, "ft")));
                 if (feet == 1) {
                     setDistance(
                         feet + ' foot away'
