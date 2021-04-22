@@ -18,7 +18,7 @@ function Navigation({ navigation }) {
   return (
     <SafeAreaView>
       <View style={styles.navBar}>
-        <TouchableOpacity style={{ alignSelf: 'center', margin: 25, marginTop: 30, }} onPress={() => navigation.navigate('Home')}>
+        <TouchableOpacity style={{ alignSelf: 'center', margin: 25}} onPress={() => navigation.navigate('Home')}>
           <FontAwesome5
             name="home"
             solid
@@ -36,7 +36,7 @@ function Navigation({ navigation }) {
             />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={{ alignSelf: 'center', margin: 25, marginTop: 30, }} onPress={() => navigation.navigate('Schedule')}>
+        <TouchableOpacity style={{ alignSelf: 'center', margin: 25, marginLeft: 30 }} onPress={() => navigation.navigate('Schedule')}>
           <FontAwesome5
             name="calendar-alt"
             solid
