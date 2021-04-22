@@ -9,6 +9,7 @@ import Cog from '../components/Cog';
 import PlayingBanner from '../components/playingBanner';
 import Geolocation from 'react-native-geolocation-service';
 import * as geolib from 'geolib';
+import { useFocusEffect } from '@react-navigation/native';
 
 import { db } from '../components/Firebase/firebase';
 
@@ -18,8 +19,6 @@ export default ({ navigation }) => {
   const safeAreaInsets = useSafeAreaInsets();
 
   const locationPermission = PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
-  const [deviceLatitude, setDeviceLatitude] = useState();
-  const [deviceLongitude, setDeviceLongitude] = useState();
   const [currentPosition, setCurrentPosition] = useState();
   const [contentData, setContentData] = useState(null);
 
@@ -49,55 +48,9 @@ export default ({ navigation }) => {
     }
   };
 
-
-
-  // useEffect(() => {
-  //   if (locationPermission) {
-  //     Geolocation.getCurrentPosition(
-  //       (position) => {
-  //         //setDevicePosition(position);
-  //         setDeviceLatitude(position.coords.latitude);
-  //         setDeviceLongitude(position.coords.longitude);
-  //         setIsLoading(false);
-  //         //console.log(position);
-  //       },
-  //       (error) => {
-  //         // See error code charts below.
-  //         console.log(error.code, error.message);
-  //       },
-  //       { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-  //     );
-
-  //     const currentPosition = //() => {
-  //       Geolocation.watchPosition(
-  //         (position) => {
-  //           //setDevicePosition(position);
-  //           setDeviceLatitude(position.coords.latitude);
-  //           setDeviceLongitude(position.coords.longitude);
-  //           console.log(position);
-  //         },
-  //         (error) => {
-  //           console.log(error.code, error.message);
-  //         },
-  //         { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-  //       );
-  //     return () => {
-  //       if (currentPosition) {
-  //         Geolocation.clearWatch(currentPosition);
-  //       }
-  //     };
-
-  //   } else {
-  //     requestLocationPermission();
-  //   }
-  //   //}
-  // }, [])
-
   function getCurrentLocation() {
     Geolocation.getCurrentPosition(
       (position) => {
-        setDeviceLatitude(position.coords.latitude);
-        setDeviceLongitude(position.coords.longitude);
         setCurrentPosition(position.coords);
         setIsLoading(false);
       },
@@ -108,13 +61,23 @@ export default ({ navigation }) => {
     );
   }
 
-  useEffect(() => {
-    if (locationPermission) {
-      getCurrentLocation();
-    } else {
-      requestLocationPermission();
-    }
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      if (locationPermission) {
+        getCurrentLocation();
+
+        const interval = setInterval(() => {
+          getCurrentLocation();
+          //console.log('This will run every 5 seconds');
+        }, 5000);
+        
+        return () => clearInterval(interval);
+
+      } else {
+        requestLocationPermission();
+      }
+    }, [])
+  );
 
 
   useEffect(() => {
@@ -152,11 +115,10 @@ export default ({ navigation }) => {
 
       var contents = contentData.map(({ id, content }) => content.geopoints.map((geopoints, pointId) => {
         if (geopoints.latitude !== '' && geopoints.longitude !== '') {
-          // distanceArr.push([id, pointId, geopoints]);
-          // console.log(distanceArr);
+
           if (content.type == "easterEgg") {
             var distance = (geolib.getDistance(currentPosition, geopoints));
-            
+
             if (distance < 10) {
               return <Marker
                 key={pointId}
@@ -178,8 +140,6 @@ export default ({ navigation }) => {
                 </Callout>
               </Marker>
 
-            } else {
-              return <></>
             }
 
           } else if (content.type == "play") {
@@ -294,8 +254,8 @@ export default ({ navigation }) => {
           followsUserLocation={true}
 
           region={{
-            latitude: deviceLatitude,
-            longitude: deviceLongitude,
+            latitude: currentPosition.latitude,
+            longitude: currentPosition.longitude,
             latitudeDelta: 0.00220,
             longitudeDelta: 0.00220,
           }}
