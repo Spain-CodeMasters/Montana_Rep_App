@@ -282,6 +282,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                     <View style={styles.discription}>
                         <Text style={styles.text_title}>{sponsor.title}</Text>
                         <Text allowFontScaling style={styles.subtext}>{distance}</Text>
+                        <Text allowFontScaling style={styles.subtext}>{sponsor.locationInfo}</Text>
                         <Text allowFontScaling style={styles.subtext}>{sponsor.body}</Text>
                         {/* Check for Link */}
                         {(function () {

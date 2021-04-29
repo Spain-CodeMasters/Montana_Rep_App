@@ -22,6 +22,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AutoHeightImage from 'react-native-auto-height-image';
 
 import { db } from '../components/Firebase/firebase';
+import { TextComponent } from 'react-native';
 
 //Carousel Banner
 const { width, height } = Dimensions.get('screen');
@@ -225,7 +226,7 @@ export default ({ navigation }) => {
             />
 
 
-            <Animatable.View animation="slideInDown" easing="ease-in" iterationCount={'infinite'} direction="alternate" style={{ position: 'absolute', top: ITEM_HEIGHT * 0.9, left: ITEM_WIDTH / 2 - 18 }}>
+            <Animatable.View animation="bounce" easing="ease-in" iterationCount={'infinite'} duration={1500} iterationDelay={1000} style={{ position: 'absolute', top: ITEM_HEIGHT * 0.9, left: ITEM_WIDTH / 2 - 18 }}>
                 <TouchableOpacity onPress={() => scroll.current.scrollToOffset({ offset: ITEM_HEIGHT, animated: true })}>
                     <FontAwesome5
                         name="chevron-down"
@@ -238,14 +239,19 @@ export default ({ navigation }) => {
             </Animatable.View>
 
             {/* PINNED POST */}
-            <FlatList
-                data={postData.filter(function (posts) { return posts.post.pinned == true; })}
-                renderItem={renderItem}
-                keyExtractor={(item) => item.id}
-                ItemSeparatorComponent={renderItemSeparator}
-                ListFooterComponent={renderItemSeparator}
+            <View style={{padding: 10}}>
+            <Text style={[styles.postLabel, { padding: 10, color: '#999', textAlign: "center" }]}>FEATURED</Text>
+            <View style={{padding: 20, backgroundColor: "white", borderWidth: 1, borderColor: '#999', borderRadius: 5 }}>
+                
 
-            />
+                <FlatList
+                    data={postData.filter(function (posts) { return posts.post.pinned == true; })}
+                    renderItem={renderItem}
+                    keyExtractor={(item) => item.id}
+                    ItemSeparatorComponent={renderItemSeparator}
+                />
+            </View>
+            </View>
         </View>
 
     }

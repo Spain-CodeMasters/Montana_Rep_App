@@ -124,8 +124,12 @@ export default ({ navigation }) => {
 
           if (content.type == "easterEgg") {
             var distance = (geolib.getDistance(currentPosition, geopoints));
-
-            if (distance < 10) {
+            let reveal;
+            if (distance < 10){
+              reveal = true;
+            }
+            
+            if (reveal) {
               return <Marker
                 key={pointId}
                 coordinate={{

@@ -175,6 +175,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                     <View style={styles.discription}>
                         <Text style={styles.text_title}>{event.title}</Text>
                         <Text allowFontScaling style={styles.subtext}>{distance}</Text>
+                        <Text allowFontScaling style={styles.subtext}>{event.locationInfo}</Text>
                         <Text allowFontScaling style={styles.subtext}>{event.body}</Text>
                         {/* Check for Link */}
                         {(function () {

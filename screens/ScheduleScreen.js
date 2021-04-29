@@ -61,6 +61,8 @@ const GetTime = ({ start, end }) => {
     function hours(){
       if (h > 12){
         return h - 12;
+      } else if (h == 0) {
+        return 12;
       } else {
         return h;
       }
