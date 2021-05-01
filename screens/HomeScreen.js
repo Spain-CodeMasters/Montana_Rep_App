@@ -239,19 +239,21 @@ export default ({ navigation }) => {
             </Animatable.View>
 
             {/* PINNED POST */}
-            <View style={{padding: 10}}>
-            <Text style={[styles.postLabel, { padding: 10, color: '#999', textAlign: "center" }]}>FEATURED</Text>
-            <View style={{padding: 20, backgroundColor: "white", borderWidth: 1, borderColor: '#999', borderRadius: 5 }}>
-                
-
-                <FlatList
-                    data={postData.filter(function (posts) { return posts.post.pinned == true; })}
-                    renderItem={renderItem}
-                    keyExtractor={(item) => item.id}
-                    ItemSeparatorComponent={renderItemSeparator}
-                />
-            </View>
-            </View>
+            {(function () {
+                if (postData.filter(function (posts) { return posts.post.pinned == true; }).length !== 0) {
+                    return <View style={{ padding: 10 }}>
+                        <Text style={[styles.postLabel, { padding: 10, color: '#999', textAlign: "center" }]}>FEATURED</Text>
+                        <View style={{ padding: 20, backgroundColor: "white", borderWidth: 1, borderColor: '#999', borderRadius: 5 }}>
+                            <FlatList
+                                data={postData.filter(function (posts) { return posts.post.pinned == true; })}
+                                renderItem={renderItem}
+                                keyExtractor={(item) => item.id}
+                                ItemSeparatorComponent={renderItemSeparator}
+                            />
+                        </View>
+                    </View>
+                }
+            })()}
         </View>
 
     }

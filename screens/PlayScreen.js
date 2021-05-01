@@ -273,6 +273,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                         <Text allowFontScaling style={styles.subtext}>{distance}</Text>
                         <Text allowFontScaling style={styles.author}>{play.screenwriter}</Text>
                         <Text allowFontScaling style={styles.subtext}>{play.locationInfo}</Text>
+                        <Text allowFontScaling style={styles.subtext}>{play.subHeader}</Text>
                         <Text allowFontScaling style={styles.subtext}>{play.body}</Text>
                         {!locked ? <Text allowFontScaling style={styles.subtext}></Text> : null}
                         {
