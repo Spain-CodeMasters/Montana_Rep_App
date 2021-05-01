@@ -169,7 +169,16 @@ export default ({ navigation: { goBack }, navigation, route }) => {
         setLoading(false);
     };
 
-    const onEnd = () => [video.current.seek(0), setPaused(true)];
+    const onEnd = () => {
+        video.current.seek(0);
+        setPaused(true);
+        console.log("Ended");
+        let views = play.views + 1;
+    
+        db.collection("content").doc(route.params.id).update ({
+            views: views,
+        })
+    };
 
     useEffect(() => {
         setProgress(new Animated.Value(currentTime));

@@ -1,18 +1,18 @@
 import 'react-native-gesture-handler';
 import React, { useState, useRef, useEffect } from 'react';
-import { 
-    Animated, 
-    Text, 
-    View, 
-    StyleSheet, 
-    TouchableOpacity, 
-    Dimensions, 
-    StatusBar, 
-    ScrollView, 
-    Image, 
-    ImageBackground, 
-    Linking, 
-    PermissionsAndroid, 
+import {
+    Animated,
+    Text,
+    View,
+    StyleSheet,
+    TouchableOpacity,
+    Dimensions,
+    StatusBar,
+    ScrollView,
+    Image,
+    ImageBackground,
+    Linking,
+    PermissionsAndroid,
 } from 'react-native';
 import Video from 'react-native-video';
 import Navigation from '../components/navigation/navigation';
@@ -158,7 +158,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                     );
                 }
             }
-        } 
+        }
     }
 
 
@@ -182,7 +182,16 @@ export default ({ navigation: { goBack }, navigation, route }) => {
         setLoading(false);
     };
 
-    const onEnd = () => [video.current.seek(0), setPaused(true)];
+    const onEnd = () => {
+        video.current.seek(0);
+        setPaused(true);
+        console.log("Ended");
+        let views = sponsor.views + 1;
+    
+        db.collection("content").doc(route.params.id).update ({
+            views: views,
+        })
+    };
 
     useEffect(() => {
         setProgress(new Animated.Value(currentTime));
@@ -246,16 +255,16 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                                             size={40}
                                             style={{ padding: 10, }}
                                         />
-                                    //</TouchableOpacity>
-                                    : <TouchableOpacity onPress={() => { paused ? setPaused(false) : setPaused(true) }}>
-                                        <FontAwesome5
-                                            name={paused ? "play" : "pause"}
-                                            solid
-                                            color="#fff"
-                                            size={40}
-                                            style={{ padding: 10, }}
-                                        />
-                                    </TouchableOpacity>
+                                        //</TouchableOpacity>
+                                        : <TouchableOpacity onPress={() => { paused ? setPaused(false) : setPaused(true) }}>
+                                            <FontAwesome5
+                                                name={paused ? "play" : "pause"}
+                                                solid
+                                                color="#fff"
+                                                size={40}
+                                                style={{ padding: 10, }}
+                                            />
+                                        </TouchableOpacity>
                                 }
 
                                 <View style={styles.progressBar}>
