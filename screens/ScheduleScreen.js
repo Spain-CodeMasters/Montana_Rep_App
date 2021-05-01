@@ -190,7 +190,7 @@ export default ({ navigation }) => {
   const [scheduleView, setScheduleView] = useState(scheduleData);
 
   useEffect(() => {
-    db.collection("content").orderBy("start", "desc").onSnapshot((snapshot) => {
+    db.collection("content").orderBy("start", "asc").onSnapshot((snapshot) => {
       setScheduleData(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
       setScheduleView(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
     })
