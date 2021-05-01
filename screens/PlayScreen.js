@@ -86,7 +86,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
 
 
     function checkPosition(currentPosition) {
-        if (play !== null && play.geopoints[0].latitude !== '') {
+        if (play !== null && play.geopoints[0].latitude !== '' || play !== null && play.geopoints.length > 1) {
             let pointId = 0
             //CHECK for null
             if (route.params.pointId !== null) {

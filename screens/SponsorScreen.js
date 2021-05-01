@@ -101,7 +101,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
     }, []);
 
     function checkPosition(currentPosition) {
-        if (sponsor !== null && sponsor.geopoints[0].latitude !== '') {
+        if (sponsor !== null && sponsor.geopoints[0].latitude !== '' || sponsor !== null && sponsor.geopoints.length > 1) {
             let pointId = 0
             //CHECK for null
             if (route.params.pointId !== null) {

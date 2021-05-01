@@ -82,7 +82,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
     }, []);
 
     function checkPosition(currentPosition) {
-        if (event !== null && event.geopoints[0].latitude !== '') {
+        if (event !== null && event.geopoints[0].latitude !== '' || event !== null && event.geopoints.length > 1) {
             let pointId = 0
 
             //CHECK for null
