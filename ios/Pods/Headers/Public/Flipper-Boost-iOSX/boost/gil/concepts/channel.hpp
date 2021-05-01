@@ -1,0 +1,1 @@
+../../../../../../Flipper-Boost-iOSX/frameworks/Headers/boost/gil/concepts/channel.hpp

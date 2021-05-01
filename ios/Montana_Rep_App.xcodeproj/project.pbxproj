@@ -3,57 +3,18 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* Montana_Rep_AppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* Montana_Rep_AppTests.m */; };
+		0D02178BC2C19E017678A7C9 /* libPods-Montana_Rep_App-Montana_Rep_AppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC3B667E13CDCD274923BD5F /* libPods-Montana_Rep_App-Montana_Rep_AppTests.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		2DCD954D1E0B4F2C00145EB5 /* Montana_Rep_AppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* Montana_Rep_AppTests.m */; };
+		7E48DD0F263D04C0003FAB95 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E48DD0E263D04C0003FAB95 /* File.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		232B42A222ED46B39CB853A1 /* FuturaPTBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 501E184D77B8486F8429DDCF /* FuturaPTBold.otf */; };
-		F12D6E7983CF428FB5B25487 /* FuturaPTBoldOblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7D4844DB809B41A6AD095ACE /* FuturaPTBoldOblique.otf */; };
-		E9ABE89A05CE4BF4A1095943 /* FuturaPTBook.otf in Resources */ = {isa = PBXBuildFile; fileRef = D33831D63B5C48D196FD20A1 /* FuturaPTBook.otf */; };
-		7EB7E408FFA94F20BCB08925 /* FuturaPTBookOblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4E338C069A0E4D49B48DCD38 /* FuturaPTBookOblique.otf */; };
-		487231CCF86C4F3EB4E45EE7 /* FuturaPTCondBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0A3C7B937769484AA42EF132 /* FuturaPTCondBold.otf */; };
-		CF565688BC35467C9FBD5A27 /* FuturaPTCondBoldOblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3256687C3046451B9FC4364C /* FuturaPTCondBoldOblique.otf */; };
-		4CA8658B8C0A4FA1B530123E /* FuturaPTCondBook.otf in Resources */ = {isa = PBXBuildFile; fileRef = CB09F34C7D474B318CB22D13 /* FuturaPTCondBook.otf */; };
-		25EE71C84B7B49888B219F00 /* FuturaPTCondBookOblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0206F6CA4D214291A93C0BD2 /* FuturaPTCondBookOblique.otf */; };
-		7C6EBFAF05BF43BC832D5457 /* FuturaPTCondExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = BF51DD506BCE4D6AA880F4EA /* FuturaPTCondExtraBold.otf */; };
-		13A29B0EBAB6451E8B373B60 /* FuturaPTCondExtraBoldOblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = FEB3E5F1E7B74B83893DB6C8 /* FuturaPTCondExtraBoldOblique.otf */; };
-		F69BE91A33CD420F8234E923 /* FuturaPTCondMedium.otf in Resources */ = {isa = PBXBuildFile; fileRef = C17221ECEA8C42908D797978 /* FuturaPTCondMedium.otf */; };
-		6E34E59823034B80A9384401 /* FuturaPTCondMediumOblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = 268271485EF84F198733B69C /* FuturaPTCondMediumOblique.otf */; };
-		B7BDD888A98A497CB5177A82 /* FuturaPTDemi.otf in Resources */ = {isa = PBXBuildFile; fileRef = 50B7163BD04145FA9CA16E43 /* FuturaPTDemi.otf */; };
-		4136F414DF0C455F994E4811 /* FuturaPTDemiOblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = 82E07C820E81496AB0223885 /* FuturaPTDemiOblique.otf */; };
-		D030381C34C04A52AF333E4B /* FuturaPTExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8CDD913FD0024A6B8E0ADA06 /* FuturaPTExtraBold.otf */; };
-		E180BCB56B7548A8AD5759A6 /* FuturaPTExtraBoldOblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = 321387286E3243188EABF5F2 /* FuturaPTExtraBoldOblique.otf */; };
-		FCE05E044C3047128D853430 /* FuturaPTHeavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7616B6CACF3B445EB61831DF /* FuturaPTHeavy.otf */; };
-		8C566A5528B849599D398665 /* FuturaPTHeavyOblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8DAEEA40545B401190CD10A9 /* FuturaPTHeavyOblique.otf */; };
-		5BB0B1BF26F14F3A9022EA68 /* FuturaPTLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 885A72ECEE504D63ADD23757 /* FuturaPTLight.otf */; };
-		C6A559D8943547A9A32111CC /* FuturaPTLightOblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0C240399989E4BF4BE33F651 /* FuturaPTLightOblique.otf */; };
-		D6FEF5B118CC4351A68F4B43 /* FuturaPTMedium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 806DC4234ABB4B869F47166F /* FuturaPTMedium.otf */; };
-		2FA66A50DAF04B51B4CFCE8E /* FuturaPTMediumOblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = F6E3AE46A04B430091FC4E45 /* FuturaPTMediumOblique.otf */; };
-		A121866CE4A14868BF36186E /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54E0B00F10E640BE9C9DBD66 /* AntDesign.ttf */; };
-		1903D839D89E4B52A8DE6131 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BBB51AF2B6EB4281998F3B23 /* Entypo.ttf */; };
-		BE1CC75302E94738B928BCB9 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BB7006F781074B38B7ED0707 /* EvilIcons.ttf */; };
-		13DF931345B748E1931F441B /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BC3C5F4C1C8040688543A00A /* Feather.ttf */; };
-		556BE0887515491E9231B882 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B15DA50314084F5BADA4ABE7 /* FontAwesome.ttf */; };
-		8A7B138E70B349E3A5796A8A /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 746275354C014FC79C0B844B /* FontAwesome5_Brands.ttf */; };
-		D711E4D6DA624A66B1F1C13E /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4CFD86146E64AEA929BBC4C /* FontAwesome5_Regular.ttf */; };
-		06AE5A6836A04685B0DB451F /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 076B3FFB75664CD7A12A7F66 /* FontAwesome5_Solid.ttf */; };
-		42FEEE0BB06347ADB69FA8F1 /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1D77F797552642D68C98AA90 /* Fontisto.ttf */; };
-		B8C0052CE3344CABA1989710 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4163A47822964CF594450D34 /* Foundation.ttf */; };
-		2C83C311E0884DA7B7EBE20B /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 39776DB5AEA5476E9F975A4F /* Ionicons.ttf */; };
-		96F84FA5A5BB476BB1B4F154 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4AA0DA2721EC45D2874F823D /* MaterialCommunityIcons.ttf */; };
-		9F9D631438E84046815D3B5C /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EA81BF3733A44637BCF80C96 /* MaterialIcons.ttf */; };
-		9EB09B97EEF14466A30CE402 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4FB6336E7DD44C689E6A5E6B /* Octicons.ttf */; };
-		8731FB3654BE49AF8FB57809 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 707AB245C1C84E7FAB9A911B /* SimpleLineIcons.ttf */; };
-		D1F4AC6981C44C54A0C92DE8 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D91D32A4BF8F444EA50CCE63 /* Zocial.ttf */; };
+		D2DD1843C646CF63B23826AA /* libPods-Montana_Rep_App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4E40E7083B326E691AAD9E /* libPods-Montana_Rep_App.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,17 +25,9 @@
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
 			remoteInfo = Montana_Rep_App;
 		};
-		2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2D02E47A1E0B4A5D006451C7;
-			remoteInfo = "Montana_Rep_App-tvOS";
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		00E356EE1AD99517003FC87E /* Montana_Rep_AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Montana_Rep_AppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* Montana_Rep_AppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Montana_Rep_AppTests.m; sourceTree = "<group>"; };
@@ -84,49 +37,16 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Montana_Rep_App/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Montana_Rep_App/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Montana_Rep_App/main.m; sourceTree = "<group>"; };
-		2D02E47B1E0B4A5D006451C7 /* Montana_Rep_App-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Montana_Rep_App-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2D02E4901E0B4A5D006451C7 /* Montana_Rep_App-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Montana_Rep_App-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E48DD0D263D04C0003FAB95 /* Montana_Rep_App-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Montana_Rep_App-Bridging-Header.h"; sourceTree = "<group>"; };
+		7E48DD0E263D04C0003FAB95 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Montana_Rep_App/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		859E5311EDEEF17C353E07BA /* Pods-Montana_Rep_App-Montana_Rep_AppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Montana_Rep_App-Montana_Rep_AppTests.debug.xcconfig"; path = "Target Support Files/Pods-Montana_Rep_App-Montana_Rep_AppTests/Pods-Montana_Rep_App-Montana_Rep_AppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		AD4E40E7083B326E691AAD9E /* libPods-Montana_Rep_App.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Montana_Rep_App.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B4EF82748BB76660E380CE06 /* Pods-Montana_Rep_App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Montana_Rep_App.release.xcconfig"; path = "Target Support Files/Pods-Montana_Rep_App/Pods-Montana_Rep_App.release.xcconfig"; sourceTree = "<group>"; };
+		BC3B667E13CDCD274923BD5F /* libPods-Montana_Rep_App-Montana_Rep_AppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Montana_Rep_App-Montana_Rep_AppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C5F15B5C468AAC2577F3FB88 /* Pods-Montana_Rep_App-Montana_Rep_AppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Montana_Rep_App-Montana_Rep_AppTests.release.xcconfig"; path = "Target Support Files/Pods-Montana_Rep_App-Montana_Rep_AppTests/Pods-Montana_Rep_App-Montana_Rep_AppTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
-		501E184D77B8486F8429DDCF /* FuturaPTBold.otf */ = {isa = PBXFileReference; name = "FuturaPTBold.otf"; path = "../assets/fonts/FuturaPTBold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		7D4844DB809B41A6AD095ACE /* FuturaPTBoldOblique.otf */ = {isa = PBXFileReference; name = "FuturaPTBoldOblique.otf"; path = "../assets/fonts/FuturaPTBoldOblique.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		D33831D63B5C48D196FD20A1 /* FuturaPTBook.otf */ = {isa = PBXFileReference; name = "FuturaPTBook.otf"; path = "../assets/fonts/FuturaPTBook.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		4E338C069A0E4D49B48DCD38 /* FuturaPTBookOblique.otf */ = {isa = PBXFileReference; name = "FuturaPTBookOblique.otf"; path = "../assets/fonts/FuturaPTBookOblique.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		0A3C7B937769484AA42EF132 /* FuturaPTCondBold.otf */ = {isa = PBXFileReference; name = "FuturaPTCondBold.otf"; path = "../assets/fonts/FuturaPTCondBold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		3256687C3046451B9FC4364C /* FuturaPTCondBoldOblique.otf */ = {isa = PBXFileReference; name = "FuturaPTCondBoldOblique.otf"; path = "../assets/fonts/FuturaPTCondBoldOblique.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		CB09F34C7D474B318CB22D13 /* FuturaPTCondBook.otf */ = {isa = PBXFileReference; name = "FuturaPTCondBook.otf"; path = "../assets/fonts/FuturaPTCondBook.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		0206F6CA4D214291A93C0BD2 /* FuturaPTCondBookOblique.otf */ = {isa = PBXFileReference; name = "FuturaPTCondBookOblique.otf"; path = "../assets/fonts/FuturaPTCondBookOblique.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		BF51DD506BCE4D6AA880F4EA /* FuturaPTCondExtraBold.otf */ = {isa = PBXFileReference; name = "FuturaPTCondExtraBold.otf"; path = "../assets/fonts/FuturaPTCondExtraBold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		FEB3E5F1E7B74B83893DB6C8 /* FuturaPTCondExtraBoldOblique.otf */ = {isa = PBXFileReference; name = "FuturaPTCondExtraBoldOblique.otf"; path = "../assets/fonts/FuturaPTCondExtraBoldOblique.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		C17221ECEA8C42908D797978 /* FuturaPTCondMedium.otf */ = {isa = PBXFileReference; name = "FuturaPTCondMedium.otf"; path = "../assets/fonts/FuturaPTCondMedium.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		268271485EF84F198733B69C /* FuturaPTCondMediumOblique.otf */ = {isa = PBXFileReference; name = "FuturaPTCondMediumOblique.otf"; path = "../assets/fonts/FuturaPTCondMediumOblique.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		50B7163BD04145FA9CA16E43 /* FuturaPTDemi.otf */ = {isa = PBXFileReference; name = "FuturaPTDemi.otf"; path = "../assets/fonts/FuturaPTDemi.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		82E07C820E81496AB0223885 /* FuturaPTDemiOblique.otf */ = {isa = PBXFileReference; name = "FuturaPTDemiOblique.otf"; path = "../assets/fonts/FuturaPTDemiOblique.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		8CDD913FD0024A6B8E0ADA06 /* FuturaPTExtraBold.otf */ = {isa = PBXFileReference; name = "FuturaPTExtraBold.otf"; path = "../assets/fonts/FuturaPTExtraBold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		321387286E3243188EABF5F2 /* FuturaPTExtraBoldOblique.otf */ = {isa = PBXFileReference; name = "FuturaPTExtraBoldOblique.otf"; path = "../assets/fonts/FuturaPTExtraBoldOblique.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		7616B6CACF3B445EB61831DF /* FuturaPTHeavy.otf */ = {isa = PBXFileReference; name = "FuturaPTHeavy.otf"; path = "../assets/fonts/FuturaPTHeavy.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		8DAEEA40545B401190CD10A9 /* FuturaPTHeavyOblique.otf */ = {isa = PBXFileReference; name = "FuturaPTHeavyOblique.otf"; path = "../assets/fonts/FuturaPTHeavyOblique.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		885A72ECEE504D63ADD23757 /* FuturaPTLight.otf */ = {isa = PBXFileReference; name = "FuturaPTLight.otf"; path = "../assets/fonts/FuturaPTLight.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		0C240399989E4BF4BE33F651 /* FuturaPTLightOblique.otf */ = {isa = PBXFileReference; name = "FuturaPTLightOblique.otf"; path = "../assets/fonts/FuturaPTLightOblique.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		806DC4234ABB4B869F47166F /* FuturaPTMedium.otf */ = {isa = PBXFileReference; name = "FuturaPTMedium.otf"; path = "../assets/fonts/FuturaPTMedium.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		F6E3AE46A04B430091FC4E45 /* FuturaPTMediumOblique.otf */ = {isa = PBXFileReference; name = "FuturaPTMediumOblique.otf"; path = "../assets/fonts/FuturaPTMediumOblique.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		54E0B00F10E640BE9C9DBD66 /* AntDesign.ttf */ = {isa = PBXFileReference; name = "AntDesign.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		BBB51AF2B6EB4281998F3B23 /* Entypo.ttf */ = {isa = PBXFileReference; name = "Entypo.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		BB7006F781074B38B7ED0707 /* EvilIcons.ttf */ = {isa = PBXFileReference; name = "EvilIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		BC3C5F4C1C8040688543A00A /* Feather.ttf */ = {isa = PBXFileReference; name = "Feather.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		B15DA50314084F5BADA4ABE7 /* FontAwesome.ttf */ = {isa = PBXFileReference; name = "FontAwesome.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		746275354C014FC79C0B844B /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; name = "FontAwesome5_Brands.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		C4CFD86146E64AEA929BBC4C /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; name = "FontAwesome5_Regular.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		076B3FFB75664CD7A12A7F66 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; name = "FontAwesome5_Solid.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		1D77F797552642D68C98AA90 /* Fontisto.ttf */ = {isa = PBXFileReference; name = "Fontisto.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		4163A47822964CF594450D34 /* Foundation.ttf */ = {isa = PBXFileReference; name = "Foundation.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		39776DB5AEA5476E9F975A4F /* Ionicons.ttf */ = {isa = PBXFileReference; name = "Ionicons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		4AA0DA2721EC45D2874F823D /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; name = "MaterialCommunityIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		EA81BF3733A44637BCF80C96 /* MaterialIcons.ttf */ = {isa = PBXFileReference; name = "MaterialIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		4FB6336E7DD44C689E6A5E6B /* Octicons.ttf */ = {isa = PBXFileReference; name = "Octicons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		707AB245C1C84E7FAB9A911B /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		D91D32A4BF8F444EA50CCE63 /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		FA42D21AC59DAB956E90220F /* Pods-Montana_Rep_App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Montana_Rep_App.debug.xcconfig"; path = "Target Support Files/Pods-Montana_Rep_App/Pods-Montana_Rep_App.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D02178BC2C19E017678A7C9 /* libPods-Montana_Rep_App-Montana_Rep_AppTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,20 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2D02E4781E0B4A5D006451C7 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2D02E48D1E0B4A5D006451C7 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				D2DD1843C646CF63B23826AA /* libPods-Montana_Rep_App.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -181,13 +89,14 @@
 		13B07FAE1A68108700A75B9A /* Montana_Rep_App */ = {
 			isa = PBXGroup;
 			children = (
-				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				7E48DD0E263D04C0003FAB95 /* File.swift */,
+				7E48DD0D263D04C0003FAB95 /* Montana_Rep_App-Bridging-Header.h */,
 			);
 			name = Montana_Rep_App;
 			sourceTree = "<group>";
@@ -196,9 +105,21 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
+				AD4E40E7083B326E691AAD9E /* libPods-Montana_Rep_App.a */,
+				BC3B667E13CDCD274923BD5F /* libPods-Montana_Rep_App-Montana_Rep_AppTests.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6CA53C93D8A295D86AABA77B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				FA42D21AC59DAB956E90220F /* Pods-Montana_Rep_App.debug.xcconfig */,
+				B4EF82748BB76660E380CE06 /* Pods-Montana_Rep_App.release.xcconfig */,
+				859E5311EDEEF17C353E07BA /* Pods-Montana_Rep_App-Montana_Rep_AppTests.debug.xcconfig */,
+				C5F15B5C468AAC2577F3FB88 /* Pods-Montana_Rep_App-Montana_Rep_AppTests.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -216,7 +137,7 @@
 				00E356EF1AD99517003FC87E /* Montana_Rep_AppTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				FEFF8A8570B5445B826EEBDD /* Resources */,
+				6CA53C93D8A295D86AABA77B /* Pods */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -228,57 +149,9 @@
 			children = (
 				13B07F961A680F5B00A75B9A /* Montana_Rep_App.app */,
 				00E356EE1AD99517003FC87E /* Montana_Rep_AppTests.xctest */,
-				2D02E47B1E0B4A5D006451C7 /* Montana_Rep_App-tvOS.app */,
-				2D02E4901E0B4A5D006451C7 /* Montana_Rep_App-tvOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
-		};
-		FEFF8A8570B5445B826EEBDD /* Resources */ = {
-			isa = "PBXGroup";
-			children = (
-				501E184D77B8486F8429DDCF /* FuturaPTBold.otf */,
-				7D4844DB809B41A6AD095ACE /* FuturaPTBoldOblique.otf */,
-				D33831D63B5C48D196FD20A1 /* FuturaPTBook.otf */,
-				4E338C069A0E4D49B48DCD38 /* FuturaPTBookOblique.otf */,
-				0A3C7B937769484AA42EF132 /* FuturaPTCondBold.otf */,
-				3256687C3046451B9FC4364C /* FuturaPTCondBoldOblique.otf */,
-				CB09F34C7D474B318CB22D13 /* FuturaPTCondBook.otf */,
-				0206F6CA4D214291A93C0BD2 /* FuturaPTCondBookOblique.otf */,
-				BF51DD506BCE4D6AA880F4EA /* FuturaPTCondExtraBold.otf */,
-				FEB3E5F1E7B74B83893DB6C8 /* FuturaPTCondExtraBoldOblique.otf */,
-				C17221ECEA8C42908D797978 /* FuturaPTCondMedium.otf */,
-				268271485EF84F198733B69C /* FuturaPTCondMediumOblique.otf */,
-				50B7163BD04145FA9CA16E43 /* FuturaPTDemi.otf */,
-				82E07C820E81496AB0223885 /* FuturaPTDemiOblique.otf */,
-				8CDD913FD0024A6B8E0ADA06 /* FuturaPTExtraBold.otf */,
-				321387286E3243188EABF5F2 /* FuturaPTExtraBoldOblique.otf */,
-				7616B6CACF3B445EB61831DF /* FuturaPTHeavy.otf */,
-				8DAEEA40545B401190CD10A9 /* FuturaPTHeavyOblique.otf */,
-				885A72ECEE504D63ADD23757 /* FuturaPTLight.otf */,
-				0C240399989E4BF4BE33F651 /* FuturaPTLightOblique.otf */,
-				806DC4234ABB4B869F47166F /* FuturaPTMedium.otf */,
-				F6E3AE46A04B430091FC4E45 /* FuturaPTMediumOblique.otf */,
-				54E0B00F10E640BE9C9DBD66 /* AntDesign.ttf */,
-				BBB51AF2B6EB4281998F3B23 /* Entypo.ttf */,
-				BB7006F781074B38B7ED0707 /* EvilIcons.ttf */,
-				BC3C5F4C1C8040688543A00A /* Feather.ttf */,
-				B15DA50314084F5BADA4ABE7 /* FontAwesome.ttf */,
-				746275354C014FC79C0B844B /* FontAwesome5_Brands.ttf */,
-				C4CFD86146E64AEA929BBC4C /* FontAwesome5_Regular.ttf */,
-				076B3FFB75664CD7A12A7F66 /* FontAwesome5_Solid.ttf */,
-				1D77F797552642D68C98AA90 /* Fontisto.ttf */,
-				4163A47822964CF594450D34 /* Foundation.ttf */,
-				39776DB5AEA5476E9F975A4F /* Ionicons.ttf */,
-				4AA0DA2721EC45D2874F823D /* MaterialCommunityIcons.ttf */,
-				EA81BF3733A44637BCF80C96 /* MaterialIcons.ttf */,
-				4FB6336E7DD44C689E6A5E6B /* Octicons.ttf */,
-				707AB245C1C84E7FAB9A911B /* SimpleLineIcons.ttf */,
-				D91D32A4BF8F444EA50CCE63 /* Zocial.ttf */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 
@@ -287,9 +160,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "Montana_Rep_AppTests" */;
 			buildPhases = (
+				92D116A1EBBA50C50D9F98C1 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
+				B9393F585C227D9052BD6C00 /* [CP] Embed Pods Frameworks */,
+				6FCA6D0C3B21DEA727E5D69C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -305,11 +181,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Montana_Rep_App" */;
 			buildPhases = (
+				17A889398D9A8E47BEAA054F /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				6D0C7ADAE78D01604A01E146 /* [CP] Embed Pods Frameworks */,
+				0716ECF4C0F1C17F94DC06D0 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -320,71 +199,25 @@
 			productReference = 13B07F961A680F5B00A75B9A /* Montana_Rep_App.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E47A1E0B4A5D006451C7 /* Montana_Rep_App-tvOS */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Montana_Rep_App-tvOS" */;
-			buildPhases = (
-				FD10A7F122414F3F0027D42C /* Start Packager */,
-				2D02E4771E0B4A5D006451C7 /* Sources */,
-				2D02E4781E0B4A5D006451C7 /* Frameworks */,
-				2D02E4791E0B4A5D006451C7 /* Resources */,
-				2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Montana_Rep_App-tvOS";
-			productName = "Montana_Rep_App-tvOS";
-			productReference = 2D02E47B1E0B4A5D006451C7 /* Montana_Rep_App-tvOS.app */;
-			productType = "com.apple.product-type.application";
-		};
-		2D02E48F1E0B4A5D006451C7 /* Montana_Rep_App-tvOSTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Montana_Rep_App-tvOSTests" */;
-			buildPhases = (
-				2D02E48C1E0B4A5D006451C7 /* Sources */,
-				2D02E48D1E0B4A5D006451C7 /* Frameworks */,
-				2D02E48E1E0B4A5D006451C7 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */,
-			);
-			name = "Montana_Rep_App-tvOSTests";
-			productName = "Montana_Rep_App-tvOSTests";
-			productReference = 2D02E4901E0B4A5D006451C7 /* Montana_Rep_App-tvOSTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1210;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
-					};
-					2D02E47A1E0B4A5D006451C7 = {
-						CreatedOnToolsVersion = 8.2.1;
-						ProvisioningStyle = Automatic;
-					};
-					2D02E48F1E0B4A5D006451C7 = {
-						CreatedOnToolsVersion = 8.2.1;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 2D02E47A1E0B4A5D006451C7;
+						LastSwiftMigration = 1250;
 					};
 				};
 			};
 			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Montana_Rep_App" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -398,8 +231,6 @@
 			targets = (
 				13B07F861A680F5B00A75B9A /* Montana_Rep_App */,
 				00E356ED1AD99517003FC87E /* Montana_Rep_AppTests */,
-				2D02E47A1E0B4A5D006451C7 /* Montana_Rep_App-tvOS */,
-				2D02E48F1E0B4A5D006451C7 /* Montana_Rep_App-tvOSTests */,
 			);
 		};
 /* End PBXProject section */
@@ -418,59 +249,6 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				232B42A222ED46B39CB853A1 /* FuturaPTBold.otf in Resources */,
-				F12D6E7983CF428FB5B25487 /* FuturaPTBoldOblique.otf in Resources */,
-				E9ABE89A05CE4BF4A1095943 /* FuturaPTBook.otf in Resources */,
-				7EB7E408FFA94F20BCB08925 /* FuturaPTBookOblique.otf in Resources */,
-				487231CCF86C4F3EB4E45EE7 /* FuturaPTCondBold.otf in Resources */,
-				CF565688BC35467C9FBD5A27 /* FuturaPTCondBoldOblique.otf in Resources */,
-				4CA8658B8C0A4FA1B530123E /* FuturaPTCondBook.otf in Resources */,
-				25EE71C84B7B49888B219F00 /* FuturaPTCondBookOblique.otf in Resources */,
-				7C6EBFAF05BF43BC832D5457 /* FuturaPTCondExtraBold.otf in Resources */,
-				13A29B0EBAB6451E8B373B60 /* FuturaPTCondExtraBoldOblique.otf in Resources */,
-				F69BE91A33CD420F8234E923 /* FuturaPTCondMedium.otf in Resources */,
-				6E34E59823034B80A9384401 /* FuturaPTCondMediumOblique.otf in Resources */,
-				B7BDD888A98A497CB5177A82 /* FuturaPTDemi.otf in Resources */,
-				4136F414DF0C455F994E4811 /* FuturaPTDemiOblique.otf in Resources */,
-				D030381C34C04A52AF333E4B /* FuturaPTExtraBold.otf in Resources */,
-				E180BCB56B7548A8AD5759A6 /* FuturaPTExtraBoldOblique.otf in Resources */,
-				FCE05E044C3047128D853430 /* FuturaPTHeavy.otf in Resources */,
-				8C566A5528B849599D398665 /* FuturaPTHeavyOblique.otf in Resources */,
-				5BB0B1BF26F14F3A9022EA68 /* FuturaPTLight.otf in Resources */,
-				C6A559D8943547A9A32111CC /* FuturaPTLightOblique.otf in Resources */,
-				D6FEF5B118CC4351A68F4B43 /* FuturaPTMedium.otf in Resources */,
-				2FA66A50DAF04B51B4CFCE8E /* FuturaPTMediumOblique.otf in Resources */,
-				A121866CE4A14868BF36186E /* AntDesign.ttf in Resources */,
-				1903D839D89E4B52A8DE6131 /* Entypo.ttf in Resources */,
-				BE1CC75302E94738B928BCB9 /* EvilIcons.ttf in Resources */,
-				13DF931345B748E1931F441B /* Feather.ttf in Resources */,
-				556BE0887515491E9231B882 /* FontAwesome.ttf in Resources */,
-				8A7B138E70B349E3A5796A8A /* FontAwesome5_Brands.ttf in Resources */,
-				D711E4D6DA624A66B1F1C13E /* FontAwesome5_Regular.ttf in Resources */,
-				06AE5A6836A04685B0DB451F /* FontAwesome5_Solid.ttf in Resources */,
-				42FEEE0BB06347ADB69FA8F1 /* Fontisto.ttf in Resources */,
-				B8C0052CE3344CABA1989710 /* Foundation.ttf in Resources */,
-				2C83C311E0884DA7B7EBE20B /* Ionicons.ttf in Resources */,
-				96F84FA5A5BB476BB1B4F154 /* MaterialCommunityIcons.ttf in Resources */,
-				9F9D631438E84046815D3B5C /* MaterialIcons.ttf in Resources */,
-				9EB09B97EEF14466A30CE402 /* Octicons.ttf in Resources */,
-				8731FB3654BE49AF8FB57809 /* SimpleLineIcons.ttf in Resources */,
-				D1F4AC6981C44C54A0C92DE8 /* Zocial.ttf in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2D02E4791E0B4A5D006451C7 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2D02E48E1E0B4A5D006451C7 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -489,23 +267,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "set -e\n\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
-		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
+		0716ECF4C0F1C17F94DC06D0 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Montana_Rep_App/Pods-Montana_Rep_App-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "Bundle React Native Code And Images";
-			outputPaths = (
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Montana_Rep_App/Pods-Montana_Rep_App-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Montana_Rep_App/Pods-Montana_Rep_App-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
-		FD10A7F022414F080027D42C /* Start Packager */ = {
+		17A889398D9A8E47BEAA054F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -513,18 +294,94 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
-			name = "Start Packager";
+			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Montana_Rep_App-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		FD10A7F122414F3F0027D42C /* Start Packager */ = {
+		6D0C7ADAE78D01604A01E146 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Montana_Rep_App/Pods-Montana_Rep_App-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Montana_Rep_App/Pods-Montana_Rep_App-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Montana_Rep_App/Pods-Montana_Rep_App-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6FCA6D0C3B21DEA727E5D69C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Montana_Rep_App-Montana_Rep_AppTests/Pods-Montana_Rep_App-Montana_Rep_AppTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Montana_Rep_App-Montana_Rep_AppTests/Pods-Montana_Rep_App-Montana_Rep_AppTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Montana_Rep_App-Montana_Rep_AppTests/Pods-Montana_Rep_App-Montana_Rep_AppTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		92D116A1EBBA50C50D9F98C1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Montana_Rep_App-Montana_Rep_AppTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B9393F585C227D9052BD6C00 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Montana_Rep_App-Montana_Rep_AppTests/Pods-Montana_Rep_App-Montana_Rep_AppTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Montana_Rep_App-Montana_Rep_AppTests/Pods-Montana_Rep_App-Montana_Rep_AppTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Montana_Rep_App-Montana_Rep_AppTests/Pods-Montana_Rep_App-Montana_Rep_AppTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FD10A7F022414F080027D42C /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -559,24 +416,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				7E48DD0F263D04C0003FAB95 /* File.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2D02E4771E0B4A5D006451C7 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */,
-				2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2D02E48C1E0B4A5D006451C7 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2DCD954D1E0B4F2C00145EB5 /* Montana_Rep_AppTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -588,17 +429,14 @@
 			target = 13B07F861A680F5B00A75B9A /* Montana_Rep_App */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
-		2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2D02E47A1E0B4A5D006451C7 /* Montana_Rep_App-tvOS */;
-			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 859E5311EDEEF17C353E07BA /* Pods-Montana_Rep_App-Montana_Rep_AppTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -606,7 +444,11 @@
 				);
 				INFOPLIST_FILE = Montana_Rep_AppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -620,12 +462,18 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C5F15B5C468AAC2577F3FB88 /* Pods-Montana_Rep_App-Montana_Rep_AppTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = Montana_Rep_AppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -639,13 +487,17 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FA42D21AC59DAB956E90220F /* Pods-Montana_Rep_App.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Montana_Rep_App/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -653,6 +505,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Montana_Rep_App;
+				SWIFT_OBJC_BRIDGING_HEADER = "Montana_Rep_App-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -661,12 +514,16 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B4EF82748BB76660E380CE06 /* Pods-Montana_Rep_App.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = Montana_Rep_App/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -674,114 +531,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Montana_Rep_App;
+				SWIFT_OBJC_BRIDGING_HEADER = "Montana_Rep_App-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
-			};
-			name = Release;
-		};
-		2D02E4971E0B4A5E006451C7 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_TESTABILITY = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Montana_Rep_App-tvOS/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-					"-lc++",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.Montana_Rep_App-tvOS";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = appletvos;
-				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 10.0;
-			};
-			name = Debug;
-		};
-		2D02E4981E0B4A5E006451C7 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Montana_Rep_App-tvOS/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-					"-lc++",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.Montana_Rep_App-tvOS";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = appletvos;
-				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 10.0;
-			};
-			name = Release;
-		};
-		2D02E4991E0B4A5E006451C7 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_TESTABILITY = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Montana_Rep_App-tvOSTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-					"-lc++",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.Montana_Rep_App-tvOSTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Montana_Rep_App-tvOS.app/Montana_Rep_App-tvOS";
-				TVOS_DEPLOYMENT_TARGET = 10.1;
-			};
-			name = Debug;
-		};
-		2D02E49A1E0B4A5E006451C7 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Montana_Rep_App-tvOSTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-					"-lc++",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.Montana_Rep_App-tvOSTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Montana_Rep_App-tvOS.app/Montana_Rep_App-tvOS";
-				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Release;
 		};
@@ -808,6 +560,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -817,6 +570,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -833,7 +587,10 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					/usr/lib/swift,
+					"$(inherited)",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
@@ -868,6 +625,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -877,6 +635,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -886,7 +645,10 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					/usr/lib/swift,
+					"$(inherited)",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
@@ -915,24 +677,6 @@
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
 				13B07F951A680F5B00A75B9A /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Montana_Rep_App-tvOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2D02E4971E0B4A5E006451C7 /* Debug */,
-				2D02E4981E0B4A5E006451C7 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Montana_Rep_App-tvOSTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2D02E4991E0B4A5E006451C7 /* Debug */,
-				2D02E49A1E0B4A5E006451C7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

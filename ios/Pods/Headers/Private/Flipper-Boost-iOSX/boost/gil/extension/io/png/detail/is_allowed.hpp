@@ -1,0 +1,1 @@
+../../../../../../../../../Flipper-Boost-iOSX/frameworks/Headers/boost/gil/extension/io/png/detail/is_allowed.hpp

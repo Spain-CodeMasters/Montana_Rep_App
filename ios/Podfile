@@ -3,33 +3,56 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '10.0'
 
+# We ingore warning except for RNMBGL
+INHIBIT_WARNING_BY_DEFAULT = true
+
+if INHIBIT_WARNING_BY_DEFAULT
+  ORIG_POD = method(:pod)
+
+  # Override pods so we default to disbling all warnings
+  def pod(name, *requirements)
+    options = requirements.last
+    if options.is_a?(Hash)
+      options[:inhibit_warnings] = true unless options.has_key?(:inhibit_warnings)
+    else
+      requirements.push({inhibit_warnings: true})
+    end
+    ORIG_POD[name, *requirements]
+  end
+end
+
 target 'Montana_Rep_App' do
   config = use_native_modules!
 
-  use_react_native!(:path => config["reactNativePath"])
-
   pod 'react-native-maps', :path => '../node_modules/react-native-maps'
 
+  use_react_native!(
+    :path => config[:reactNativePath],
+    # to enable hermes on iOS, change `false` to `true` and then install pods
+    :hermes_enabled => true
+  )
+  
   target 'Montana_Rep_AppTests' do
     inherit! :complete
     # Pods for testing
   end
+  rn_maps_path = '../node_modules/react-native-maps'
+  pod 'react-native-google-maps', :path => rn_maps_path
+  use_native_modules!
 
+    pre_install do |installer|
+      $RNMBGL.pre_install(installer)
+    end
+    
   # Enables Flipper.
   #
   # Note that if you have use_frameworks! enabled, Flipper will not work and
-  # you should disable these next few lines.
-  use_flipper!
+  # you should disable the next line.
+  # use_flipper!()
+
   post_install do |installer|
-    flipper_post_install(installer)
-  end
-end
-
-target 'Montana_Rep_App-tvOS' do
-  # Pods for Montana_Rep_App-tvOS
-
-  target 'Montana_Rep_App-tvOSTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
+    react_native_post_install(installer)
+    installer.pods_project.build_configurations.each do |config|
+            config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
+              end  end
 end

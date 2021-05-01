@@ -1,0 +1,1 @@
+../../../../../../../Flipper-Boost-iOSX/frameworks/Headers/boost/geometry/algorithms/detail/has_self_intersections.hpp

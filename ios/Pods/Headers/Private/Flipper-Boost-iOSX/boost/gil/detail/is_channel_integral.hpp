@@ -1,0 +1,1 @@
+../../../../../../Flipper-Boost-iOSX/frameworks/Headers/boost/gil/detail/is_channel_integral.hpp
