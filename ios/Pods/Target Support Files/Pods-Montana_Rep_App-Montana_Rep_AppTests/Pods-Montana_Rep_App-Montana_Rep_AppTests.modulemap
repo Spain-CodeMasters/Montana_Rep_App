@@ -1,0 +1,6 @@
+module Pods_Montana_Rep_App_Montana_Rep_AppTests {
+  umbrella header "Pods-Montana_Rep_App-Montana_Rep_AppTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

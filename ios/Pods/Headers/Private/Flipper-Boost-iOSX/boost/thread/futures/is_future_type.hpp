@@ -1,0 +1,1 @@
+../../../../../../Flipper-Boost-iOSX/frameworks/Headers/boost/thread/futures/is_future_type.hpp

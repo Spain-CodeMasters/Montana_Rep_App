@@ -68,7 +68,7 @@ export default function ForgotPasswordScreen({ navigation }) {
   },
   text_header: {
     color: '#343A3F',
-    fontFamily: 'FuturaPTDemi',
+    fontFamily: 'FuturaPT-Demi',
     fontWeight: 'bold',
     fontSize: 30
 },

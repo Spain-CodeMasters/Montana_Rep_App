@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     width: windowWidth / 1.5,
     height: windowHeight / 15,
     fontSize: 18,
-    fontFamily: 'FuturaPTBook',
+    fontFamily: 'FuturaPT-Book',
     borderBottomWidth: 2, 
     borderBottomColor: '#AFAFAF'
   }

@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   buttonText: {
-    fontFamily: 'FuturaPTBook',
+    fontFamily: 'FuturaPT-Book',
     fontSize: 24,
     color: "white",
 

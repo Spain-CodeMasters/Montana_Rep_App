@@ -52,14 +52,14 @@ const styles = StyleSheet.create({
     
         header_text: {
         fontSize: 24, 
-        fontFamily: 'FuturaPTDemi',
+        fontFamily: 'FuturaPT-Demi',
         textAlign: 'center',
         color: '#343A3F',
         marginBottom: 50,
         },
         subtext: {
             fontSize: 18,
-            fontFamily: 'FuturaPTBook',
+            fontFamily: 'FuturaPT-Book',
         },
         action: {
             flexDirection: 'row',

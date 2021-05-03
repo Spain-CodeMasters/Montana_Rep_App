@@ -282,7 +282,7 @@ const styles = StyleSheet.create({
     },
     header: {
         fontSize: 24,
-        fontFamily: 'FuturaPTDemi',
+        fontFamily: 'FuturaPT-Demi',
         textAlign: 'left',
         color: '#343A3F',
         marginTop: 20,
@@ -290,7 +290,7 @@ const styles = StyleSheet.create({
     },
     subheader: {
         fontSize: 20,
-        fontFamily: 'FuturaPTDemi',
+        fontFamily: 'FuturaPT-Demi',
         textAlign: 'left',
         color: '#343A3F',
         marginTop: 10,
@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
     },
     subsubheader: {
         fontSize: 18,
-        fontFamily: 'FuturaPTDemi',
+        fontFamily: 'FuturaPT-Demi',
         textAlign: 'left',
         color: '#343A3F',
         marginTop: 5,
@@ -307,7 +307,7 @@ const styles = StyleSheet.create({
 
     header_text: {
         fontSize: 24,
-        fontFamily: 'FuturaPTDemi',
+        fontFamily: 'FuturaPT-Demi',
         textAlign: 'center',
         color: '#343A3F',
         marginBottom: 50,
@@ -320,7 +320,7 @@ const styles = StyleSheet.create({
     },
     subtext: {
         fontSize: 18,
-        fontFamily: 'FuturaPTBook',
+        fontFamily: 'FuturaPT-Book',
     },
 
 });
