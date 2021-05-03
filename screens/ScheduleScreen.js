@@ -361,7 +361,7 @@ const styles = StyleSheet.create({
   title: {
     color: '#fff',
     textTransform: 'uppercase',
-    fontFamily: 'FuturaPTDemi',
+    fontFamily: 'FuturaPT-Demi',
     fontSize: 40,
     letterSpacing: 5,
     margin: 10,
@@ -378,14 +378,14 @@ const styles = StyleSheet.create({
     top: 0,
   },
   timeText: {
-    fontFamily: 'FuturaPTBook',
+    fontFamily: 'FuturaPT-Book',
     fontSize: 24,
     color: "white",
     //fontWeight: 'bold',
 
   },
   buttonText: {
-    fontFamily: 'FuturaPTBook',
+    fontFamily: 'FuturaPT-Book',
     fontSize: 24,
     color: "white",
     //fontWeight: 'bold',
@@ -399,7 +399,7 @@ const styles = StyleSheet.create({
   },
   postLabel: {
     fontSize: 16,
-    fontFamily: 'FuturaPTMedium',
+    fontFamily: 'FuturaPT-Medium',
     lineHeight: 20,
     textTransform: 'uppercase'
   },
@@ -428,7 +428,7 @@ const styles = StyleSheet.create({
   },
   subtext: {
     fontSize: 18,
-    fontFamily: 'FuturaPTBook',
+    fontFamily: 'FuturaPT-Book',
     marginTop: 20,
     marginBottom: 20,
     lineHeight: 20,

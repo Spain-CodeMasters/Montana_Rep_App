@@ -28,7 +28,7 @@ import { TextComponent } from 'react-native';
 const { width, height } = Dimensions.get('screen');
 
 const ITEM_WIDTH = width;
-const ITEM_HEIGHT = height * 0.88;
+const ITEM_HEIGHT = height * 0.90;
 
 
 const Post = ({ item }) => (
@@ -392,7 +392,7 @@ const styles = StyleSheet.create({
     },
     postLabel: {
         fontSize: 16,
-        fontFamily: 'FuturaPTMedium',
+        fontFamily: 'FuturaPT-Medium',
         lineHeight: 20,
         textTransform: 'uppercase'
     },
@@ -428,7 +428,7 @@ const styles = StyleSheet.create({
         borderColor: '#707070',
         borderWidth: 1,
         color: 'black',
-        fontFamily: 'FuturaPTBook',
+        fontFamily: 'FuturaPT-Book',
         fontSize: 18,
         paddingLeft: 10,
 
@@ -454,7 +454,7 @@ const styles = StyleSheet.create({
     },
 
     footer_text: {
-        fontFamily: 'FuturaPTBook',
+        fontFamily: 'FuturaPT-Book',
         fontSize: 16,
         color: 'white'
 
@@ -462,13 +462,13 @@ const styles = StyleSheet.create({
 
     text_title: {
         fontSize: 34,
-        fontFamily: 'FuturaPTDemi',
+        fontFamily: 'FuturaPT-Demi',
         textAlign: 'center',
     },
 
     subtext: {
         fontSize: 18,
-        fontFamily: 'FuturaPTBook',
+        fontFamily: 'FuturaPT-Book',
         marginTop: 20,
         marginBottom: 20,
         lineHeight: 20,
@@ -476,7 +476,7 @@ const styles = StyleSheet.create({
 
     subtext_link: {
         fontSize: 20,
-        fontFamily: 'FuturaPTBook',
+        fontFamily: 'FuturaPT-Book',
         color: '#747A21',
         marginBottom: 30
     },
@@ -495,7 +495,7 @@ const styles = StyleSheet.create({
         zIndex: 99,
     },
     buttonText: {
-        fontFamily: 'FuturaPTBook',
+        fontFamily: 'FuturaPT-Book',
         fontSize: 24,
         color: "white",
     },

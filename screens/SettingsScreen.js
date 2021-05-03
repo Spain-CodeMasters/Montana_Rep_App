@@ -37,7 +37,7 @@ export default ({ navigation: { goBack }, navigation }) => {
 
   return (
     <View style={styles.settings}>
-      <View><Cog onPress={() => goBack()} /></View>
+      <View style={styles.raiseCog}><Cog  styles={styles.raiseCog} onPress={() => goBack()} /></View>
       <ScrollView style={styles.container}>
 
         <Text style={styles.header_text}>Settings</Text>
@@ -155,8 +155,9 @@ const styles = StyleSheet.create({
   },
 
   header_text: {
+    paddingTop: 20,
     fontSize: 24,
-    fontFamily: 'FuturaPTDemi',
+    fontFamily: 'FuturaPT-Demi',
     textAlign: 'center',
     color: '#343A3F',
     marginBottom: 20,
@@ -194,14 +195,18 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 18,
-    fontFamily: 'FuturaPTBook',
+    fontFamily: 'FuturaPT-Book',
   },
 
   subtext: {
     fontSize: 18,
-    fontFamily: 'FuturaPTBook',
+    fontFamily: 'FuturaPT-Book',
     marginLeft: 60,
   },
+
+  raiseCog:{
+    zIndex: 1
+  }
 
 
 });

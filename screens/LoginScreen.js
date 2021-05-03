@@ -191,19 +191,19 @@ const styles = StyleSheet.create({
   },
   text_header: {
       color: '#343A3F',
-      fontFamily: 'FuturaPTDemi',
+      fontFamily: 'FuturaPT-Demi',
       fontWeight: 'bold',
       fontSize: 40
   },
   text_subheader: {
       color: '#343a3f',
-      fontFamily: 'FuturaPTBook',
+      fontFamily: 'FuturaPT-Book',
       // marginTop: 10,
       fontSize: 20
   },
   text_linkheader: {
       color: '#747A21',
-      fontFamily: 'FuturaPTBook',
+      fontFamily: 'FuturaPT-Book',
       // marginTop: 10,
       fontSize: 20
   },

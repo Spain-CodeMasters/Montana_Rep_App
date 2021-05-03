@@ -2,6 +2,11 @@
   "name": "montana_rep_app",
   "version": "0.0.1",
   "private": true,
+  "rnpm": {
+    "assets": [
+      "../assets/fonts/"
+    ]
+  },
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
@@ -38,6 +43,7 @@
     "react-native-map": "0.0.1",
     "react-native-maps": "github:xDemon200/react-native-maps",
     "react-native-onboarding-swiper": "^1.1.4",
+    "react-native-permissions": "^3.0.3",
     "react-native-reanimated": "^1.13.2",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^2.18.0",

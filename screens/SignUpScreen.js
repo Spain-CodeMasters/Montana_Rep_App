@@ -139,19 +139,19 @@ const styles = StyleSheet.create({
       color: '#343A3F',
       fontWeight: 'bold',
       fontSize: 40, 
-      fontFamily: 'FuturaPTDemi'
+      fontFamily: 'FuturaPT-Demi'
   },
   text_subheader: {
       color: '#343a3f',
       // marginTop: 10,
       fontSize: 20,
-      fontFamily: 'FuturaPTBook'
+      fontFamily: 'FuturaPT-Book'
   },
   text_linkheader: {
       color: '#747A21',
       // marginTop: 10,
       fontSize: 20,
-      fontFamily: 'FuturaPTBook'
+      fontFamily: 'FuturaPT-Book'
   },
   text_footer: {
       color: '#05375a',
@@ -160,7 +160,6 @@ const styles = StyleSheet.create({
   action: {
       flexDirection: 'row',
       marginTop: 15,
-      borderBottomWidth: 1,
       borderBottomColor: '#f2f2f2',
       paddingBottom: 5
   },

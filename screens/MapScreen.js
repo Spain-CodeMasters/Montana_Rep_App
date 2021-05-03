@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { useState, useEffect } from 'react';
-import { Text, View, Image, StyleSheet, TouchableOpacity, Dimensions, PermissionsAndroid, } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, Dimensions,  PermissionsAndroid,} from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker, Callout, Animated, AnimatedRegion } from 'react-native-maps';
 import * as Animatable from 'react-native-animatable';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -10,6 +10,7 @@ import PlayingBanner from '../components/playingBanner';
 import Geolocation from 'react-native-geolocation-service';
 import * as geolib from 'geolib';
 import { useFocusEffect } from '@react-navigation/native';
+import { PERMISSIONS, check, request } from 'react-native-permissions';
 
 import { db } from '../components/Firebase/firebase';
 
@@ -18,7 +19,8 @@ export default ({ navigation }) => {
 
   const safeAreaInsets = useSafeAreaInsets();
 
-  const locationPermission = PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
+  const androidLocationPermission = PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
+  // const iosLocationPermission = 
   const [currentPosition, setCurrentPosition] = useState();
   const [currentRegion, setCurrentRegion] = useState();
   const [contentData, setContentData] = useState(null);
@@ -83,6 +85,7 @@ export default ({ navigation }) => {
 
   useEffect(() => {
     requestLocationPermission();
+
     db.collection("content").onSnapshot((snapshot) => {
       setContentData(snapshot.docs.map((doc) => ({ id: doc.id, content: doc.data() })));
 
@@ -254,7 +257,6 @@ export default ({ navigation }) => {
       paddingRight: safeAreaInsets.right,
     }}>
       <Cog onPress={() => navigation.navigate('Settings')} />
-
       {!isLoading ? ( 
         <MapView
           provider={PROVIDER_GOOGLE}
@@ -284,6 +286,15 @@ export default ({ navigation }) => {
 
         </MapView>
       ) : (null)}
+
+    <MapView
+    initialRegion={{
+      latitude: 37.78825,
+      longitude: -122.4324,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
+    }}
+    />
 
       <Navigation navigation={navigation} />
     </View>
@@ -321,13 +332,13 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 18,
     marginBottom: 5,
-    fontFamily: 'FuturaPTBook',
+    fontFamily: 'FuturaPT-Book',
     flexDirection: 'row'
   },
   nameDescription: {
     fontSize: 18,
     marginBottom: 5,
-    fontFamily: 'FuturaPTBook',
+    fontFamily: 'FuturaPT-Book',
     flexDirection: 'row'
   },
   arrow: {

@@ -21,9 +21,22 @@ if INHIBIT_WARNING_BY_DEFAULT
   end
 end
 
+pod 'GoogleMaps'
+pod 'Google-Maps-iOS-Utils'
+
+# add pods for desired Firebase products
+# https://firebase.google.com/docs/ios/setup#available-pods
+
 target 'Montana_Rep_App' do
   config = use_native_modules!
 
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  pod 'Permission-LocationAccuracy', :path => "#{permissions_path}/LocationAccuracy"
+  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
+  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+
+  pod 'Permission-Notifications', :path => "#{permissions_path}/Notifications.podspec"
+  
   pod 'react-native-maps', :path => '../node_modules/react-native-maps'
 
   use_react_native!(
@@ -40,9 +53,9 @@ target 'Montana_Rep_App' do
   pod 'react-native-google-maps', :path => rn_maps_path
   use_native_modules!
 
-    pre_install do |installer|
-      $RNMBGL.pre_install(installer)
-    end
+    #pre_install do |installer|
+     # $RNMBGL.pre_install(installer)
+    #end
     
   # Enables Flipper.
   #

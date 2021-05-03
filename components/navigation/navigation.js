@@ -18,7 +18,7 @@ function Navigation({ navigation }) {
   return (
     <SafeAreaView>
       <View style={styles.navBar}>
-        <TouchableOpacity style={{ alignSelf: 'center', margin: 25}} onPress={() => navigation.navigate('Home')}>
+        <TouchableOpacity style={{ alignSelf: 'center', marginRight: 30}} onPress={() => navigation.navigate('Home')}>
           <FontAwesome5
             name="home"
             solid
@@ -26,7 +26,7 @@ function Navigation({ navigation }) {
             size={30}
           />
         </TouchableOpacity>
-        <TouchableOpacity style={{ alignSelf: 'flex-end', margin: 5, }} onPress={() => navigation.navigate('Map')}>
+        <TouchableOpacity style={{ alignSelf: 'flex-end', margin: 0, }} onPress={() => navigation.navigate('Map')}>
           <View style={styles.circle}>
             <FontAwesome5
               name="map-marker-alt"
@@ -36,7 +36,7 @@ function Navigation({ navigation }) {
             />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={{ alignSelf: 'center', margin: 25, marginLeft: 30 }} onPress={() => navigation.navigate('Schedule')}>
+        <TouchableOpacity style={{ alignSelf: 'center', margin: 0, marginLeft: 30 }} onPress={() => navigation.navigate('Schedule')}>
           <FontAwesome5
             name="calendar-alt"
             solid
@@ -57,11 +57,11 @@ const styles = StyleSheet.create({
       width: 0,
       height: 1,
     },
-    shadowOpacity: 0.20,
-    shadowRadius: 1.41,
+    // shadowOpacity: 0.20,
+    // shadowRadius: 1.41,
 
     elevation: 2,
-    backgroundColor: 'rgba(255, 255, 255, 1)',
+    backgroundColor: 'white',
 
     // alignSelf: 'flex-end',
     position: 'absolute',
