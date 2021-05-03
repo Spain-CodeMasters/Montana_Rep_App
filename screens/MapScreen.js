@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { useState, useEffect } from 'react';
-import { Text, View, Image, StyleSheet, TouchableOpacity, Dimensions,  PermissionsAndroid,} from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, Dimensions, PermissionsAndroid, Platform } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker, Callout, Animated, AnimatedRegion } from 'react-native-maps';
 import * as Animatable from 'react-native-animatable';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -10,7 +10,7 @@ import PlayingBanner from '../components/playingBanner';
 import Geolocation from 'react-native-geolocation-service';
 import * as geolib from 'geolib';
 import { useFocusEffect } from '@react-navigation/native';
-import { PERMISSIONS, check, request } from 'react-native-permissions';
+import { PERMISSIONS, RESULTS, check, request } from 'react-native-permissions';
 
 import { db } from '../components/Firebase/firebase';
 
@@ -19,7 +19,7 @@ export default ({ navigation }) => {
 
   const safeAreaInsets = useSafeAreaInsets();
 
-  const androidLocationPermission = PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
+  const [locationPermission, setLocationPermission] = useState(false);
   // const iosLocationPermission = 
   const [currentPosition, setCurrentPosition] = useState();
   const [currentRegion, setCurrentRegion] = useState();
@@ -27,29 +27,84 @@ export default ({ navigation }) => {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  const requestLocationPermission = async () => {
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-        {
-          title: "Montana Repertory Theatre Location Permission",
-          message:
-            "We need access to your location " +
-            "to use the community map",
-          buttonNeutral: "Ask Me Later",
-          buttonNegative: "Cancel",
-          buttonPositive: "OK"
+
+  useEffect(() => {
+    //requestLocationPermission();
+    if (Platform.OS === "android") {
+      checkPermissions(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
+    } else if (Platform.OS === "ios") {
+      checkPermissions(PERMISSIONS.IOS.LOCATION_ALWAYS);
+    };
+
+    db.collection("content").onSnapshot((snapshot) => {
+      setContentData(snapshot.docs.map((doc) => ({ id: doc.id, content: doc.data() })));
+
+    })
+  }, []);
+
+  function checkPermissions(type) {
+    check(type)
+      .then((result) => {
+        switch (result) {
+          case RESULTS.UNAVAILABLE:
+            console.log('This feature is not available (on this device / in this context)');
+            break;
+          case RESULTS.DENIED:
+            const requestPermission = request(type)
+              .then((result) => {
+                switch (result) {
+                  case RESULTS.GRANTED:
+                    setLocationPermission(true);
+                    console.log('The permission is granted');
+                    break;
+                  case RESULTS.BLOCKED:
+                    console.log('The permission is denied and not requestable anymore');
+                    break;
+                }
+              });
+
+            console.log('The permission has not been requested / is denied but requestable');
+            break;
+          case RESULTS.LIMITED:
+            console.log('The permission is limited: some actions are possible');
+            break;
+          case RESULTS.GRANTED:
+            setLocationPermission(true);
+            console.log('The permission is granted');
+            break;
+          case RESULTS.BLOCKED:
+            console.log('The permission is denied and not requestable anymore');
+            break;
         }
-      );
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log("Location Permission Granted");
-      } else {
-        console.log("Location Permission Denied");
-      }
-    } catch (err) {
-      console.warn(err);
-    }
-  };
+      })
+      .catch((error) => {
+        // …
+      });
+  }
+
+  // const requestLocationPermission = async () => {
+  //   try {
+  //     const granted = await PermissionsAndroid.request(
+  //       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+  //       {
+  //         title: "Montana Repertory Theatre Location Permission",
+  //         message:
+  //           "We need access to your location " +
+  //           "to use the community map",
+  //         buttonNeutral: "Ask Me Later",
+  //         buttonNegative: "Cancel",
+  //         buttonPositive: "OK"
+  //       }
+  //     );
+  //     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+  //       console.log("Location Permission Granted");
+  //     } else {
+  //       console.log("Location Permission Denied");
+  //     }
+  //   } catch (err) {
+  //     console.warn(err);
+  //   }
+  // };
 
   function getCurrentLocation() {
     Geolocation.getCurrentPosition(
@@ -64,33 +119,21 @@ export default ({ navigation }) => {
     );
   }
 
-  useFocusEffect(
-    React.useCallback(() => {
-      if (locationPermission) {
-        getCurrentLocation();
-
-        const interval = setInterval(() => {
-          getCurrentLocation();
-          //console.log('This will run every 5 seconds');
-        }, 5000);
-
-        return () => clearInterval(interval);
-
-      } else {
-        requestLocationPermission();
-      }
-    }, [])
-  );
-
-
   useEffect(() => {
-    requestLocationPermission();
+    //React.useCallback(() => {
+    if (locationPermission) {
+      getCurrentLocation();
 
-    db.collection("content").onSnapshot((snapshot) => {
-      setContentData(snapshot.docs.map((doc) => ({ id: doc.id, content: doc.data() })));
+      const interval = setInterval(() => {
+        getCurrentLocation();
+        //console.log('This will run every 5 seconds');
+      }, 5000);
 
-    })
-  }, []);
+      return () => clearInterval(interval);
+
+    }
+    //}, [])
+  }, [locationPermission]);
 
 
   function selectPlay(id, pointId) {
@@ -114,7 +157,7 @@ export default ({ navigation }) => {
     });
   }
 
-  function onRegionChange(region){
+  function onRegionChange(region) {
     setCurrentRegion(region);
   }
 
@@ -128,10 +171,10 @@ export default ({ navigation }) => {
           if (content.type == "easterEgg") {
             var distance = (geolib.getDistance(currentPosition, geopoints));
             let reveal;
-            if (distance < 10){
+            if (distance < 10) {
               reveal = true;
             }
-            
+
             if (reveal) {
               return <Marker
                 key={pointId}
@@ -257,7 +300,7 @@ export default ({ navigation }) => {
       paddingRight: safeAreaInsets.right,
     }}>
       <Cog onPress={() => navigation.navigate('Settings')} />
-      {!isLoading ? ( 
+      {!isLoading ? (
         <MapView
           provider={PROVIDER_GOOGLE}
           style={styles.map}
@@ -287,14 +330,14 @@ export default ({ navigation }) => {
         </MapView>
       ) : (null)}
 
-    <MapView
-    initialRegion={{
-      latitude: 37.78825,
-      longitude: -122.4324,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421,
-    }}
-    />
+      <MapView
+        initialRegion={{
+          latitude: 37.78825,
+          longitude: -122.4324,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+      />
 
       <Navigation navigation={navigation} />
     </View>
