@@ -1,5 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { useState, useEffect } from 'react';
+import { PERMISSIONS, RESULTS, check, request } from 'react-native-permissions';
 import { Text, View, Image, StyleSheet, TouchableOpacity, Dimensions, PermissionsAndroid, Platform } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker, Callout, Animated, AnimatedRegion } from 'react-native-maps';
 import * as Animatable from 'react-native-animatable';
@@ -10,7 +11,7 @@ import PlayingBanner from '../components/playingBanner';
 import Geolocation from 'react-native-geolocation-service';
 import * as geolib from 'geolib';
 import { useFocusEffect } from '@react-navigation/native';
-import { PERMISSIONS, RESULTS, check, request } from 'react-native-permissions';
+
 
 import { db } from '../components/Firebase/firebase';
 
@@ -330,14 +331,14 @@ export default ({ navigation }) => {
         </MapView>
       ) : (null)}
 
-      <MapView
+      {/* <MapView
         initialRegion={{
           latitude: 37.78825,
           longitude: -122.4324,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
-      />
+      /> */}
 
       <Navigation navigation={navigation} />
     </View>
