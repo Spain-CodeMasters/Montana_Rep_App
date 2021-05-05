@@ -32,54 +32,26 @@ export default ({ navigation: { goBack }, navigation, route }) => {
     const [distance, setDistance] = useState('');
     const [event, setEvent] = useState(null);
 
-    const requestLocationPermission = async () => {
-        try {
-            const granted = await PermissionsAndroid.request(
-                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-                {
-                    title: "Montana Repertory Theatre Location Permission",
-                    message:
-                        "We need access to your location " +
-                        "to show your distance from this event",
-                    buttonNeutral: "Ask Me Later",
-                    buttonNegative: "Cancel",
-                    buttonPositive: "OK"
-                }
-            );
-            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                console.log("Location Permission Granted");
-            } else {
-                console.log("Location Permission Denied");
-            }
-        } catch (err) {
-            console.warn(err);
-        }
-    };
-
-
 
     useEffect(() => {
-        if (locationPermission) {
-            Geolocation.getCurrentPosition(
-                (position) => {
-                    checkPosition(position.coords);
-                },
-                (error) => {
-                    console.log(error.code, error.message);
-                },
-                { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-            );
-
-        } else {
-            requestLocationPermission();
-        }
+        Geolocation.getCurrentPosition(
+            (position) => {
+                checkPosition(position.coords);
+            },
+            (error) => {
+                console.log(error.code, error.message);
+            },
+            { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+        );
     }, [event]);
+
 
     useEffect(() => {
         db.collection("content").doc(route.params.id).onSnapshot((snapshot) => {
             setEvent(snapshot._data);
         })
     }, []);
+
 
     function checkPosition(currentPosition) {
         if (event !== null && event.geopoints[0].latitude !== '' || event !== null && event.geopoints.length > 1) {
@@ -97,8 +69,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
 
                     for (var j = 1; j < arr.length; j++) {
                         if (arr[j] < arr[0]) {
-                            pointId = j;
-                            console.log(pointId);
+                            pointId = j - 1;
                         }
                     }
                 }
@@ -131,7 +102,6 @@ export default ({ navigation: { goBack }, navigation, route }) => {
             }
         }
     }
-
 
 
     return <View style={{
@@ -169,7 +139,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                             </View>
                         </ImageBackground>
                     </View>
-        
+
 
                     {/* discription */}
                     <View style={styles.discription}>

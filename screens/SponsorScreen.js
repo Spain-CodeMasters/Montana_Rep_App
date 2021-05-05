@@ -38,67 +38,34 @@ const ITEM_HEIGHT = height * .88;
 //var source = 'https://actions.google.com/sounds/v1/crowds/voices_angry.ogg';
 
 export default ({ navigation: { goBack }, navigation, route }) => {
-    // const [scrollY, setScrollY] = useState(new Animated.Value(0));
-    // const headerHeight = scrollY.interpolate({
-    //     inputRange: [0, HEADER_SCROLL_DISTANCE],
-    //     outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
-    //     extrapolate: 'clamp',
-    // });
+
     const safeAreaInsets = useSafeAreaInsets()
 
-    const locationPermission = PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
+    //const locationPermission = PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
 
     const [distance, setDistance] = useState('');
     const [sponsor, setSponsor] = useState(null);
 
-    const requestLocationPermission = async () => {
-        try {
-            const granted = await PermissionsAndroid.request(
-                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-                {
-                    title: "Montana Repertory Theatre Location Permission",
-                    message:
-                        "We need access to your location " +
-                        "to show your distance from this event",
-                    buttonNeutral: "Ask Me Later",
-                    buttonNegative: "Cancel",
-                    buttonPositive: "OK"
-                }
-            );
-            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                console.log("Location Permission Granted");
-            } else {
-                console.log("Location Permission Denied");
-            }
-        } catch (err) {
-            console.warn(err);
-        }
-    };
-
-
 
     useEffect(() => {
-        if (locationPermission) {
-            Geolocation.getCurrentPosition(
-                (position) => {
-                    checkPosition(position.coords);
-                },
-                (error) => {
-                    console.log(error.code, error.message);
-                },
-                { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-            );
-
-        } else {
-            requestLocationPermission();
-        }
+        Geolocation.getCurrentPosition(
+            (position) => {
+                checkPosition(position.coords);
+            },
+            (error) => {
+                console.log(error.code, error.message);
+            },
+            { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+        );
     }, [sponsor]);
+
 
     useEffect(() => {
         db.collection("content").doc(route.params.id).onSnapshot((snapshot) => {
             setSponsor(snapshot._data);
         })
     }, []);
+
 
     function checkPosition(currentPosition) {
         if (sponsor !== null && sponsor.geopoints[0].latitude !== '' || sponsor !== null && sponsor.geopoints.length > 1) {
@@ -111,11 +78,11 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                 var arr = [];
 
                 for (var i = 0; i < sponsor.geopoints.length; i++) {
-                    arr.push(geolib.getDistance(currentPosition, sponsor.geopoints[i]))
+                    arr.push(geolib.getDistance(currentPosition, sponsor.geopoints[i]));
 
                     for (var j = 1; j < arr.length; j++) {
                         if (arr[j] < arr[0]) {
-                            pointId = j;
+                            pointId = j-1;
                         }
                     }
                 }
@@ -187,8 +154,8 @@ export default ({ navigation: { goBack }, navigation, route }) => {
         setPaused(true);
         console.log("Ended");
         let views = sponsor.views + 1;
-    
-        db.collection("content").doc(route.params.id).update ({
+
+        db.collection("content").doc(route.params.id).update({
             views: views,
         })
     };
@@ -289,10 +256,35 @@ export default ({ navigation: { goBack }, navigation, route }) => {
 
                     {/* discription */}
                     <View style={styles.discription}>
+                        <View style={{ paddingHorizontal: 10, width: '100%' }}>
+                            <Text style={[styles.postLabel, { padding: 10, color: '#999', textAlign: "center" }]}>{distance}</Text>
+                            {(function () {
+                                if (sponsor.locationInfo !== '' && sponsor.locationInfo !== ' ' && sponsor.locationInfo !== null) {
+                                    return <View style={{ padding: 20, backgroundColor: "white", borderWidth: 1, borderColor: '#999', borderRadius: 5, marginBottom: 20, }}>
+                                        <Text allowFontScaling style={styles.text_location}>{sponsor.locationInfo}</Text>
+                                    </View>
+                                }
+                            })()}
+                        </View>
+
                         <Text style={styles.text_title}>{sponsor.title}</Text>
-                        <Text allowFontScaling style={styles.subtext}>{distance}</Text>
-                        <Text allowFontScaling style={styles.subtext}>{sponsor.locationInfo}</Text>
-                        <Text allowFontScaling style={styles.subtext}>{sponsor.subHeader}</Text>
+
+                        {(function () {
+                            if (sponsor.sponsorSubHeader !== '' && sponsor.sponsorSubHeader !== ' ' && sponsor.sponsorSubHeader !== null) {
+                                return <Text allowFontScaling style={styles.text_subtitle}>{sponsor.sponsorSubHeader}</Text>
+                            } else {
+                                return <></>
+                            }
+                        })()}
+
+                        {(function () {
+                            if (sponsor.commSubHeader !== '' && sponsor.commSubHeader !== ' ' && sponsor.commSubHeader !== null) {
+                                return <Text allowFontScaling style={styles.text_subtitle}>{sponsor.commSubHeader}</Text>
+                            } else {
+                                return <></>
+                            }
+                        })()}
+
                         <Text allowFontScaling style={styles.subtext}>{sponsor.body}</Text>
                         {/* Check for Link */}
                         {(function () {
@@ -372,10 +364,6 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     header: {
-        // position: 'absolute',
-        // top: 0,
-        // left: 0,
-        // right: 0,
         backgroundColor: '#fff',
         overflow: 'hidden',
         height: ITEM_HEIGHT,
@@ -400,8 +388,8 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'flex-start',
         justifyContent: 'center',
-        margin: 45
-
+        marginTop: 18,
+        marginHorizontal: 45,
     },
     postLabel: {
         fontSize: 16,
@@ -431,26 +419,32 @@ const styles = StyleSheet.create({
     },
 
     text_title: {
-        fontSize: 40,
-        fontFamily: 'FuturaPT-Demi'
-
+        color: "black",
+        fontSize: 28,
+        fontFamily: 'FuturaPT-Medium',
+        margin: 10,
     },
 
-    author: {
+    text_subtitle: {
         fontSize: 20,
         fontFamily: 'FuturaPT-Book',
         paddingHorizontal: 40,
-        marginTop: 10,
-        lineHeight: 20
+        paddingBottom: 10,
+        lineHeight: 20,
+    },
+
+    text_location: {
+        fontSize: 16,
+        fontFamily: 'FuturaPT-Book',
+        lineHeight: 20,
     },
 
     subtext: {
-        fontSize: 16,
+        fontSize: 18,
         fontFamily: 'FuturaPT-Book',
-        paddingHorizontal: 40,
-        marginTop: 20,
-        marginBottom: 10,
-        lineHeight: 20
+        paddingHorizontal: 30,
+        paddingVertical: 5,
+        lineHeight: 20,
     },
 
     back: {
@@ -530,7 +524,13 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         marginRight: -7,
         width: 14,
-    }
+    },
+    postLabel: {
+        fontSize: 16,
+        fontFamily: 'FuturaPT-Medium',
+        lineHeight: 20,
+        textTransform: 'uppercase'
+    },
 
 
 })

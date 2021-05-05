@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginTop: 10,
     width: windowWidth / 1.3,
-    height: windowHeight / 15,
+    //height: windowHeight / 15,
     backgroundColor: Color.Primary_Gold,
     padding: 10,
     alignItems: 'center',
@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   buttonText: {
+    //padding: 10,
     fontFamily: 'FuturaPT-Book',
     fontSize: 24,
     color: "white",

@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }) => {
           } catch (e) {
             console.log(e);
           }
-          
+
         },
         logout: async () => {
           try {
@@ -44,15 +44,13 @@ export const AuthProvider = ({ children }) => {
           } catch (e) {
             console.error(e);
           }
-        }, 
+        },
         passwordReset: email => {
-           firebase.auth().sendPasswordResetEmail(email, null);
-          }, catch (e) {
-            console.log(e);
+          firebase.auth().sendPasswordResetEmail(email, null);
+        }, catch(e) {
+          console.log(e);
         }
-      } 
-    }
-
+      }}
     >
       {children}
     </AuthContext.Provider>

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import 'react-native-gesture-handler';
 import { AuthContext } from '../navigation/AuthProvider';
-import { Button, StyleSheet, ScrollView, View, Text, StatusBar, Switch, TouchableOpacity, Linking } from 'react-native';
+import { Button, StyleSheet, ScrollView, View, Text, StatusBar, Switch, TouchableOpacity, Linking, Platform } from 'react-native';
 import { windowHeight, windowWidth } from '../components/utils/Dimensions';
 import Feather from 'react-native-vector-icons/Feather';
 import Cog from '../components/Cog';
@@ -19,7 +19,11 @@ export default ({ navigation: { goBack }, navigation }) => {
   const [isEnabled, setIsEnabled] = useState(true);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
+  const [isAccountDown, setIsAccountDown] = useState(false);
+  const [isSecurityDown, setIsSecurityDown] = useState(false);
+
   const [isMenu, setIsMenu] = useState(false);
+
 
   const ExternalLinkBtn = (props) => {
     return <Button
@@ -37,25 +41,27 @@ export default ({ navigation: { goBack }, navigation }) => {
 
   return (
     <View style={styles.settings}>
-      <View style={styles.raiseCog}><Cog  styles={styles.raiseCog} onPress={() => goBack()} /></View>
+      <View style={styles.raiseCog}><Cog styles={styles.raiseCog} onPress={() => goBack()} /></View>
       <ScrollView style={styles.container}>
 
         <Text style={styles.header_text}>Settings</Text>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginBottom: 20, }}>
           <FancyCard
-            title='Become a Premium Member'
+            title='GoPlay! Premium'
             onPress={() => navigation.navigate('Account')}
           />
         </View>
         <View style={styles.horizontal_rule} />
         <View>
-          <View style={styles.inline_rule}>
-            <Text style={styles.text}><Feather name="user" size={20} color='#747A21' />  Account</Text>
-            <View style={{ alignSelf: 'flex-end' }}>
-              {/* <Feather name= "chevron-right" size= {20} color= '#343A3F' /> */}
-              <Feather name="chevron-down" size={20} color='#343A3F' />
+          <TouchableOpacity onPress={() => navigation.navigate('Change Password')}>
+            <View style={styles.inline_rule}>
+              <Text style={styles.text}><Feather name="user" size={20} color='#747A21' />  Account</Text>
+              <View style={{ alignSelf: 'flex-end' }}>
+                {/* <Feather name= "chevron-right" size= {20} color= '#343A3F' /> */}
+                <Feather name="chevron-down" size={20} color='#343A3F' />
+              </View>
             </View>
-          </View>
+          </TouchableOpacity>
           <View style={styles.horizontal_rule} />
           <TouchableOpacity onPress={() => navigation.navigate('Change Password')}>
             <Text style={styles.subtext}>Change Password</Text>
@@ -71,7 +77,7 @@ export default ({ navigation: { goBack }, navigation }) => {
 
         <View style={styles.horizontal_rule} />
         <View style={styles.inline_rule}>
-          <Text style={styles.text}><Feather name="bell" size={20} color='#747A21' />  Notifications Enabled</Text>
+          <Text style={styles.text}><Feather name="bell" size={20} color='#747A21' />  Notifications</Text>
           <View style={{ alignSelf: 'flex-end' }}>
             <Switch
               trackColor={{ false: "#767577", true: "#C7CAA6" }}
@@ -86,9 +92,9 @@ export default ({ navigation: { goBack }, navigation }) => {
 
         <View style={styles.horizontal_rule} />
         <View>
-          {/* <TouchableOpacity  onPress={()=> navigation.navigate('Privacy')}> */}
-          <Text style={styles.text}><Feather name="lock" size={20} color='#747A21' />  Privacy & Security</Text>
-          {/* </TouchableOpacity> */}
+          <TouchableOpacity onPress={() => navigation.navigate('Privacy')}>
+            <Text style={styles.text}><Feather name="lock" size={20} color='#747A21' />  Privacy & Security</Text>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.horizontal_rule} />
@@ -204,8 +210,12 @@ const styles = StyleSheet.create({
     marginLeft: 60,
   },
 
-  raiseCog:{
-    zIndex: 1
+  raiseCog: {
+    ...Platform.select({
+      ios: {
+        zIndex: 1
+      }
+    })
   }
 
 

@@ -111,7 +111,7 @@ const Play = ({ item, onPress }) => {
   return <ImageBackground source={{ uri: source()}} style={styles.play}>
     <TouchableOpacity style={styles.play} onPress={onPress}>
       <View style={styles.overlay}>
-        <AdjustTitle fontSize={40} text={item.post.title} style={styles.title} numberOfLines={1} />
+        <AdjustTitle fontSize={40} text={item.post.title} style={styles.title} numberOfLines={2} />
       </View>
     </TouchableOpacity>
 
@@ -127,7 +127,7 @@ const Event = ({ item, onPress }) => {
   return <ImageBackground source={{ uri: item.post.photoUrl }} style={styles.play}>
     <TouchableOpacity style={styles.play} onPress={onPress} >
       <View style={styles.overlay}>
-        <AdjustTitle fontSize={40} text={item.post.title} style={styles.title} numberOfLines={1} />
+        <AdjustTitle fontSize={40} text={item.post.title} style={styles.title} numberOfLines={2} />
       </View>
     </TouchableOpacity>
 
@@ -160,7 +160,7 @@ const Sponsor = ({ item, onPress }) => {
   return <ImageBackground source={{ uri: source() }} style={styles.play}>
     <TouchableOpacity style={styles.play} onPress={onPress}>
       <View style={styles.overlay}>
-        <AdjustTitle fontSize={40} text={item.post.title} style={styles.title} numberOfLines={1} />
+        <AdjustTitle fontSize={40} text={item.post.title} style={styles.title} numberOfLines={2} />
       </View>
     </TouchableOpacity>
 
