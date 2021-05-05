@@ -27,7 +27,7 @@ pod 'Google-Maps-iOS-Utils'
 # add pods for desired Firebase products
 # https://firebase.google.com/docs/ios/setup#available-pods
 
-target 'Montana_Rep_App' do
+target 'GoPlay! Demo' do
   config = use_native_modules!
 
   permissions_path = '../node_modules/react-native-permissions/ios'
@@ -45,7 +45,7 @@ target 'Montana_Rep_App' do
     :hermes_enabled => true
   )
   
-  target 'Montana_Rep_AppTests' do
+  target 'GoPlay! DemoTests' do
     inherit! :complete
     # Pods for testing
   end

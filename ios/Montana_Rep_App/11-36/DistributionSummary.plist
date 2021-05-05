@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>GoPlay!.ipa</key>
+	<array>
+		<dict>
+			<key>architectures</key>
+			<array>
+				<string>arm64</string>
+			</array>
+			<key>certificate</key>
+			<dict>
+				<key>SHA1</key>
+				<string>8EF03D64920A3CCC7144893EF7F0FBB638FFEF2E</string>
+				<key>dateExpires</key>
+				<string>5/3/22</string>
+				<key>type</key>
+				<string>Apple Development</string>
+			</dict>
+			<key>embeddedBinaries</key>
+			<array>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>arm64</string>
+					</array>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>8EF03D64920A3CCC7144893EF7F0FBB638FFEF2E</string>
+						<key>dateExpires</key>
+						<string>5/3/22</string>
+						<key>type</key>
+						<string>Apple Development</string>
+					</dict>
+					<key>name</key>
+					<string>hermes.framework</string>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>XU6A9MSJ49</string>
+						<key>name</key>
+						<string>Clarissa Spain</string>
+					</dict>
+				</dict>
+			</array>
+			<key>entitlements</key>
+			<dict>
+				<key>application-identifier</key>
+				<string>XU6A9MSJ49.com.montana-rep-app.goplay</string>
+				<key>com.apple.developer.team-identifier</key>
+				<string>XU6A9MSJ49</string>
+				<key>get-task-allow</key>
+				<true/>
+				<key>keychain-access-groups</key>
+				<array>
+					<string>XU6A9MSJ49.com.montana-rep-app.goplay</string>
+				</array>
+			</dict>
+			<key>name</key>
+			<string>GoPlay! Demo.app</string>
+			<key>profile</key>
+			<dict>
+				<key>UUID</key>
+				<string>c14a8be7-e6c1-4e42-9f6e-0a2026a636f5</string>
+				<key>name</key>
+				<string>iOS Team Provisioning Profile: com.montana-rep-app.goplay</string>
+			</dict>
+			<key>team</key>
+			<dict>
+				<key>id</key>
+				<string>XU6A9MSJ49</string>
+				<key>name</key>
+				<string>Clarissa Spain</string>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>
