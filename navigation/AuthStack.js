@@ -2,6 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import SignupScreen from '../screens/SignUpScreen';
 import LoginScreen from '../screens/LoginScreen';
+import TermsScreen from '../screens/TermsScreen';
 import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
 const Stack = createStackNavigator();
 export default function AuthStack() {
@@ -16,6 +17,7 @@ export default function AuthStack() {
        component={SignupScreen} 
        options={{ header: () => null }} />
       <Stack.Screen name= 'ForgotPasswordScreen' component={ForgotPasswordScreen} options={{ header: () => null }} />
+      <Stack.Screen name= 'TermsScreen' component={TermsScreen} options={{ header: () => null }} />
     </Stack.Navigator>
   );
 }

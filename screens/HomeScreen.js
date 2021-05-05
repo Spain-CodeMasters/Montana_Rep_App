@@ -316,13 +316,13 @@ export default ({ navigation }) => {
                         <FontAwesome5 name='instagram' solid color="#fff" size={30} style={{ padding: 10, }} />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => {
-                        Linking.openURL("https://www.instagram.com/mtreptheatre/?hl=en")
+                        Linking.openURL('mailto:goplay@montanarep.com')
                             .catch(err => {
                                 console.error("Failed opening page because: ", err);
                                 alert('Failed to open page');
                             })
                     }}>
-                        <FontAwesome5 name='envelope' solid color="#fff" size={30} style={{ padding: 10, }} onPress={() => { alert('email'); }} />
+                        <FontAwesome5 name='envelope' solid color="#fff" size={30} style={{ padding: 10, }} />
                     </TouchableOpacity>
                 </View>
                 <Text style={styles.footer_text}>©2021 Montana Repertory Theatre</Text>

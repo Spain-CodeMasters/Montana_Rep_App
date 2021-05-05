@@ -172,7 +172,7 @@ export default ({ navigation }) => {
           if (content.type == "easterEgg") {
             var distance = (geolib.getDistance(currentPosition, geopoints));
             let reveal;
-            if (distance < 10) {
+            if (distance < 30) {
               reveal = true;
             }
 
@@ -208,6 +208,8 @@ export default ({ navigation }) => {
               }}
               image={require('../assets/GoPlay_PinGold.png')}
               onPress={e => selectPlay(id, pointId)}
+              style={{height: 10, }}
+              resizeMode="contain"
             >
               <Callout tooltip>
                 <View>
@@ -312,8 +314,8 @@ export default ({ navigation }) => {
             latitudeDelta: 0.00220,
             longitudeDelta: 0.00220,
           }}
-          region={currentRegion}
-          onRegionChangeComplete={onRegionChange}
+          //region={currentRegion}
+          //onRegionChangeComplete={onRegionChange}
         >
 
           <Markers />

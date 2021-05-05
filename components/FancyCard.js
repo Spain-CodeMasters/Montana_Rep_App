@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
   buttonText: {
     fontFamily: 'FuturaPT-Book', 
     color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: 30,
   }
 });

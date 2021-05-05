@@ -28,53 +28,21 @@ const ITEM_HEIGHT = height * .88;
 
 export default ({ navigation: { goBack }, navigation, route }) => {
 
-    const safeAreaInsets = useSafeAreaInsets()
-
-    const locationPermission = PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
-
+    const safeAreaInsets = useSafeAreaInsets();
     const [distance, setDistance] = useState('');
     const [play, setPlay] = useState(null);
 
-    const requestLocationPermission = async () => {
-        try {
-            const granted = await PermissionsAndroid.request(
-                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-                {
-                    title: "Montana Repertory Theatre Location Permission",
-                    message:
-                        "We need access to your location " +
-                        "to show your distance from this play",
-                    buttonNeutral: "Ask Me Later",
-                    buttonNegative: "Cancel",
-                    buttonPositive: "OK"
-                }
-            );
-            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                console.log("Location Permission Granted");
-            } else {
-                console.log("Location Permission Denied");
-            }
-        } catch (err) {
-            console.warn(err);
-        }
-    };
-
 
     useEffect(() => {
-        if (locationPermission) {
-            Geolocation.getCurrentPosition(
-                (position) => {
-                    checkPosition(position.coords);
-                },
-                (error) => {
-                    console.log(error.code, error.message);
-                },
-                { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-            );
-
-        } else {
-            requestLocationPermission();
-        }
+        Geolocation.getCurrentPosition(
+            (position) => {
+                checkPosition(position.coords);
+            },
+            (error) => {
+                console.log(error.code, error.message);
+            },
+            { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+        );
     }, [play]);
 
 
@@ -96,11 +64,11 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                 var arr = [];
 
                 for (var i = 0; i < play.geopoints.length; i++) {
-                    arr.push(geolib.getDistance(currentPosition, play.geopoints[i]))
-
+                    arr.push(geolib.getDistance(currentPosition, play.geopoints[i]));
+                    
                     for (var j = 1; j < arr.length; j++) {
                         if (arr[j] < arr[0]) {
-                            pointId = j;
+                            pointId = j - 1;
                         }
                     }
                 }
@@ -144,7 +112,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                     );
                 }
             }
-        } 
+        }
     }
 
 
@@ -157,6 +125,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
     const [loading, setLoading] = useState(true);
     const [paused, setPaused] = useState(true);
     const [progress, setProgress] = useState(new Animated.Value(currentTime));
+
 
     const onProgress = (data) => {
         if (!loading) {
@@ -174,8 +143,8 @@ export default ({ navigation: { goBack }, navigation, route }) => {
         setPaused(true);
         console.log("Ended");
         let views = play.views + 1;
-    
-        db.collection("content").doc(route.params.id).update ({
+
+        db.collection("content").doc(route.params.id).update({
             views: views,
         })
     };
@@ -223,19 +192,6 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                                 {/* title */}
                                 <Text style={styles.title}>{play.title}</Text>
 
-                                {/* preview
-                                {
-                                    locked ? <TouchableOpacity
-                                        onPress={() => setPaused(false)}
-                                    >
-                                        <View style={styles.button}>
-
-                                            <Text style={styles.buttonText}>Preview</Text>
-
-                                        </View>
-                                    </TouchableOpacity> : <View style={{ width: 177, height: 44, }}></View>
-                                } */}
-
                                 {/* controls */}
                                 {
                                     locked ? //<TouchableOpacity onPress={() => { setLocked(false), alert('Unlocked') }}>
@@ -278,12 +234,45 @@ export default ({ navigation: { goBack }, navigation, route }) => {
 
                     {/* discription */}
                     <View style={styles.discription}>
+                        <View style={{ paddingHorizontal: 10, width: '100%' }}>
+                            <Text style={[styles.postLabel, { padding: 10, color: '#999', textAlign: "center" }]}>{distance}</Text>
+                            {(function () {
+                                if (play.locationInfo !== '' && play.locationInfo !== ' ' && play.locationInfo !== null) {
+                                    return <View style={{ padding: 20, backgroundColor: "white", borderWidth: 1, borderColor: '#999', borderRadius: 5, marginBottom: 20, }}>
+                                        <Text allowFontScaling style={styles.text_location}>{play.locationInfo}</Text>
+                                    </View>
+                                }
+                            })()}
+                        </View>
+
                         <Text style={styles.text_title}>{play.title}</Text>
-                        <Text allowFontScaling style={styles.subtext}>{distance}</Text>
-                        <Text allowFontScaling style={styles.author}>{play.screenwriter}</Text>
-                        <Text allowFontScaling style={styles.subtext}>{play.locationInfo}</Text>
-                        <Text allowFontScaling style={styles.subtext}>{play.subHeader}</Text>
-                        <Text allowFontScaling style={styles.subtext}>{play.body}</Text>
+
+                        {(function () {
+                            if (play.subHeader !== '' && play.subHeader !== ' ' && play.subHeader !== null) {
+                                return <Text allowFontScaling style={styles.text_subtitle}>{play.subHeader}</Text>
+                            }
+                        })()}
+
+                        <View style={{ paddingVertical: 20, }}>
+                            {(function () {
+                                if (play.screenwriter !== '' && play.screenwriter !== ' ' && play.screenwriter !== null) {
+                                    return <Text allowFontScaling style={styles.subtext}>{play.screenwriter}</Text>
+                                }
+                            })()}
+
+                            {(function () {
+                                if (play.actorInfo !== '' && play.actorInfo !== ' ' && play.actorInfo !== null) {
+                                    return <Text allowFontScaling style={styles.subtext}>{play.actorInfo}</Text>
+                                }
+                            })()}
+                        </View>
+
+                        {(function () {
+                            if (play.body !== '' && play.body !== ' ' && play.body !== null) {
+                                return <Text allowFontScaling style={styles.subtext}>{play.body}</Text>
+                            }
+                        })()}
+
                         {!locked ? <Text allowFontScaling style={styles.subtext}></Text> : null}
                         {
                             !premium ? <TouchableOpacity
@@ -296,9 +285,17 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                                 </View>
                             </TouchableOpacity> : null
                         }
-                        <Text allowFontScaling style={styles.subtext}>{play.actorInfo}</Text>
-                        <Text allowFontScaling style={styles.subtext}>{play.addInfo}</Text>
-                        <Text allowFontScaling style={styles.subtext}>{play.copyrightDate}</Text>
+                        {(function () {
+                            if (play.addInfo !== '' && play.addInfo !== ' ' && play.addInfo !== null) {
+                                return <Text allowFontScaling style={styles.subtext}>{play.addInfo}</Text>
+                            }
+                        })()}
+
+                        {(function () {
+                            if (play.copyrightDate !== '' && play.copyrightDate !== ' ' && play.copyrightDate !== null) {
+                                return <Text allowFontScaling style={styles.subtext}>{play.copyrightDate}</Text>
+                            }
+                        })()}
 
                     </View>
 
@@ -358,8 +355,14 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'flex-start',
         justifyContent: 'center',
-        margin: 45
-
+        marginTop: 18,
+        marginHorizontal: 45,
+    },
+    postLabel: {
+        fontSize: 16,
+        fontFamily: 'FuturaPT-Medium',
+        lineHeight: 20,
+        textTransform: 'uppercase'
     },
     image: {
         width: "100%",
@@ -382,26 +385,32 @@ const styles = StyleSheet.create({
     },
 
     text_title: {
-        fontSize: 40,
-        fontFamily: 'FuturaPT-Demi'
-
+        color: "black",
+        fontSize: 28,
+        fontFamily: 'FuturaPT-Medium',
+        margin: 10,
     },
 
-    author: {
+    text_subtitle: {
         fontSize: 20,
         fontFamily: 'FuturaPT-Book',
         paddingHorizontal: 40,
-        marginTop: 10,
-        lineHeight: 20
+        paddingBottom: 10,
+        lineHeight: 20,
+    },
+
+    text_location: {
+        fontSize: 16,
+        fontFamily: 'FuturaPT-Book',
+        lineHeight: 20,
     },
 
     subtext: {
-        fontSize: 16,
+        fontSize: 18,
         fontFamily: 'FuturaPT-Book',
-        paddingHorizontal: 40,
-        marginTop: 20,
-        marginBottom: 10,
-        lineHeight: 20
+        paddingHorizontal: 30,
+        paddingVertical: 5,
+        lineHeight: 20,
     },
 
     back: {
@@ -476,7 +485,13 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         marginRight: -7,
         width: 14,
-    }
+    },
+    postLabel: {
+        fontSize: 16,
+        fontFamily: 'FuturaPT-Medium',
+        lineHeight: 20,
+        textTransform: 'uppercase'
+    },
 
 
 })
