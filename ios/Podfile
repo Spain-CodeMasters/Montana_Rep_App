@@ -34,6 +34,7 @@ target 'GoPlay! Demo' do
   pod 'Permission-LocationAccuracy', :path => "#{permissions_path}/LocationAccuracy"
   pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+  # pod 'Permissions-LocationAccuracy', :path => "#{permissions_path/LocationAccuracy"
 
   # pod 'Permission-Notifications', :path => "#{permissions_path}/Notifications.podspec"
   
