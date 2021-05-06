@@ -19,8 +19,9 @@ export default ({ navigation: { goBack }, navigation }) => {
   const [isEnabled, setIsEnabled] = useState(true);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
-  const [isAccountDown, setIsAccountDown] = useState(false);
-  const [isSecurityDown, setIsSecurityDown] = useState(false);
+  const [isAccountSelected, setIsAccountSelected] = useState(false);
+  const [isPrivacySelected, setIsPrivacySelected] = useState(false);
+  const [isAboutSelected, setIsAboutSelected] = useState(false);
 
   const [isMenu, setIsMenu] = useState(false);
 
@@ -53,26 +54,31 @@ export default ({ navigation: { goBack }, navigation }) => {
         </View>
         <View style={styles.horizontal_rule} />
         <View>
-          <TouchableOpacity onPress={() => navigation.navigate('Change Password')}>
+          <TouchableOpacity onPress={() => setIsAccountSelected(!isAccountSelected)}>
             <View style={styles.inline_rule}>
               <Text style={styles.text}><Feather name="user" size={20} color='#747A21' />  Account</Text>
-              <View style={{ alignSelf: 'flex-end' }}>
-                {/* <Feather name= "chevron-right" size= {20} color= '#343A3F' /> */}
-                <Feather name="chevron-down" size={20} color='#343A3F' />
-              </View>
+              {!isAccountSelected ? <Feather name="chevron-right" size={20} color='#343A3F' />
+                : <Feather name="chevron-down" size={20} color='#343A3F' />}
+
             </View>
           </TouchableOpacity>
-          <View style={styles.horizontal_rule} />
-          <TouchableOpacity onPress={() => navigation.navigate('Change Password')}>
-            <Text style={styles.subtext}>Change Password</Text>
-          </TouchableOpacity>
-          <View style={styles.horizontal_rule} />
-          <TouchableOpacity onPress={() => navigation.navigate('Update Account')}>
-            <Text style={styles.subtext}>Update Account</Text>
-          </TouchableOpacity>
-          {/* <View style={styles.horizontal_rule} />
-                <Text style={styles.subtext}>Delete Account</Text> */}
 
+          {isAccountSelected ? <View>
+            <View style={styles.horizontal_rule} />
+
+            <TouchableOpacity onPress={() => navigation.navigate('Change Password')}>
+              <Text style={styles.subtext}>Change Password</Text>
+            </TouchableOpacity>
+
+            <View style={styles.horizontal_rule} />
+
+            <TouchableOpacity onPress={() => navigation.navigate('Update Account')}>
+              <Text style={styles.subtext}>Update Account</Text>
+            </TouchableOpacity>
+
+            {/* <View style={styles.horizontal_rule} />
+                <Text style={styles.subtext}>Delete Account</Text> */}
+          </View> : null}
         </View>
 
         <View style={styles.horizontal_rule} />
@@ -92,45 +98,62 @@ export default ({ navigation: { goBack }, navigation }) => {
 
         <View style={styles.horizontal_rule} />
         <View>
-          <TouchableOpacity onPress={() => navigation.navigate('Privacy')}>
-            <Text style={styles.text}><Feather name="lock" size={20} color='#747A21' />  Privacy & Security</Text>
+          <TouchableOpacity onPress={() => setIsPrivacySelected(!isPrivacySelected)}>
+            <View style={styles.inline_rule}>
+              <Text style={styles.text}><Feather name="lock" size={20} color='#747A21' />  Privacy & Security</Text>
+              <View style={{ alignSelf: 'flex-end' }}>
+                {!isPrivacySelected ? <Feather name="chevron-right" size={20} color='#343A3F' />
+                  : <Feather name="chevron-down" size={20} color='#343A3F' />}
+              </View>
+            </View>
           </TouchableOpacity>
-        </View>
 
-        <View style={styles.horizontal_rule} />
-        <TouchableOpacity onPress={() => navigation.navigate('Privacy Policy')}>
-          <Text style={styles.subtext}>Privacy Policy</Text>
-        </TouchableOpacity>
-        <View style={styles.horizontal_rule} />
-        <TouchableOpacity onPress={() => navigation.navigate('Terms and Conditions')}>
-          <Text style={styles.subtext}>Terms and Conditions</Text>
-        </TouchableOpacity>
+
+          {isPrivacySelected ? <View>
+            <View style={styles.horizontal_rule} />
+            <TouchableOpacity onPress={() => navigation.navigate('Privacy Policy')}>
+              <Text style={styles.subtext}>Privacy Policy</Text>
+            </TouchableOpacity>
+            <View style={styles.horizontal_rule} />
+            <TouchableOpacity onPress={() => navigation.navigate('Terms and Conditions')}>
+              <Text style={styles.subtext}>Terms and Conditions</Text>
+            </TouchableOpacity>
+          </View> : null}
+        </View>
 
         <View style={styles.horizontal_rule} />
         <View>
-
-          <Text style={styles.text}><Feather name="help-circle" size={20} color='#747A21' />  About</Text>
-
+          <TouchableOpacity onPress={() => setIsAboutSelected(!isAboutSelected)}>
+            <View style={styles.inline_rule}>
+              <Text style={styles.text}><Feather name="help-circle" size={20} color='#747A21' />  About</Text>
+              <View style={{ alignSelf: 'flex-end' }}>
+                {!isAboutSelected ? <Feather name="chevron-right" size={20} color='#343A3F' />
+                  : <Feather name="chevron-down" size={20} color='#343A3F' />}
+              </View>
+            </View>
+          </TouchableOpacity>
           <View style={styles.horizontal_rule} />
 
-          <ExternalLinkBtn title="About Us" url="https://montanarep.com/mission" />
-          <View style={styles.horizontal_rule} />
+          {isAboutSelected ? <View>
+            <ExternalLinkBtn title="About Us" url="https://montanarep.com/mission" />
+            <View style={styles.horizontal_rule} />
 
-          <ExternalLinkBtn title="Facebook" url="https://www.facebook.com/MontanaRep" />
-          <View style={styles.horizontal_rule} />
+            <ExternalLinkBtn title="Facebook" url="https://www.facebook.com/MontanaRep" />
+            <View style={styles.horizontal_rule} />
 
-          <ExternalLinkBtn title="Instagram" url="https://www.instagram.com/mtreptheatre/?hl=en" />
-          <View style={styles.horizontal_rule} />
+            <ExternalLinkBtn title="Instagram" url="https://www.instagram.com/mtreptheatre/?hl=en" />
+            <View style={styles.horizontal_rule} />
 
-          <ExternalLinkBtn title="Rate us on the App Store" url="" />
-          <View style={styles.horizontal_rule} />
+            <ExternalLinkBtn title="Rate us on the App Store" url="" />
+            <View style={styles.horizontal_rule} />
 
-          <ExternalLinkBtn title="Write a Review" url="" />
-          <View style={styles.horizontal_rule} />
-          <ExternalLinkBtn title="Contact Us" url="https://montanarep.com/contact" />
-
+            <ExternalLinkBtn title="Write a Review" url="" />
+            <View style={styles.horizontal_rule} />
+            <ExternalLinkBtn title="Contact Us" url="https://montanarep.com/contact" />
+            <View style={styles.horizontal_rule} />
+          </View> : null}
         </View>
-        <View style={styles.horizontal_rule} />
+
         <View>
           <TouchableOpacity onPress={() => logout()}>
             <Text style={styles.text}><Feather name="log-out" size={20} color='red' />  Logout</Text>

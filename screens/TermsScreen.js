@@ -19,65 +19,63 @@ export default () => {
 
 
 
-                <Text style={{ fontWeight: 'bold' }}>Application</Text> 
-                <Text> means the software program provided by the Company downloaded by You on any electronic device, named GoPlay! - Montana Repertory Theatre</Text>
+                <Text><Text style={{ fontWeight: 'bold' }}>&#8226; Application </Text>
+                means the software program provided by the Company downloaded by You on any electronic device, named GoPlay! - Montana Repertory Theatre</Text>
 
 
-                <Text style={{ fontWeight: 'bold' }}>Application Store</Text> 
-                <Text> means the digital distribution service operated and developed by Apple Inc. (Apple App Store) or Google Inc. (Google Play Store) in which the Application has been downloaded.</Text>
+                <Text><Text style={{ fontWeight: 'bold' }}>&#8226; Application Store </Text>
+                means the digital distribution service operated and developed by Apple Inc. (Apple App Store) or Google Inc. (Google Play Store) in which the Application has been downloaded.</Text>
 
 
-                <Text style={{ fontWeight: 'bold' }}>Affiliate</Text> 
-                <Text> means an entity that controls, is controlled by or is under common control with a party, where &quot;control&quot; means ownership of 50% or more of the shares, equity interest or other securities entitled to vote for election of directors or other managing authority.</Text>
+                <Text><Text style={{ fontWeight: 'bold' }}>&#8226; Affiliate </Text>
+                means an entity that controls, is controlled by or is under common control with a party, where &quot;control&quot; means ownership of 50% or more of the shares, equity interest or other securities entitled to vote for election of directors or other managing authority.</Text>
 
 
-                <Text style={{ fontWeight: 'bold' }}>Account</Text> 
-                <Text> means a unique account created for You to access our Service or parts of our Service.</Text>
+                <Text><Text style={{ fontWeight: 'bold' }}>&#8226; Account </Text>
+                means a unique account created for You to access our Service or parts of our Service.</Text>
 
 
-                <Text style={{ fontWeight: 'bold' }}>Country</Text> 
-                <Text> refers to: Montana, United States</Text>
+                <Text><Text style={{ fontWeight: 'bold' }}>&#8226; Country </Text>
+                refers to: Montana, United States</Text>
 
 
-                <Text style={{ fontWeight: 'bold' }}>Company</Text> 
-                <Text> (referred to as either &quot;the Company&quot;, &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot; in this Agreement) refers to Montana Repertory Theatre, 32 Campus Drive.</Text>
+                <Text><Text style={{ fontWeight: 'bold' }}>&#8226; Company </Text>
+                (referred to as either &quot;the Company&quot;, &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot; in this Agreement) refers to Montana Repertory Theatre, 32 Campus Drive.</Text>
 
 
-                <Text style={{ fontWeight: 'bold' }}>Device</Text> 
-                <Text> means any device that can access the Service such as a computer, a cellphone or a digital tablet.</Text>
+                <Text><Text style={{ fontWeight: 'bold' }}>&#8226; Device </Text>
+                means any device that can access the Service such as a computer, a cellphone or a digital tablet.</Text>
 
 
-                <Text style={{ fontWeight: 'bold' }}>Service</Text> 
-                <Text> refers to the Application or the Website or both.</Text>
+                <Text><Text style={{ fontWeight: 'bold' }}>&#8226; Service </Text>
+                refers to the Application or the Website or both.</Text>
 
 
-                <Text style={{ fontWeight: 'bold' }}>Subscriptions</Text> 
-                <Text> refer to the services or access to the Service offered on a subscription basis by the Company to You.</Text>
+                <Text><Text style={{ fontWeight: 'bold' }}>&#8226; Subscriptions </Text>
+                refer to the services or access to the Service offered on a subscription basis by the Company to You.</Text>
 
 
-                <Text style={{ fontWeight: 'bold' }}>Terms and Conditions</Text> 
-                <Text> (also referred as &quot;Terms&quot;) mean these Terms and Conditions that form the entire agreement between You and the Company regarding the use of the Service.</Text>
+                <Text><Text style={{ fontWeight: 'bold' }}>&#8226; Terms and Conditions </Text>
+                (also referred as &quot;Terms&quot;) mean these Terms and Conditions that form the entire agreement between You and the Company regarding the use of the Service.</Text>
 
 
-                <Text style={{ fontWeight: 'bold' }}>Third-party Social Media Service</Text> 
-                <Text> means any services or content (including data, information, products or services) provided by a third-party that may be displayed, included or made available by the Service.</Text>
+                <Text><Text style={{ fontWeight: 'bold' }}>&#8226; Third-party Social Media Service </Text>
+                means any services or content (including data, information, products or services) provided by a third-party that may be displayed, included or made available by the Service.</Text>
 
 
-                <Text style={{ fontWeight: 'bold' }}>Website</Text>
-                <Text> refers to Montana Repertory Theatre, accessible from </Text>
-                <TouchableOpacity onPress={() => {
-                    Linking.openURL("https://goplay.montanarep.com/")
-                        .catch(err => {
-                            console.error("Failed opening page because: ", err);
-                            alert('Failed to open page');
-                        })
-                }}>
-                    <Text>goplay.montanarep.com</Text>
-                </TouchableOpacity>
+                <Text><Text style={{ fontWeight: 'bold' }}>&#8226; Website </Text>
+                refers to Montana Repertory Theatre, accessible from
+                    <Text onPress={() => {
+                        Linking.openURL("https://goplay.montanarep.com/")
+                            .catch(err => {
+                                console.error("Failed opening page because: ", err);
+                                alert('Failed to open page');
+                            })
+                    }}>goplay.montanarep.com</Text>
+                </Text>
 
-
-                <Text style={{ fontWeight: 'bold' }}>You</Text> 
-                <Text> means the individual accessing or using the Service, or the company, or other legal entity on behalf of which such individual is accessing or using the Service, as applicable.</Text>
+                <Text><Text style={{ fontWeight: 'bold' }}>&#8226; You </Text>
+                means the individual accessing or using the Service, or the company, or other legal entity on behalf of which such individual is accessing or using the Service, as applicable.</Text>
 
 
                 <Text style={styles.header}>Acknowledgment</Text>
@@ -149,7 +147,15 @@ export default () => {
                 <Text style={styles.header}>Contact Us</Text>
                 <Text>If you have any questions about these Terms and Conditions, You can contact us:</Text>
 
-                <Text>By email: {email}</Text>
+                <Text>By email:
+                    <Text onPress={() => {
+                        Linking.openURL('mailto:goplay@montanarep.com')
+                            .catch(err => {
+                                console.error("Failed opening page because: ", err);
+                                alert('Failed to open page');
+                            })
+                    }}> goplay@montanarep.com</Text>
+                </Text>
             </View>
 
         </ScrollView>
@@ -161,9 +167,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
         padding: 30,
-        //marginBottom: 100,
     },
-
     layout: {
         flex: 1,
         alignItems: 'flex-start',
@@ -177,7 +181,7 @@ const styles = StyleSheet.create({
         textAlign: 'left',
         color: '#343A3F',
         marginTop: 20,
-        marginBottom: 20,
+        marginBottom: 10,
     },
     subheader: {
         fontSize: 20,
@@ -186,6 +190,14 @@ const styles = StyleSheet.create({
         color: '#343A3F',
         marginTop: 10,
         marginBottom: 10,
+    },
+    subsubheader: {
+        fontSize: 18,
+        fontFamily: 'FuturaPT-Demi',
+        textAlign: 'left',
+        color: '#343A3F',
+        marginTop: 10,
+        marginBottom: 5,
     },
     header_text: {
         fontSize: 24,
@@ -204,4 +216,5 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontFamily: 'FuturaPT-Book',
     },
+
 });

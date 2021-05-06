@@ -155,7 +155,7 @@ export default function LoginScreen({ navigation }) {
           <FormButton buttonTitle='Sign In' onPress={() => login(email, password)} />
         </View>
         <TouchableOpacity onPress={() => navigation.navigate('ForgotPasswordScreen')}>
-          <Text style={styles.text_footer}>Forgot password?</Text>
+          <Text style={styles.text_footer}>Forgot your password?</Text>
         </TouchableOpacity>
         {/* </View> */}
       </Animatable.View>

@@ -17,7 +17,7 @@ export default function ForgotPasswordScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style ={styles.header}>
-        <Text style={styles.text_header}>Forgot Password?</Text>
+        <Text style={styles.text_header}>Forgot Your Password?</Text>
       </View>
 
       <View style={styles.footer}>
@@ -31,7 +31,7 @@ export default function ForgotPasswordScreen({ navigation }) {
           autoCorrect={false}
         />
         </View>
-          <FormButton buttonTitle="Forgot Password" onPress={() => passwordReset(email)} />
+          <FormButton buttonTitle="Send Me An Email" onPress={() => passwordReset(email)} />
           {<FormErrorMessage error={customError} visible={true} />}
           
       </View>
