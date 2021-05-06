@@ -58,8 +58,8 @@ const GetTime = ({ start, end }) => {
 
     var time = (start.getMonth() + 1) + '/' + start.getDate() + " " + hours() + ":" + minutes() + ' ' + period();
 
-    function hours(){
-      if (h > 12){
+    function hours() {
+      if (h > 12) {
         return h - 12;
       } else if (h == 0) {
         return 12;
@@ -68,16 +68,16 @@ const GetTime = ({ start, end }) => {
       }
     }
 
-    function minutes(){
-      if (m < 10){
+    function minutes() {
+      if (m < 10) {
         return "0" + m;
       } else {
         return m;
       }
     }
 
-    function period(){
-      if (h > 12){
+    function period() {
+      if (h > 12) {
         return 'PM';
       } else {
         return 'AM';
@@ -100,15 +100,15 @@ const GetTime = ({ start, end }) => {
 
 //Create Item
 const Play = ({ item, onPress }) => {
-  function source() { 
+  function source() {
     if (item.post.previewPhotoUrl !== '') {
       return item.post.previewPhotoUrl;
     } else {
       return item.post.mainPhotoUrl;
-    }; 
+    };
   }
-  
-  return <ImageBackground source={{ uri: source()}} style={styles.play}>
+
+  return <ImageBackground source={{ uri: source() }} style={styles.play}>
     <TouchableOpacity style={styles.play} onPress={onPress}>
       <View style={styles.overlay}>
         <AdjustTitle fontSize={40} text={item.post.title} style={styles.title} numberOfLines={2} />
@@ -149,12 +149,12 @@ const Event = ({ item, onPress }) => {
 
 //Create Sponsored Item
 const Sponsor = ({ item, onPress }) => {
-  function source() { 
+  function source() {
     if (item.post.previewPhotoUrl !== '') {
       return item.post.previewPhotoUrl;
     } else {
       return item.post.mainPhotoUrl;
-    }; 
+    };
   }
 
   return <ImageBackground source={{ uri: source() }} style={styles.play}>
@@ -180,9 +180,9 @@ export default ({ navigation }) => {
   const [greenAnimation, setGreenAnimation] = useState('fadeOut');
   const [goldAnimation, setGoldAnimation] = useState('fadeOut');
   const [redAnimation, setRedAnimation] = useState('fadeOut');
-  const [greenSize, setGreenSize] = useState(1.5);
-  const [goldSize, setGoldSize] = useState(1.5);
-  const [redSize, setRedSize] = useState(1.5);
+  const [isGreenSelected, setIsGreenSelected] = useState(false);
+  const [isGoldSelected, setIsGoldSelected] = useState(false);
+  const [isRedSelected, setIsRedSelected] = useState(false);
 
   const scroll = useRef(null);
 
@@ -203,30 +203,30 @@ export default ({ navigation }) => {
         setFilter("mtrep");
         setScheduleView(scheduleData.filter(function (posts) { return posts.post.category == 'mtrep'; }));
         selectGreen();
-        setGreenSize(0);
-        setGoldSize(1.5);
-        setRedSize(1.5);
+        setIsGreenSelected(true);
+        setIsGoldSelected(false);
+        setIsRedSelected(false);;
       } else if (type == "goplay") {
         setFilter("goplay");
         setScheduleView(scheduleData.filter(function (posts) { return posts.post.category == 'goplay'; }));
         selectGold();
-        setGreenSize(1.5);
-        setGoldSize(0);
-        setRedSize(1.5);
+        setIsGreenSelected(false);
+        setIsGoldSelected(true);
+        setIsRedSelected(false);
       } else if (type == "comm") {
         setFilter("comm");
         setScheduleView(scheduleData.filter(function (posts) { return posts.post.category !== 'goplay' && posts.post.category !== 'mtrep'; }));
         selectRed();
-        setGreenSize(1.5);
-        setGoldSize(1.5);
-        setRedSize(0);
+        setIsGreenSelected(false);
+        setIsGoldSelected(false);
+        setIsRedSelected(true);
       }
     } else {
       setScheduleView(scheduleData);
       setFilter("all");
-      setGreenSize(1.5);
-      setGoldSize(1.5);
-      setRedSize(1.5);
+      setIsGreenSelected(false);
+      setIsGoldSelected(false);
+      setIsRedSelected(false);
     }
 
   }
@@ -269,14 +269,14 @@ export default ({ navigation }) => {
 
   const renderHeader = () => {
     return <View>
-        {/* PINNED POST */}
-        <FlatList
-            data={scheduleData.filter(function (posts) { return posts.post.pinned == true; })}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-        />
+      {/* PINNED POST */}
+      <FlatList
+        data={scheduleData.filter(function (posts) { return posts.post.pinned == true; })}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+      />
     </View>
-  
+
   }
 
   const renderItem = ({ item }) => {
@@ -318,13 +318,37 @@ export default ({ navigation }) => {
 
     <View style={{ height: 55 }}></View>
 
-    <View style={{ position: "absolute", left: ITEM_WIDTH - 63, flexDirection: 'column', alignItems: 'flex-end', padding: 10, paddingTop: 55 }}>
+    <View style={{ position: "absolute", left: ITEM_WIDTH - 63, flexDirection: 'column', alignItems: 'center', padding: 10, paddingTop: 55 }}>
+
+      {/* GREEN */}
       <Animatable.View animation={greenAnimation} duration={500} style={[{ backgroundColor: '#747A21', position: "absolute", left: -107, top: 65, width: 117, paddingLeft: 5, paddingRight: 5, borderRadius: 5 }]}><Text style={[styles.postLabel, { color: "white" }]}>Montana Rep</Text></Animatable.View>
-      <TouchableOpacity onPress={() => filterPosts('mtrep')}><Animated.View style={[styles.postNavi, { backgroundColor: '#747A21', borderColor: "#0000", borderWidth: greenSize }]}></Animated.View></TouchableOpacity>
+      <TouchableOpacity onPress={() => filterPosts('mtrep')}>
+        {isGreenSelected ?
+          <View style={[styles.postNavi, { backgroundColor: '#747A21' }]}></View>
+          :
+          <View style={[styles.postNavi, { backgroundColor: '#747A21', width: 10, height: 10, margin: 16.5, }]}></View>
+        }
+      </TouchableOpacity>
+
+      {/* GOLD */}
       <Animatable.View animation={goldAnimation} duration={500} style={[{ backgroundColor: '#cc8a05', position: "absolute", left: -65, top: 109, width: 75, paddingLeft: 5, paddingRight: 5, borderRadius: 5 }]}><Text style={[styles.postLabel, { color: "white" }]}>Go Play!</Text></Animatable.View>
-      <TouchableOpacity onPress={() => filterPosts('goplay')}><Animated.View style={[styles.postNavi, { backgroundColor: '#cc8a05', borderColor: "#0000", borderWidth: goldSize }]}></Animated.View></TouchableOpacity>
+      <TouchableOpacity onPress={() => filterPosts('goplay')} style={{ alignSelf: 'center' }}>
+        {isGoldSelected ?
+          <View style={[styles.postNavi, { backgroundColor: '#cc8a05' }]}></View>
+          :
+          <View style={[styles.postNavi, { backgroundColor: '#cc8a05', width: 10, height: 10, margin: 16.5, }]}></View>
+        }
+      </TouchableOpacity>
+
+      {/* RED */}
       <Animatable.View animation={redAnimation} duration={500} style={[{ backgroundColor: '#A5580C', position: "absolute", left: -92, top: 152, width: 102, paddingLeft: 5, paddingRight: 5, borderRadius: 5 }]}><Text style={[styles.postLabel, { color: "white" }]}>Community</Text></Animatable.View>
-      <TouchableOpacity onPress={() => filterPosts('comm')}><Animated.View style={[styles.postNavi, { backgroundColor: '#A5580C', borderColor: "#0000", borderWidth: redSize }]}></Animated.View></TouchableOpacity>
+      <TouchableOpacity onPress={() => filterPosts('comm')} style={{ alignSelf: 'center' }}>
+        {isRedSelected ?
+          <View style={[styles.postNavi, { backgroundColor: '#A5580C' }]}></View>
+          :
+          <View style={[styles.postNavi, { backgroundColor: '#A5580C', width: 10, height: 10, margin: 16.5, }]}></View>
+        }
+      </TouchableOpacity>
     </View>
 
     <Navigation navigation={navigation} />
@@ -392,8 +416,8 @@ const styles = StyleSheet.create({
 
   },
   postNavi: {
-    minWidth: 13,
-    minHeight: 13,
+    width: 13,
+    height: 13,
     borderRadius: 10,
     margin: 15,
   },
