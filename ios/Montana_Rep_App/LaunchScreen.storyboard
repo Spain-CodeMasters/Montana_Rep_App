@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,11 +16,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.14999999999999999" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Topographic Map" translatesAutoresizingMaskIntoConstraints="NO" id="rYS-dy-G6K">
-                                <rect key="frame" x="-266" y="-77" width="684" height="811"/>
-                            </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GoPlay_LogoGreen-3" translatesAutoresizingMaskIntoConstraints="NO" id="OvK-ee-h3p">
-                                <rect key="frame" x="37" y="0.0" width="300" height="667"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="GoPlay_LogoGreen-3" translatesAutoresizingMaskIntoConstraints="NO" id="OvK-ee-h3p">
+                                <rect key="frame" x="54" y="0.0" width="267" height="667"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="400" id="8fv-on-Yru"/>
                                     <constraint firstAttribute="height" constant="128" id="gOL-Tz-Z8p"/>
@@ -31,12 +28,8 @@
                         <color key="backgroundColor" red="0.93682533499999998" green="0.9264937043" blue="0.84703785180000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="Bcu-3y-fUS" firstAttribute="trailing" secondItem="OvK-ee-h3p" secondAttribute="trailing" constant="38" id="5qn-H9-tvl"/>
-                            <constraint firstItem="rYS-dy-G6K" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" id="K5Y-a3-5FS"/>
-                            <constraint firstItem="rYS-dy-G6K" firstAttribute="top" secondItem="Bcu-3y-fUS" secondAttribute="top" id="SQV-1K-hSF"/>
-                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="bottom" secondItem="rYS-dy-G6K" secondAttribute="bottom" id="Y2R-0S-dlg"/>
                             <constraint firstItem="Bcu-3y-fUS" firstAttribute="trailing" secondItem="OvK-ee-h3p" secondAttribute="trailing" id="Y2R-uh-DYs"/>
                             <constraint firstItem="OvK-ee-h3p" firstAttribute="top" secondItem="Bcu-3y-fUS" secondAttribute="top" id="e08-Cj-35z"/>
-                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="trailing" secondItem="rYS-dy-G6K" secondAttribute="trailing" id="kBG-mq-pup"/>
                             <constraint firstItem="OvK-ee-h3p" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" constant="37" id="kcN-Dw-NmE"/>
                             <constraint firstItem="OvK-ee-h3p" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" id="ohO-f6-gOz"/>
                             <constraint firstItem="Bcu-3y-fUS" firstAttribute="bottom" secondItem="OvK-ee-h3p" secondAttribute="bottom" id="r1O-fN-zKH"/>
@@ -50,6 +43,5 @@
     </scenes>
     <resources>
         <image name="GoPlay_LogoGreen-3" width="1501" height="1501"/>
-        <image name="Topographic Map" width="4500" height="4500"/>
     </resources>
 </document>

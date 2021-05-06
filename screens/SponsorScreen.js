@@ -495,7 +495,7 @@ const styles = StyleSheet.create({
         zIndex: 99,
     },
     subButtonText: {
-        fontFamily: 'FuturaPTBook',
+        fontFamily: 'FuturaPT-Book',
         fontSize: 20,
         color: "white",
     },

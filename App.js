@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React, {useState, useEffect} from 'react';
-import {Text, View, Button, ActivityIndicator} from 'react-native';
+import {Text, View, Button, ActivityIndicator, LogBox} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import auth from '@react-native-firebase/auth';
@@ -21,7 +21,11 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 const AppStack = createStackNavigator();
 
+
+
 const App = () => {
+  LogBox.ignoreAllLogs();
+  LogBox.ignoreLogs(['Warning: AsyncStorage has been extracted from react-native core and will be removed in a future release. It can now be installed and imported from @react-native-async-storage/async-storage instead of react-native. See https://github.com/react-native-async-storage/async-storage']);
  
   // const [isFirstLaunch, setIsFirstLaunch] = React.useState(null);
 
