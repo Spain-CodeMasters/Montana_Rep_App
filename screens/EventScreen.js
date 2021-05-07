@@ -143,10 +143,27 @@ export default ({ navigation: { goBack }, navigation, route }) => {
 
                     {/* discription */}
                     <View style={styles.discription}>
+                        <View style={{ paddingHorizontal: 10, width: '100%' }}>
+                            <Text style={[styles.postLabel, { padding: 10, color: '#999', textAlign: "center" }]}>{distance}</Text>
+                            {(function () {
+                                if (event.locationInfo !== '' && event.locationInfo !== ' ' && event.locationInfo !== null) {
+                                    return <View style={{ padding: 20, backgroundColor: "white", borderWidth: 1, borderColor: '#999', borderRadius: 5, marginBottom: 20, }}>
+                                        <Text allowFontScaling style={styles.text_location}>{event.locationInfo}</Text>
+                                    </View>
+                                }
+                            })()}
+                        </View>
+
                         <Text style={styles.text_title}>{event.title}</Text>
-                        <Text allowFontScaling style={styles.subtext}>{distance}</Text>
-                        <Text allowFontScaling style={styles.subtext}>{event.locationInfo}</Text>
-                        <Text allowFontScaling style={styles.subtext}>{event.body}</Text>
+
+                        {(function () {
+                            if (event.subHeader !== '' && event.subHeader !== ' ' && event.subHeader !== null) {
+                                return <Text allowFontScaling style={styles.text_subtitle}>{event.subHeader}</Text>
+                            } else {
+                                return <></>
+                            }
+                        })()}
+
                         {/* Check for Link */}
                         {(function () {
                             if (event.link == '' || event.link == null) {
@@ -281,17 +298,24 @@ const styles = StyleSheet.create({
     },
 
     text_title: {
-        fontSize: 40,
-        fontFamily: 'FuturaPT-Demi'
-
+        color: "black",
+        fontSize: 28,
+        fontFamily: 'FuturaPT-Medium',
+        margin: 10,
     },
 
-    author: {
+    text_subtitle: {
         fontSize: 20,
         fontFamily: 'FuturaPT-Book',
         paddingHorizontal: 40,
-        marginTop: 10,
-        lineHeight: 20
+        paddingBottom: 10,
+        lineHeight: 20,
+    },
+
+    text_location: {
+        fontSize: 16,
+        fontFamily: 'FuturaPT-Book',
+        lineHeight: 20,
     },
 
     subtext: {

@@ -108,9 +108,9 @@ const Post = ({ item }) => (
 
 export default ({ navigation }) => {
     // Filter Posts 
-    const [greenAnimation, setGreenAnimation] = useState('fadeOut');
-    const [goldAnimation, setGoldAnimation] = useState('fadeOut');
-    const [redAnimation, setRedAnimation] = useState('fadeOut');
+    const [greenAnimation, setGreenAnimation] = useState('fadeIn');
+    const [goldAnimation, setGoldAnimation] = useState('fadeIn');
+    const [redAnimation, setRedAnimation] = useState('fadeIn');
     const [isGreenSelected, setIsGreenSelected] = useState(false);
     const [isGoldSelected, setIsGoldSelected] = useState(false);
     const [isRedSelected, setIsRedSelected] = useState(false);

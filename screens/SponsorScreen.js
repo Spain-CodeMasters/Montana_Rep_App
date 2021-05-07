@@ -525,12 +525,4 @@ const styles = StyleSheet.create({
         marginRight: -7,
         width: 14,
     },
-    postLabel: {
-        fontSize: 16,
-        fontFamily: 'FuturaPT-Medium',
-        lineHeight: 20,
-        textTransform: 'uppercase'
-    },
-
-
 })
