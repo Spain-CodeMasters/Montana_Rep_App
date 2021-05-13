@@ -17,7 +17,6 @@ import {
 import Video from 'react-native-video';
 import Navigation from '../components/navigation/navigation';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Geolocation from 'react-native-geolocation-service';
 import * as geolib from 'geolib';
 
@@ -39,13 +38,8 @@ const ITEM_HEIGHT = height * .88;
 
 export default ({ navigation: { goBack }, navigation, route }) => {
 
-    const safeAreaInsets = useSafeAreaInsets()
-
-    //const locationPermission = PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
-
     const [distance, setDistance] = useState('');
     const [sponsor, setSponsor] = useState(null);
-
 
     useEffect(() => {
         Geolocation.getCurrentPosition(
@@ -80,12 +74,14 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                 for (var i = 0; i < sponsor.geopoints.length; i++) {
                     arr.push(geolib.getDistance(currentPosition, sponsor.geopoints[i]));
 
-                    for (var j = 1; j < arr.length; j++) {
-                        if (arr[j] < arr[0]) {
-                            pointId = j-1;
-                        }
-                    }
+                    // for (var j = 1; j < arr.length; j++) {
+                    //     if (arr[j] < arr[0]) {
+                    //         pointId = j-1;
+                    //     }
+                    // }
                 }
+
+                pointId = arr.indexOf(Math.min(...arr));
 
             }
 
@@ -164,13 +160,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
         setProgress(new Animated.Value(currentTime));
     }, [currentTime])
 
-    return <View style={{
-        flex: 1,
-        //paddingTop: safeAreaInsets.top,
-        paddingBottom: safeAreaInsets.bottom,
-        paddingLeft: safeAreaInsets.left,
-        paddingRight: safeAreaInsets.right,
-    }}>
+    return <View>
 
 
         {/* MAIN CONTENT */}

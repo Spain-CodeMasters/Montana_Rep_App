@@ -18,7 +18,6 @@ import * as Animatable from 'react-native-animatable';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Navigation from '../components/navigation/navigation';
 import Cog from '../components/Cog';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AutoHeightImage from 'react-native-auto-height-image';
 
 import { db } from '../components/Firebase/firebase';
@@ -123,15 +122,20 @@ export default ({ navigation }) => {
     const [filter, setFilter] = useState("all");
 
     useEffect(() => {
+        db.collection("carousel").orderBy("carouselOrder", "asc").onSnapshot((snapshot) => {
+            setHeroData(snapshot.docs.map((doc) => ({ id: doc.id, hero: doc.data() })));
+        })
+        
+    }, [])
+
+    useEffect(() => {
         db.collection("posts").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
             /* BUG FIX: This data has to be set directly to run posts. Unsure why*/
             setPostData(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
             setPostView(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
             //setPostView(postData);
         })
-        db.collection("carousel").orderBy("carouselOrder", "asc").onSnapshot((snapshot) => {
-            setHeroData(snapshot.docs.map((doc) => ({ id: doc.id, hero: doc.data() })));
-        })
+        console.log("loaded")
     }, [])
 
 
@@ -242,7 +246,7 @@ export default ({ navigation }) => {
             {(function () {
                 if (postData.filter(function (posts) { return posts.post.pinned == true; }).length !== 0) {
                     return <View style={{ padding: 10 }}>
-                        <Text style={[styles.postLabel, { padding: 10, color: '#999', textAlign: "center" }]}>FEATURED</Text>
+                        <Text style={[styles.postLabel, { padding: 15, color: '#999', textAlign: "center" }]}>FEATURED</Text>
                         <View style={{ padding: 20, backgroundColor: "white", borderWidth: 1, borderColor: '#999', borderRadius: 5 }}>
                             <FlatList
                                 data={postData.filter(function (posts) { return posts.post.pinned == true; })}
@@ -335,13 +339,7 @@ export default ({ navigation }) => {
     }
 
 
-    const safeAreaInsets = useSafeAreaInsets();
-    return <View style={{
-        flex: 1,
-        paddingBottom: safeAreaInsets.bottom,
-        paddingLeft: safeAreaInsets.left,
-        paddingRight: safeAreaInsets.right,
-    }}>
+    return <View>
 
         <StatusBar hidden />
 
@@ -391,7 +389,6 @@ export default ({ navigation }) => {
             </TouchableOpacity>
         </View>
 
-        <Navigation navigation={navigation} />
     </View>
 }
 

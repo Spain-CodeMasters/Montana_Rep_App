@@ -4,8 +4,6 @@ import { PERMISSIONS, RESULTS, check, request } from 'react-native-permissions';
 import { Text, View, Image, StyleSheet, TouchableOpacity, Dimensions, PermissionsAndroid, Platform } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker, Callout, Animated, AnimatedRegion } from 'react-native-maps';
 import * as Animatable from 'react-native-animatable';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Navigation from '../components/navigation/navigation';
 import Cog from '../components/Cog';
 import PlayingBanner from '../components/playingBanner';
 import Geolocation from 'react-native-geolocation-service';
@@ -17,8 +15,6 @@ import { db } from '../components/Firebase/firebase';
 
 
 export default ({ navigation }) => {
-
-  const safeAreaInsets = useSafeAreaInsets();
 
   const [locationPermission, setLocationPermission] = useState(false);
   // const iosLocationPermission = 
@@ -296,12 +292,7 @@ export default ({ navigation }) => {
   }
 
   return (
-    <View style={{
-      flex: 1,
-      paddingBottom: safeAreaInsets.bottom,
-      paddingLeft: safeAreaInsets.left,
-      paddingRight: safeAreaInsets.right,
-    }}>
+    <View>
       <Cog onPress={() => navigation.navigate('Settings')} />
       {!isLoading ? (
         <MapView
@@ -342,7 +333,6 @@ export default ({ navigation }) => {
         }}
       /> */}
 
-      <Navigation navigation={navigation} />
     </View>
   );
 };
