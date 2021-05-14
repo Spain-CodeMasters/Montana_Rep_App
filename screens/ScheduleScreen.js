@@ -8,11 +8,8 @@ import {
   Dimensions,
   FlatList,
   ImageBackground,
-  Image,
-  Animated,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Cog from '../components/Cog';
 import { db } from '../components/Firebase/firebase';
 
@@ -99,7 +96,7 @@ const GetTime = ({ start, end }) => {
 //Create Item
 const Play = ({ item, onPress }) => {
   function source() {
-    if (item.post.previewPhotoUrl !== '') {
+    if (item.post.previewPhotoUrl !== '' && item.post.previewPhotoUrl !== ' ' && item.post.previewPhotoUrl !== null) {
       return item.post.previewPhotoUrl;
     } else {
       return item.post.mainPhotoUrl;
@@ -148,7 +145,7 @@ const Event = ({ item, onPress }) => {
 //Create Sponsored Item
 const Sponsor = ({ item, onPress }) => {
   function source() {
-    if (item.post.previewPhotoUrl !== '') {
+    if (item.post.previewPhotoUrl !== '' && item.post.previewPhotoUrl !== ' ' && item.post.previewPhotoUrl !== null) {
       return item.post.previewPhotoUrl;
     } else {
       return item.post.mainPhotoUrl;

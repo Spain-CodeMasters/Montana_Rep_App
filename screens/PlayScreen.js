@@ -181,6 +181,9 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                                     onProgress={onProgress}
                                     onLoad={onLoad}
                                     onEnd={onEnd}
+                                    ignoreSilentSwitch={"ignore"}
+                                    playInBackground={true}
+                                    playWhenInactive={true}
                                 />
 
                                 {/* title */}
