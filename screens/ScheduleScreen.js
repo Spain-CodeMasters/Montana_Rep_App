@@ -302,6 +302,7 @@ export default ({ navigation }) => {
       keyExtractor={(item) => item.id}
       renderItem={renderItem}
       ListHeaderComponent={renderHeader}
+      ListFooterComponent={<View style={{margin:27}}></View>}
     />
 
     <View style={{ height: 55 }}></View>
@@ -338,6 +339,7 @@ export default ({ navigation }) => {
         }
       </TouchableOpacity>
     </View>
+    
   </View>
 }
 

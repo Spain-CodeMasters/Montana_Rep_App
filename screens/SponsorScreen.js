@@ -13,6 +13,7 @@ import {
     ImageBackground,
     Linking,
     PermissionsAndroid,
+    TouchableWithoutFeedback,
 } from 'react-native';
 import Video from 'react-native-video';
 import Navigation from '../components/navigation/navigation';
@@ -156,8 +157,55 @@ export default ({ navigation: { goBack }, navigation, route }) => {
         })
     };
 
+    const handleProgressPressIn = (e) => {
+        const position = e.nativeEvent.locationX;
+        var barPosition;
+
+        if (position < 0) {
+            barPosition = 0;
+        } else if (position > (ITEM_WIDTH * 0.83)) {
+            barPosition = ITEM_WIDTH * 0.83;
+        } else {
+            barPosition = position;
+        }
+
+        const newProgress = (barPosition / (ITEM_WIDTH * 0.83)) * duration;
+        Animated.timing(progress, {
+            useNativeDriver: false,
+            toValue: newProgress,
+            duration: 500
+        }).start();
+    }
+
+    const handleProgressPressOut = (e) => {
+        const position = e.nativeEvent.locationX;
+        var barPosition;
+
+        if (position < 0) {
+            barPosition = 0;
+        } else if (position > (ITEM_WIDTH * 0.83)) {
+            barPosition = ITEM_WIDTH * 0.83;
+        } else {
+            barPosition = position;
+        }
+
+        const newProgress = (barPosition / (ITEM_WIDTH * 0.83)) * duration;
+        Animated.timing(progress, {
+            useNativeDriver: false,
+            toValue: newProgress,
+            duration: 500
+        }).start();
+
+        video.current.seek(newProgress);
+    }
+
+
     useEffect(() => {
-        setProgress(new Animated.Value(currentTime));
+        Animated.timing(progress, {
+            useNativeDriver: false,
+            toValue: currentTime,
+            duration: 500
+        }).start();
     }, [currentTime])
 
     return <View>
@@ -167,20 +215,13 @@ export default ({ navigation: { goBack }, navigation, route }) => {
         {(function () {
 
             if (sponsor !== null) {
-                return <ScrollView
-                // style={{ position: 'relative' }}
-                // scrollEventThrottle={16}
-                // onScroll={Animated.event(
-                //     [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-                //     { useNativeDriver: false }
-                // )}
-                >
+                return <ScrollView>
 
-                    {/* <StatusBar backgroundColor='#fff' barStyle="dark-content" /> */}
                     <StatusBar translucent={true} hidden={true} />
+                    
                     {/* AUDIO/VIDEO HEADER */}
                     <View style={styles.header} >
-                        {/* <Animated.View style={[styles.header, { height: headerHeight }]} ></Animated.View> */}
+
                         <ImageBackground source={{ uri: sponsor.mainPhotoUrl }} style={styles.image}>
                             <View style={styles.overlay}>
 
@@ -227,18 +268,26 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                                         </TouchableOpacity>
                                 }
 
-                                <View style={styles.progressBar}>
-                                    <Animated.View style={[styles.progressBarFill, {
-                                        width: progress.interpolate({
-                                            inputRange: [0, duration],
-                                            outputRange: ['0%', '100%'],
-                                        })
-                                    }]}>
-                                        <View style={styles.progressDot}></View>
-                                    </Animated.View>
-                                </View>
+                                <TouchableWithoutFeedback
+                                    hitSlop={{ top: 20, right: 10, bottom: 20, left: 10 }}
+                                    onPressIn={!locked ? (e) => handleProgressPressIn(e) : null}
+                                    onPressOut={!locked ? (e) => handleProgressPressOut(e) : null}
+                                    touchSoundDisabled={true}
+                                >
 
-
+                                    <View style={styles.progressBar} >
+                                        <Animated.View style={[styles.progressBarFill, {
+                                            width: progress.interpolate({
+                                                inputRange: [0, duration],
+                                                outputRange: ['3%', '100%'],
+                                            })
+                                        }
+                                        ]}
+                                        >
+                                            {/* <Animated.View style={styles.progressDot}></Animated.View> */}
+                                        </Animated.View>
+                                    </View>
+                                </TouchableWithoutFeedback>
 
                             </View>
                         </ImageBackground>

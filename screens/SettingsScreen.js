@@ -81,7 +81,7 @@ export default ({ navigation: { goBack }, navigation }) => {
           </View> : null}
         </View>
 
-        <View style={styles.horizontal_rule} />
+        {/* <View style={styles.horizontal_rule} />
         <View style={styles.inline_rule}>
           <Text style={styles.text}><Feather name="bell" size={20} color='#747A21' />  Notifications</Text>
           <View style={{ alignSelf: 'flex-end' }}>
@@ -94,7 +94,7 @@ export default ({ navigation: { goBack }, navigation }) => {
             />
           </View>
 
-        </View>
+        </View> */}
 
         <View style={styles.horizontal_rule} />
         <View>
