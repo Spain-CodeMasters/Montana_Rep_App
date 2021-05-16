@@ -107,9 +107,9 @@ const Post = ({ item }) => (
 
 export default ({ navigation }) => {
     // Filter Posts 
-    const [greenAnimation, setGreenAnimation] = useState('fadeIn');
-    const [goldAnimation, setGoldAnimation] = useState('fadeIn');
-    const [redAnimation, setRedAnimation] = useState('fadeIn');
+    const [greenAnimation, setGreenAnimation] = useState('fadeOut');
+    const [goldAnimation, setGoldAnimation] = useState('fadeOut');
+    const [redAnimation, setRedAnimation] = useState('fadeOut');
     const [isGreenSelected, setIsGreenSelected] = useState(false);
     const [isGoldSelected, setIsGoldSelected] = useState(false);
     const [isRedSelected, setIsRedSelected] = useState(false);
@@ -330,8 +330,8 @@ export default ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
                 <Text style={styles.footer_text}>©2021 Montana Repertory Theatre</Text>
-                <Text style={styles.footer_text}>All Right Reserved</Text>
-                <View style={{ marginBottom: 70 }}></View>
+                <Text style={styles.footer_text}>All Rights Reserved</Text>
+                <View style={{ marginBottom: 100 }}></View>
             </View>
 
         </View>
