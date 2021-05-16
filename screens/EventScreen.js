@@ -3,7 +3,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Dimensions, StatusBar, ScrollView, Image, ImageBackground, Linking, PermissionsAndroid, } from 'react-native';
 import Navigation from '../components/navigation/navigation';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Geolocation from 'react-native-geolocation-service';
 import * as geolib from 'geolib';
 
@@ -25,7 +24,6 @@ export default ({ navigation: { goBack }, navigation, route }) => {
     //     outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
     //     extrapolate: 'clamp',
     // });
-    const safeAreaInsets = useSafeAreaInsets();
 
     const locationPermission = PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
 
@@ -67,12 +65,14 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                 for (var i = 0; i < event.geopoints.length; i++) {
                     arr.push(geolib.getDistance(currentPosition, event.geopoints[i]))
 
-                    for (var j = 1; j < arr.length; j++) {
-                        if (arr[j] < arr[0]) {
-                            pointId = j - 1;
-                        }
-                    }
+                    // for (var j = 1; j < arr.length; j++) {
+                    //     if (arr[j] < arr[0]) {
+                    //         pointId = j - 1;
+                    //     }
+                    // }
                 }
+
+                pointId = arr.indexOf(Math.min(...arr));
 
             }
 
@@ -104,12 +104,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
     }
 
 
-    return <View style={{
-        flex: 1,
-        paddingBottom: safeAreaInsets.bottom,
-        paddingLeft: safeAreaInsets.left,
-        paddingRight: safeAreaInsets.right,
-    }}>
+    return <View>
 
 
         {/* MAIN CONTENT */}

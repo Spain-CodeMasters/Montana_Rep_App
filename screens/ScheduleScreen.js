@@ -8,14 +8,9 @@ import {
   Dimensions,
   FlatList,
   ImageBackground,
-  Image,
-  Animated,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import Navigation from '../components/navigation/navigation';
 import Cog from '../components/Cog';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { db } from '../components/Firebase/firebase';
 
 const { width, height } = Dimensions.get('screen');
@@ -101,7 +96,7 @@ const GetTime = ({ start, end }) => {
 //Create Item
 const Play = ({ item, onPress }) => {
   function source() {
-    if (item.post.previewPhotoUrl !== '') {
+    if (item.post.previewPhotoUrl !== '' && item.post.previewPhotoUrl !== ' ' && item.post.previewPhotoUrl !== null) {
       return item.post.previewPhotoUrl;
     } else {
       return item.post.mainPhotoUrl;
@@ -150,7 +145,7 @@ const Event = ({ item, onPress }) => {
 //Create Sponsored Item
 const Sponsor = ({ item, onPress }) => {
   function source() {
-    if (item.post.previewPhotoUrl !== '') {
+    if (item.post.previewPhotoUrl !== '' && item.post.previewPhotoUrl !== ' ' && item.post.previewPhotoUrl !== null) {
       return item.post.previewPhotoUrl;
     } else {
       return item.post.mainPhotoUrl;
@@ -173,7 +168,6 @@ const Sponsor = ({ item, onPress }) => {
 
 
 export default ({ navigation }) => {
-  const safeAreaInsets = useSafeAreaInsets();
 
   const [filter, setFilter] = useState("all");
 
@@ -299,13 +293,7 @@ export default ({ navigation }) => {
   };
 
 
-  return <View style={{
-    flex: 1,
-    //paddingTop: safeAreaInsets.top,
-    paddingBottom: safeAreaInsets.bottom,
-    paddingLeft: safeAreaInsets.left,
-    paddingRight: safeAreaInsets.right,
-  }}>
+  return <View>
     <Cog onPress={() => navigation.navigate('Settings')} />
 
     <FlatList
@@ -314,6 +302,7 @@ export default ({ navigation }) => {
       keyExtractor={(item) => item.id}
       renderItem={renderItem}
       ListHeaderComponent={renderHeader}
+      ListFooterComponent={<View style={{margin:27}}></View>}
     />
 
     <View style={{ height: 55 }}></View>
@@ -350,8 +339,7 @@ export default ({ navigation }) => {
         }
       </TouchableOpacity>
     </View>
-
-    <Navigation navigation={navigation} />
+    
   </View>
 }
 
@@ -432,23 +420,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: -100,
-  },
-  modalView: {
-    margin: 0,
-    backgroundColor: "white",
-    borderRadius: 10,
-    padding: 40,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-    width: 300,
-    height: 550,
   },
   subtext: {
     fontSize: 18,
