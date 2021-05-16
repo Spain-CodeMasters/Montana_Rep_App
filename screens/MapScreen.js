@@ -1,29 +1,70 @@
 import 'react-native-gesture-handler';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { PERMISSIONS, RESULTS, check, request } from 'react-native-permissions';
-import { Text, View, Image, StyleSheet, TouchableOpacity, Dimensions, PermissionsAndroid, Platform } from 'react-native';
-import MapView, { PROVIDER_GOOGLE, Marker, Callout, Animated, AnimatedRegion } from 'react-native-maps';
+import { Text, View, Image, StyleSheet, TouchableOpacity, Dimensions, PermissionsAndroid, Platform, Pressable  } from 'react-native';
+import MapView, { PROVIDER_GOOGLE, Marker, Callout, Animated, AnimatedRegion, MapViewAnimated } from 'react-native-maps';
 import * as Animatable from 'react-native-animatable';
 import Cog from '../components/Cog';
 import PlayingBanner from '../components/playingBanner';
 import Geolocation from 'react-native-geolocation-service';
 import * as geolib from 'geolib';
 import { useFocusEffect } from '@react-navigation/native';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+
 
 
 import { db } from '../components/Firebase/firebase';
+import { greaterThan } from 'react-native-reanimated';
 
 
 export default ({ navigation }) => {
-
+  const _map = useRef(null);
   const [locationPermission, setLocationPermission] = useState(false);
   // const iosLocationPermission = 
-  const [currentPosition, setCurrentPosition] = useState();
+  const [currentPosition, setCurrentPosition] = useState({});
   const [currentRegion, setCurrentRegion] = useState();
-  const [contentData, setContentData] = useState(null);
+  const [contentData, setContentData] = useState([]);
 
   const [isLoading, setIsLoading] = useState(true);
 
+  //const [showsUserLocation, setShowsUserLocation] = useState(true);
+  const [followsUserLocation, setFollowsUserLocation] = useState(true);
+  const [mapWidth, setMapWidth] = useState('99%')
+  //const [mapRegion, setMapRegion] = useState()
+
+  //Update map styling to force a re-render to make sure the geolocation button appears
+  const updateMapStyle = () => {
+    setMapWidth('100%')
+  }
+
+  let mapRegion;
+
+  if(followsUserLocation==true){
+    mapRegion = {
+      latitude: currentPosition.latitude,
+      longitude: currentPosition.longitude,
+      latitudeDelta: 0.00120,
+      longitudeDelta: 0.00120,
+  
+    }}
+
+  
+  // let statusBarHeight= "1 px";
+  
+  // useEffect(() => {
+  //   if(_map.current) {
+  //     _map.current.animateCamera(
+  //       {
+  //         center: {
+  //           latitude: 50.1109221,
+  //           longitude: 8.6821267
+  //         },
+  //         zoom: 15
+  //       },
+  //       5000
+  //     );
+  //   }
+  // }, []);
 
   useEffect(() => {
     //requestLocationPermission();
@@ -108,11 +149,12 @@ export default ({ navigation }) => {
       (position) => {
         setCurrentPosition(position.coords);
         setIsLoading(false);
+        
       },
       (error) => {
         console.log(error.code, error.message);
       },
-      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 10000 }
     );
   }
 
@@ -120,11 +162,17 @@ export default ({ navigation }) => {
     //React.useCallback(() => {
     if (locationPermission) {
       getCurrentLocation();
+   
+
+
 
       const interval = setInterval(() => {
         getCurrentLocation();
+
+        
+     
         //console.log('This will run every 5 seconds');
-      }, 5000);
+      }, 1000);
 
       return () => clearInterval(interval);
 
@@ -291,25 +339,65 @@ export default ({ navigation }) => {
     }
   }
 
+  // console.log(isTracking)
+
   return (
-    <View>
+    <View style={styles.container}>
       <Cog onPress={() => navigation.navigate('Settings')} />
       {!isLoading ? (
-        <MapView
+        <MapView.Animated
+          ref={_map}
           provider={PROVIDER_GOOGLE}
-          style={styles.map}
-          showsUserLocation={true}
-          initialRegion={{
-            latitude: currentPosition.latitude,
+          mapPadding={{ top: 50, left: 20, bottom: 50 }}
+          mapType="hybrid"
+          customMapStyle={googleMapStyle}
+          
+          style={[styles.map, {width: mapWidth }]}
+          showsUserLocation
+          showsBuildings
+          // onLayout={() => {
+          //   animateCamera({
+          //     center: {
+          //       latitude: currentPosition.latitude,
+          //       longitude: currentPosition.longitude,
+          //     }, 
+          //     heading: 0, 
+          //     pitch: 90,
+          
+          //   });
+          // }}
+           initialRegion={
+            {latitude: currentPosition.latitude,
             longitude: currentPosition.longitude,
-            latitudeDelta: 0.00220,
-            longitudeDelta: 0.00220,
-          }}
+            latitudeDelta: 0.00120,
+            longitudeDelta: 0.00120}
+          }
+        
+          region={mapRegion}
+          // animateCamera = {{center: mapRegion,pitch: 2, heading: 20,altitude: 200, zoom: 40},500}
+          onPanDrag={(e)=> setFollowsUserLocation(false)}
+          onUserLocationChange= {event => console.log(event.nativeEvent)}
+          followsUserLocation={followsUserLocation}
+         
+          showsMyLocationButton={false}
+          showsTraffic={true}
+          showsCompass={true}
+          zoomEnabled={true}
+          zoomControlEnabled={true}
+          onMapReady={() => updateMapStyle()}
+          getCamera
+          
+          
           //region={currentRegion}
           //onRegionChangeComplete={onRegionChange}
+          //scrollEnabled={require('react-native').Platform.OS === 'android' ? true : !this.state.followsUserLocation}
         >
 
           <Markers />
+          {/* <MyLocationButton
+          
+          /> */}
+
 
           {/* Device Location Marker
           <Marker.Animated
@@ -321,29 +409,56 @@ export default ({ navigation }) => {
           /> */}
 
 
-        </MapView>
+        </MapView.Animated>
+        
       ) : (null)}
+      <TouchableOpacity style={styles.buttonContainer} onPress={()=>
+        {setFollowsUserLocation(true)}}>
+        <View style={styles.button}>
+           <Text style={styles.buttonText}>
+           <FontAwesome5
+          name = "location-arrow"
+          solid
+          color="#fff"
+          size={20}
+        />  Re-center</Text>
+        </View>
+      </TouchableOpacity>
 
-      {/* <MapView
-        initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
-      /> */}
+      {/* <TouchableOpacity style={styles.buttonContainer} onPress={()=>
+        toggleChangeView()}>
+        <View style={styles.button}>
+           <Text style={styles.buttonText}>
+           <FontAwesome5
+          name = "location-arrow"
+          solid
+          color="#fff"
+          size={20}
+        /> Change View</Text>
+        </View>
+      </TouchableOpacity> */}
 
     </View>
   );
 };
 
+const googleMapStyle = [{
+  featureType: "administrative",
+  elementType: "geometry",
+  stylers: [{
+    visibility: "off"
+  }]
+}]
 
 const styles = StyleSheet.create({
   map: {
-    height: '100%'
+    height: '100%',
+    // padding: 50
   },
   container: {
     flex: 1,
+    alignItems: 'center',
+    // justifyContent: 'center'
   },
   bubble: {
     elevation: 2,
@@ -422,6 +537,43 @@ const styles = StyleSheet.create({
     width: 300,
     height: 550,
   },
+  buttonContainer: {
+    position: "absolute",
+    bottom: '9%',
+    alignSelf: "flex-start",
+  },
+  buttonContainer2: {
+    position: "absolute",
+    bottom: '20%',
+    alignSelf: "flex-start",
+  },
+  button: {
+    backgroundColor: '#cc8a05',
+    minWidth: 150,
+    maxWidth: 200,
+    minHeight: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 5,
+    margin: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
+    zIndex: 1,
+},
+buttonText: {
+    fontFamily: 'FuturaPT-Book',
+    fontSize: 24,
+    color: "white",
+},
+marker: {
+  width: 40,
+  height: 40,
+  borderRadius: 40,
+  justifyContent: 'center',
+  alignItems: 'center',
+  borderWidth: 1,
+  borderColor: '#FFF',
+ },
 
 });
 
