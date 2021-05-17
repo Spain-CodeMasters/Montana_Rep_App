@@ -30,7 +30,7 @@ function MainTabs() {
   return (
     <Tab.Navigator tabBar={props => <Navigation {...props} />}>
       <Tab.Screen name='Home' component={HomeScreen} options={{ header: () => null,  }} />
-      <Tab.Screen name='Map' component={MapScreen} options={{ header: () => null,  }} />
+      <Tab.Screen name='Map' component={MapScreen} options={{ header: () => null, gestureEnabled: false}} />
       <Tab.Screen name='Schedule' component={ScheduleScreen} options={{ header: () => null, }} />
     </Tab.Navigator>
   );
