@@ -640,7 +640,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     alignItems: 'center',
     margin: 10,
-    padding: 13,
+    padding: 12,
   },
 buttonText: {
     fontFamily: 'FuturaPT-Book',
