@@ -1,8 +1,8 @@
 import 'react-native-gesture-handler';
 import React, { useState, useRef, useEffect } from 'react';
 import { PERMISSIONS, RESULTS, check, request } from 'react-native-permissions';
-import { Text, View, Image, StyleSheet, TouchableOpacity, Dimensions, PermissionsAndroid, Platform, Pressable  } from 'react-native';
-import MapView, { PROVIDER_GOOGLE, Marker, Callout, Animated, AnimatedRegion, MapViewAnimated, Camera} from 'react-native-maps';
+import { Text, View, Image, StyleSheet, TouchableOpacity, Dimensions, PermissionsAndroid, Platform, Pressable } from 'react-native';
+import MapView, { PROVIDER_GOOGLE, Marker, Callout, Animated, AnimatedRegion, MapViewAnimated, Camera } from 'react-native-maps';
 import * as Animatable from 'react-native-animatable';
 import Cog from '../components/Cog';
 import PlayingBanner from '../components/playingBanner';
@@ -41,39 +41,39 @@ export default ({ navigation }) => {
 
 
 
-useEffect(()=>{
-  val=true;
+  useEffect(() => {
+    val = true;
+
+  }, []);
+
+
+  function setTrue() {
+    val = true;
+    pitchVal = 0;
+
+  }
+  function setFalse() {
+    val = false;
+  }
+
+  function toggleChangeView() {
+    pitchVal = 45;
+  }
+
+  /*   let mapRegion;
   
-},[]);
+    if(followsUserLocation==true){
+      mapRegion = {
+        latitude: currentPosition.latitude,
+        longitude: currentPosition.longitude,
+        latitudeDelta: 0.00120,
+        longitudeDelta: 0.00120,
+    
+      }} */
 
 
-function setTrue(){
-  val = true;
-  pitchVal=0;
-
-}
-function setFalse(){
-  val = false;
-}
-
-function toggleChangeView() {
-  pitchVal=45;
-}
-
-/*   let mapRegion;
-
-  if(followsUserLocation==true){
-    mapRegion = {
-      latitude: currentPosition.latitude,
-      longitude: currentPosition.longitude,
-      latitudeDelta: 0.00120,
-      longitudeDelta: 0.00120,
-  
-    }} */
-
-  
   // let statusBarHeight= "1 px";
-  
+
   // useEffect(() => {
   //   if(_map.current) {
   //     _map.current.animateCamera(
@@ -96,7 +96,9 @@ function toggleChangeView() {
     } else if (Platform.OS === "ios") {
       checkPermissions(PERMISSIONS.IOS.LOCATION_ALWAYS);
     };
+  }, []);
 
+  useEffect(() => {
     db.collection("content").onSnapshot((snapshot) => {
       setContentData(snapshot.docs.map((doc) => ({ id: doc.id, content: doc.data() })));
 
@@ -143,36 +145,12 @@ function toggleChangeView() {
       });
   }
 
-  // const requestLocationPermission = async () => {
-  //   try {
-  //     const granted = await PermissionsAndroid.request(
-  //       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-  //       {
-  //         title: "Montana Repertory Theatre Location Permission",
-  //         message:
-  //           "We need access to your location " +
-  //           "to use the community map",
-  //         buttonNeutral: "Ask Me Later",
-  //         buttonNegative: "Cancel",
-  //         buttonPositive: "OK"
-  //       }
-  //     );
-  //     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-  //       console.log("Location Permission Granted");
-  //     } else {
-  //       console.log("Location Permission Denied");
-  //     }
-  //   } catch (err) {
-  //     console.warn(err);
-  //   }
-  // };
-
   function getCurrentLocation() {
     Geolocation.getCurrentPosition(
       (position) => {
         setCurrentPosition(position.coords);
         setIsLoading(false);
-        console.log(position)
+        //console.log(position)
       },
       (error) => {
         console.log(error.code, error.message);
@@ -185,16 +163,16 @@ function toggleChangeView() {
     //React.useCallback(() => {
     if (locationPermission) {
       getCurrentLocation();
-   
+
 
 
 
       const interval = setInterval(() => {
         getCurrentLocation();
-        
-        
-     
-        //console.log('This will run every 5 seconds');
+
+
+
+        //console.log('This will run every second');
       }, 1000);
 
       return () => clearInterval(interval);
@@ -203,30 +181,30 @@ function toggleChangeView() {
     //}, [])
   }, [locationPermission]);
 
-renderTheCamera();
+  renderTheCamera();
 
 
-  function renderTheCamera(){
-    try{
-    if(val){
+  function renderTheCamera() {
+    try {
+      if (val) {
 
-      if(_map.current){
-        const newCamera = {
-          center: {
-            latitude: currentPosition.latitude,
-            longitude: currentPosition.longitude,
-        },
-        pitch: pitchVal,
-        //heading: currentPosition.heading,
-        heading: 0,
-     
-        // Only when using Google Maps.
-        zoom: 20
+        if (_map.current) {
+          const newCamera = {
+            center: {
+              latitude: currentPosition.latitude,
+              longitude: currentPosition.longitude,
+            },
+            pitch: pitchVal,
+            //heading: currentPosition.heading,
+            heading: 0,
+
+            // Only when using Google Maps.
+            zoom: 20
+          }
+          _map.current.animateCamera(newCamera, { duration: 1000 })
         }
-        _map.current.animateCamera(newCamera, {duration: 1000})
       }
-      }
-    }catch{
+    } catch {
       console.log('he aint rendered yet')
     }
 
@@ -261,32 +239,79 @@ renderTheCamera();
 
   renderMarkers();
 
-  function renderMarkers(){
+  function renderMarkers() {
 
-  Markers = () => {
+    Markers = () => {
 
-    if (contentData !== null) {
+      if (contentData !== null) {
 
-      var contents = contentData.map(({ id, content }) => content.geopoints.map((geopoints, pointId) => {
-        if (geopoints.latitude !== '' && geopoints.longitude !== '') {
+        var contents = contentData.map(({ id, content }) => content.geopoints.map((geopoints, pointId) => {
+          if (geopoints.latitude !== '' && geopoints.longitude !== '' && content.publish && new Date < content.end.toDate()) {
 
-          if (content.type == "easterEgg") {
-            var distance = (geolib.getDistance(currentPosition, geopoints));
-            let reveal;
-            if (distance < 30) {
-              reveal = true;
-            }
+            if (content.type == "easterEgg") {
+              var distance = (geolib.getDistance(currentPosition, geopoints));
+              let reveal;
+              if (distance < 30) {
+                reveal = true;
+              }
 
-            if (reveal) {
+              if (reveal) {
+                return <Marker.Animated
+                  key={pointId}
+                  coordinate={{
+                    latitude: geopoints.latitude * 1,
+                    longitude: geopoints.longitude * 1,
+                  }}
+                  image={require('../assets/GoPlay_PinGift.png')}
+                  onPress={e => selectPlay(id, pointId)}
+                  tracksViewChanges={true}
+                >
+                  <Callout tooltip>
+                    <View>
+                      <View style={styles.bubble}>
+                        <Text style={styles.name}>{content.title}</Text>
+                      </View>
+                      <View style={styles.arrowBorder} />
+                      <View style={styles.arrow} />
+                    </View>
+                  </Callout>
+                </Marker.Animated>
+
+              }
+
+            } else if (content.type == "play") {
               return <Marker.Animated
                 key={pointId}
                 coordinate={{
                   latitude: geopoints.latitude * 1,
                   longitude: geopoints.longitude * 1,
                 }}
-                image={require('../assets/GoPlay_PinGift.png')}
+                image={require('../assets/GoPlay_PinGold.png')}
                 onPress={e => selectPlay(id, pointId)}
-                tracksViewChanges = {true}
+                style={{ height: 10, }}
+                resizeMode="contain"
+                tracksViewChanges={true}
+              >
+                <Callout tooltip>
+                  <View>
+                    <View style={styles.bubble}>
+                      <Text style={styles.name}>{content.title}</Text>
+                    </View>
+                    <View style={styles.arrowBorder} />
+                    <View style={styles.arrow} />
+                  </View>
+                </Callout>
+              </Marker.Animated>
+            } else if (content.category == "mtrep") {
+              return <Marker.Animated
+                key={pointId}
+                coordinate={{
+                  latitude: geopoints.latitude * 1,
+                  longitude: geopoints.longitude * 1,
+                }}
+                image={require('../assets/GoPlay_PinGreen.png')}
+                onPress={e => selectEvent(id, pointId)}
+                tracksViewChanges={true}
               >
                 <Callout tooltip>
                   <View>
@@ -299,123 +324,76 @@ renderTheCamera();
                 </Callout>
               </Marker.Animated>
 
+            } else if (content.type == "sponsor") {
+              return <Marker.Animated
+                key={pointId}
+                coordinate={{
+                  latitude: geopoints.latitude * 1,
+                  longitude: geopoints.longitude * 1,
+                }}
+                image={require('../assets/GoPlay_PinCopper.png')}
+                onPress={e => selectSponsor(id, pointId)}
+                tracksViewChanges={true}
+              >
+                <Callout tooltip>
+                  <View>
+                    <View style={styles.bubble}>
+                      <Text style={styles.name}>{content.title}</Text>
+                    </View>
+                    <View style={styles.arrowBorder} />
+                    <View style={styles.arrow} />
+                  </View>
+                </Callout>
+              </Marker.Animated>
+            } else {
+              return <Marker.Animated
+                key={pointId}
+                coordinate={{
+                  latitude: geopoints.latitude * 1,
+                  longitude: geopoints.longitude * 1,
+                }}
+                image={require('../assets/GoPlay_PinCopper.png')}
+                onPress={e => selectEvent(id, pointId)}
+                tracksViewChanges={true}
+              >
+                <Callout tooltip>
+                  <View>
+                    <View style={styles.bubble}>
+                      <Text style={styles.name}>{content.title}</Text>
+                    </View>
+                    <View style={styles.arrowBorder} />
+                    <View style={styles.arrow} />
+                  </View>
+                </Callout>
+              </Marker.Animated>
             }
-
-          } else if (content.type == "play") {
-            return <Marker.Animated
-              key={pointId}
-              coordinate={{
-                latitude: geopoints.latitude * 1,
-                longitude: geopoints.longitude * 1,
-              }}
-              image={require('../assets/GoPlay_PinGold.png')}
-              onPress={e => selectPlay(id, pointId)}
-              style={{height: 10, }}
-              resizeMode="contain"
-              tracksViewChanges = {true}
-            >
-              <Callout tooltip>
-                <View>
-                  <View style={styles.bubble}>
-                    <Text style={styles.name}>{content.title}</Text>
-                  </View>
-                  <View style={styles.arrowBorder} />
-                  <View style={styles.arrow} />
-                </View>
-              </Callout>
-            </Marker.Animated>
-          } else if (content.category == "mtrep") {
-            return <Marker.Animated
-              key={pointId}
-              coordinate={{
-                latitude: geopoints.latitude * 1,
-                longitude: geopoints.longitude * 1,
-              }}
-              image={require('../assets/GoPlay_PinGreen.png')}
-              onPress={e => selectEvent(id, pointId)}
-              tracksViewChanges = {true}
-            >
-              <Callout tooltip>
-                <View>
-                  <View style={styles.bubble}>
-                    <Text style={styles.name}>{content.title}</Text>
-                  </View>
-                  <View style={styles.arrowBorder} />
-                  <View style={styles.arrow} />
-                </View>
-              </Callout>
-            </Marker.Animated>
-
-          } else if (content.type == "sponsor") {
-            return <Marker.Animated
-              key={pointId}
-              coordinate={{
-                latitude: geopoints.latitude * 1,
-                longitude: geopoints.longitude * 1,
-              }}
-              image={require('../assets/GoPlay_PinCopper.png')}
-              onPress={e => selectSponsor(id, pointId)}
-              tracksViewChanges = {true}
-            >
-              <Callout tooltip>
-                <View>
-                  <View style={styles.bubble}>
-                    <Text style={styles.name}>{content.title}</Text>
-                  </View>
-                  <View style={styles.arrowBorder} />
-                  <View style={styles.arrow} />
-                </View>
-              </Callout>
-            </Marker.Animated>
-          } else {
-            return <Marker.Animated
-              key={pointId}
-              coordinate={{
-                latitude: geopoints.latitude * 1,
-                longitude: geopoints.longitude * 1,
-              }}
-              image={require('../assets/GoPlay_PinCopper.png')}
-              onPress={e => selectEvent(id, pointId)}
-              tracksViewChanges = {true}
-            >
-              <Callout tooltip>
-                <View>
-                  <View style={styles.bubble}>
-                    <Text style={styles.name}>{content.title}</Text>
-                  </View>
-                  <View style={styles.arrowBorder} />
-                  <View style={styles.arrow} />
-                </View>
-              </Callout>
-            </Marker.Animated>
           }
-        }
-      }))
+        }))
 
-      return (
-        <>
-          {contents}
+        return (
+          <>
+            {contents}
 
-        </>
-      );
+          </>
+        );
+      }
     }
   }
-}
 
-   
 
-   let Camera = {
+
+  let Camera = {
     center: {
-       latitude: currentPosition.latitude,
-       longitude: currentPosition.longitude,
-   },
-   pitch: 0,
-   heading: 0,
+      latitude: currentPosition.latitude,
+      longitude: currentPosition.longitude,
+    },
+    pitch: 0,
+    heading: 0,
 
 
-   // Only when using Google Maps.
-   zoom: 20
-}
+    // Only when using Google Maps.
+    zoom: 20
+  }
 
 
 
@@ -430,19 +408,18 @@ renderTheCamera();
           mapPadding={{ top: 50, left: 20, bottom: 50 }}
           mapType="hybrid"
           customMapStyle={googleMapStyle}
-          
-          style={[styles.map, {width: mapWidth }]}
+
+          style={[styles.map, { width: mapWidth }]}
           showsUserLocation
           showsBuildings
           initialCamera={Camera}
-        
-          
+
           //region={mapRegion}
           animateCamera={Camera, 1000}
           // animateCamera = {{center: mapRegion,pitch: 2, heading: 20,altitude: 200, zoom: 40},500}
           //onPanDrag={(e)=> setFollowsUserLocation(false)}
           //onStartShouldSetResponder={(e)=> setFollowsUserLocation(false)}
-         // onUserLocationChange= {event => console.log(event.nativeEvent)}
+          // onUserLocationChange= {event => console.log(event.nativeEvent)}
           followsUserLocation={followsUserLocation}
           //onStartShouldSetResponder={(e)=> setFollowsUserLocation(false)}
           onPanDrag={(e) => setFalse()}
@@ -452,15 +429,15 @@ renderTheCamera();
           zoomControlEnabled={true}
           onMapReady={() => updateMapStyle()}
           //getCamera
-          
-          
+
+
           //region={currentRegion}
           //onRegionChangeComplete={onRegionChange}
           //scrollEnabled={require('react-native').Platform.OS === 'android' ? true : !followsUserLocation}
           scrollEnabled={true}
         >
 
-          
+
           {/* <MyLocationButton
           
           /> */}
@@ -474,40 +451,40 @@ renderTheCamera();
             }}
             image={require('../assets/map_marker.png')}
           /> */}
-        <Markers 
-        zIndex={1}
-        tracksViewChanges={true} 
-        tracksInfoWindowChanges={false}/>
+          <Markers
+            zIndex={1}
+            tracksViewChanges={true}
+            tracksInfoWindowChanges={false} />
 
         </MapView.Animated>
-        
-        
+
+
       ) : (null)}
 
-      
 
-      <TouchableOpacity style={styles.buttonContainer} onPress={()=>{setTrue()}}>
+
+      <TouchableOpacity style={styles.buttonContainer} onPress={() => { setTrue() }}>
         <View style={styles.button}>
-           <Text style={styles.buttonText}>
-           <FontAwesome5
-          name = "location-arrow"
-          solid
-          color="#fff"
-          size={20}
-        />  Re-center</Text>
+          <Text style={styles.buttonText}>
+            <FontAwesome5
+              name="location-arrow"
+              solid
+              color="#fff"
+              size={20}
+            />  Re-center</Text>
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.buttonContainer2} onPress={()=>
+      <TouchableOpacity style={styles.buttonContainer2} onPress={() =>
         toggleChangeView()}>
         <View style={styles.buttonCircle}>
-           
-           <FontAwesome5
-          name = "dot-circle"
-          solid
-          color="#fff"
-          size={25}
-        />
+
+          <FontAwesome5
+            name="dot-circle"
+            solid
+            color="#fff"
+            size={25}
+          />
         </View>
       </TouchableOpacity>
 
@@ -632,7 +609,7 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     zIndex: 2,
-},
+  },
   buttonCircle: {
     backgroundColor: '#cc8a05',
     width: 50,
@@ -642,20 +619,20 @@ const styles = StyleSheet.create({
     margin: 10,
     padding: 12,
   },
-buttonText: {
+  buttonText: {
     fontFamily: 'FuturaPT-Book',
     fontSize: 24,
     color: "white",
-},
-marker: {
-  width: 40,
-  height: 40,
-  borderRadius: 40,
-  justifyContent: 'center',
-  alignItems: 'center',
-  borderWidth: 1,
-  borderColor: '#FFF',
- },
+  },
+  marker: {
+    width: 40,
+    height: 40,
+    borderRadius: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#FFF',
+  },
 
 });
 
