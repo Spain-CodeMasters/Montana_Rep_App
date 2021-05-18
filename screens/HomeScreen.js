@@ -16,12 +16,10 @@ import {
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import Navigation from '../components/navigation/navigation';
 import Cog from '../components/Cog';
 import AutoHeightImage from 'react-native-auto-height-image';
 
 import { db } from '../components/Firebase/firebase';
-import { TextComponent } from 'react-native';
 
 //Carousel Banner
 const { width, height } = Dimensions.get('screen');

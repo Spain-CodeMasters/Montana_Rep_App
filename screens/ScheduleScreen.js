@@ -46,8 +46,6 @@ const GetTime = ({ start, end }) => {
   //console.log(start);
   if (start !== null && start !== undefined) {
     const today = new Date();
-    //console.log(start.toString());
-
     const h = start.getHours();
     const m = start.getMinutes();
 
@@ -273,22 +271,26 @@ export default ({ navigation }) => {
 
   }
 
+
+
   const renderItem = ({ item }) => {
-    if (item.post.type == 'play') {
-      return <Play
-        item={item}
-        onPress={() => selectPlay(item.id)}
-      />
-    } else if (item.post.type == 'event') {
-      return <Event
-        item={item}
-        onPress={() => selectEvent(item.id)}
-      />
-    } else if (item.post.type == "sponsor") {
-      return <Sponsor
-        item={item}
-        onPress={() => selectSponsor(item.id)}
-      />
+    if (item.post.publish && new Date < item.post.end.toDate()) {
+      if (item.post.type == 'play') {
+        return <Play
+          item={item}
+          onPress={() => selectPlay(item.id)}
+        />
+      } else if (item.post.type == 'event') {
+        return <Event
+          item={item}
+          onPress={() => selectEvent(item.id)}
+        />
+      } else if (item.post.type == "sponsor") {
+        return <Sponsor
+          item={item}
+          onPress={() => selectSponsor(item.id)}
+        />
+      }
     }
   };
 
@@ -302,7 +304,7 @@ export default ({ navigation }) => {
       keyExtractor={(item) => item.id}
       renderItem={renderItem}
       ListHeaderComponent={renderHeader}
-      ListFooterComponent={<View style={{margin:27}}></View>}
+      ListFooterComponent={<View style={{ margin: 27 }}></View>}
     />
 
     <View style={{ height: 55 }}></View>
@@ -339,7 +341,7 @@ export default ({ navigation }) => {
         }
       </TouchableOpacity>
     </View>
-    
+
   </View>
 }
 
