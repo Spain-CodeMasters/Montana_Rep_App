@@ -115,8 +115,6 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                     );
                 }
             }
-        } else {
-            setLocked(false);
         }
     }
 
@@ -277,7 +275,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                                 playInBackground={true}
                                 playWhenInactive={true}
                             />
-                            <TouchableWithoutFeedback onPress={() => { handlePlayerOnPress() }} touchSoundDisabled={true}>
+                            <TouchableWithoutFeedback onPress={() => { !locked ? handlePlayerOnPress() : null;}} touchSoundDisabled={true}>
 
                                 <Animated.View style={[styles.overlay, {
                                     opacity: opacity,
