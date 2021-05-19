@@ -1,5 +1,5 @@
 import React, { useState, useContext,  } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Platform, StatusBar } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Platform, StatusBar, Alert } from 'react-native';
 import FormInput from '../components/FormInput';
 import FormButton from '../components/Forms/FormButton';
 import FormErrorMessage from '../components/Forms/FormErrorMessage';
@@ -11,7 +11,7 @@ import { AuthContext } from '../navigation/AuthProvider';
 export default function ForgotPasswordScreen({ navigation }) {
   useStatusBar('light-content');
   const [email, setEmail] = useState('');
-  const [customError, setCustomError] = useState('');
+  const [customError, setCustomError] = useState('wrong email');
   const { passwordReset } = useContext(AuthContext);
 
   return (

@@ -121,7 +121,12 @@ export default ({ navigation }) => {
 
     useEffect(() => {
         db.collection("carousel").orderBy("carouselOrder", "asc").onSnapshot((snapshot) => {
+            
+            if(snapshot==null){
+                return null;
+            }else{
             setHeroData(snapshot.docs.map((doc) => ({ id: doc.id, hero: doc.data() })));
+            }
         })
         
     }, [])
@@ -129,9 +134,14 @@ export default ({ navigation }) => {
     useEffect(() => {
         db.collection("posts").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
             /* BUG FIX: This data has to be set directly to run posts. Unsure why*/
+            
+            if(snapshot==null){
+                return null;
+            }else{
             setPostData(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
             setPostView(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
             //setPostView(postData);
+            }
         })
         console.log("loaded")
     }, [])

@@ -100,7 +100,11 @@ export default ({ navigation }) => {
 
   useEffect(() => {
     db.collection("content").onSnapshot((snapshot) => {
+      if(snapshot==null){
+        return null;
+    }else{
       setContentData(snapshot.docs.map((doc) => ({ id: doc.id, content: doc.data() })));
+    }
 
     })
   }, []);
@@ -406,7 +410,7 @@ export default ({ navigation }) => {
           ref={_map}
           provider={PROVIDER_GOOGLE}
           mapPadding={{ top: 50, left: 20, bottom: 50 }}
-          mapType="hybrid"
+          mapType="standard"
           customMapStyle={googleMapStyle}
 
           style={[styles.map, { width: mapWidth }]}

@@ -183,8 +183,14 @@ export default ({ navigation }) => {
 
   useEffect(() => {
     db.collection("content").orderBy("start", "asc").onSnapshot((snapshot) => {
+      if(snapshot==null){
+        return null;
+
+      }else{
       setScheduleData(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
       setScheduleView(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
+      }
+      
     })
   }, []);
 
