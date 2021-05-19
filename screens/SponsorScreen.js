@@ -122,6 +122,8 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                     );
                 }
             }
+        } else {
+            setLocked(false);
         }
     }
 
@@ -134,6 +136,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
     const [loading, setLoading] = useState(true);
     const [paused, setPaused] = useState(true);
     const [progress, setProgress] = useState(new Animated.Value(currentTime));
+    const opacity = useRef(new Animated.Value(1)).current;
 
     const onProgress = (data) => {
         if (!loading) {
@@ -147,6 +150,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
     };
 
     const onEnd = () => {
+        fadeIn();
         video.current.seek(0);
         setPaused(true);
         console.log("Ended");
@@ -158,6 +162,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
     };
 
     const handleProgressPressIn = (e) => {
+        fadeIn();
         const position = e.nativeEvent.locationX;
         var barPosition;
 
@@ -178,6 +183,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
     }
 
     const handleProgressPressOut = (e) => {
+        setTimeout(function () { !paused ? fadeOut() : null; }, 3000);
         const position = e.nativeEvent.locationX;
         var barPosition;
 
@@ -208,6 +214,42 @@ export default ({ navigation: { goBack }, navigation, route }) => {
         }).start();
     }, [currentTime])
 
+    const fadeIn = () => {
+        Animated.timing(opacity, {
+            useNativeDriver: true,
+            toValue: 1,
+            duration: 500,
+        }).start();
+    };
+
+    const fadeOut = () => {
+        setControls(false);
+        Animated.timing(opacity, {
+            useNativeDriver: true,
+            toValue: 0,
+            duration: 1000
+        }).start();
+    };
+
+    function handlePlayPause() {
+        setPaused(!paused);
+        paused ? Animated.timing(opacity, {
+            useNativeDriver: true,
+            toValue: 0,
+            delay: 1000,
+            duration: 1000
+        }).start() : fadeIn();
+    }
+
+    function handlePlayerOnPress() {
+        if (controls) {
+            fadeOut();
+        } else if (!controls) {
+            fadeIn();
+            !paused ?setTimeout(function () {  fadeOut(); }, 3000): null;
+        }
+    }
+
     return <View>
 
 
@@ -218,78 +260,84 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                 return <ScrollView>
 
                     <StatusBar translucent={true} hidden={true} />
-                    
+
                     {/* AUDIO/VIDEO HEADER */}
                     <View style={styles.header} >
 
                         <ImageBackground source={{ uri: sponsor.mainPhotoUrl }} style={styles.image}>
-                            <View style={styles.overlay}>
+                            {/* video */}
+                            <Video source={{ uri: sponsor.playUrl }}
+                                ref={video}
+                                rate={1.0}
+                                volume={1.0}
+                                paused={paused}
+                                muted={false}
+                                resizeMode={"contain"}
+                                style={styles.video}
+                                onProgress={onProgress}
+                                onLoad={onLoad}
+                                onEnd={onEnd}
+                                ignoreSilentSwitch={"ignore"}
+                                playInBackground={true}
+                                playWhenInactive={true}
+                            />
 
-                                {/* video */}
-                                <Video source={{ uri: sponsor.playUrl }}
-                                    ref={video}
-                                    rate={1.0}
-                                    volume={1.0}
-                                    paused={paused}
-                                    muted={false}
-                                    resizeMode={"contain"}
-                                    style={styles.video}
-                                    onProgress={onProgress}
-                                    onLoad={onLoad}
-                                    onEnd={onEnd}
-                                    ignoreSilentSwitch={"ignore"}
-                                    playInBackground={true}
-                                    playWhenInactive={true}
-                                />
+                            <TouchableWithoutFeedback onPress={() => { handlePlayerOnPress() }} touchSoundDisabled={true}>
 
-                                {/* title */}
-                                <Text style={styles.title}>{sponsor.title}</Text>
+                                <Animated.View style={[styles.overlay, {
+                                    opacity: opacity,
+                                }]}>
+
+                                    {/* title */}
+                                    <Text style={styles.title}>{sponsor.title}</Text>
 
 
-                                {/* controls */}
-                                {
-                                    locked ? //<TouchableOpacity onPress={() => { setLocked(false), alert('Unlocked') }}>
-                                        <FontAwesome5
-                                            name="lock"
-                                            solid
-                                            color="#fff"
-                                            size={40}
-                                            style={{ padding: 10, }}
-                                        />
-                                        //</TouchableOpacity>
-                                        : <TouchableOpacity onPress={() => { paused ? setPaused(false) : setPaused(true) }}>
+                                    {/* controls */}
+                                    {
+                                        locked ? //<TouchableOpacity onPress={() => { setLocked(false), alert('Unlocked') }}>
                                             <FontAwesome5
-                                                name={paused ? "play" : "pause"}
+                                                name="lock"
                                                 solid
                                                 color="#fff"
                                                 size={40}
                                                 style={{ padding: 10, }}
                                             />
-                                        </TouchableOpacity>
-                                }
+                                            //</TouchableOpacity>
+                                            : <TouchableOpacity
+                                                onPress={() => { handlePlayPause() }}>
+                                                <FontAwesome5
+                                                    name={paused ? "play" : "pause"}
+                                                    solid
+                                                    color="#fff"
+                                                    size={40}
+                                                    style={{ padding: 10, }}
+                                                />
+                                            </TouchableOpacity>
+                                    }
 
-                                <TouchableWithoutFeedback
-                                    hitSlop={{ top: 20, right: 10, bottom: 20, left: 10 }}
-                                    onPressIn={!locked ? (e) => handleProgressPressIn(e) : null}
-                                    onPressOut={!locked ? (e) => handleProgressPressOut(e) : null}
-                                    touchSoundDisabled={true}
-                                >
+                                    <TouchableWithoutFeedback
+                                        hitSlop={{ top: 20, right: 10, bottom: 20, left: 10 }}
+                                        onPressIn={!locked ? (e) => handleProgressPressIn(e) : null}
+                                        onPressOut={!locked ? (e) => handleProgressPressOut(e) : null}
+                                        touchSoundDisabled={true}
+                                    >
 
-                                    <View style={styles.progressBar} >
-                                        <Animated.View style={[styles.progressBarFill, {
-                                            width: progress.interpolate({
-                                                inputRange: [0, duration],
-                                                outputRange: ['3%', '100%'],
-                                            })
-                                        }
-                                        ]}
-                                        >
-                                            {/* <Animated.View style={styles.progressDot}></Animated.View> */}
-                                        </Animated.View>
-                                    </View>
-                                </TouchableWithoutFeedback>
+                                        <View style={styles.progressBar} >
+                                            <Animated.View style={[styles.progressBarFill, {
+                                                width: progress.interpolate({
+                                                    inputRange: [0, duration],
+                                                    outputRange: ['3%', '100%'],
+                                                })
+                                            }
+                                            ]}
+                                            >
+                                                {/* <Animated.View style={styles.progressDot}></Animated.View> */}
+                                            </Animated.View>
+                                        </View>
+                                    </TouchableWithoutFeedback>
 
-                            </View>
+                                </Animated.View>
+                            </TouchableWithoutFeedback>
                         </ImageBackground>
                     </View>
 

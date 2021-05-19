@@ -159,6 +159,12 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                             }
                         })()}
 
+                        {(function () {
+                            if (event.body !== '' && event.body !== ' ' && event.body !== null) {
+                                return <Text allowFontScaling style={styles.subtext}>{event.body}</Text>
+                            }
+                        })()}
+
                         {/* Check for Link */}
                         {(function () {
                             if (event.link == '' || event.link == null) {
