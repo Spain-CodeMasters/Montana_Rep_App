@@ -130,9 +130,10 @@ export default ({ navigation: { goBack }, navigation, route }) => {
     const [locked, setLocked] = useState(true);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
-    const [fullScreen, setFullScreen] = useState(false);
+    const [landscape, setLandscape] = useState(false);
     const [loading, setLoading] = useState(true);
     const [paused, setPaused] = useState(true);
+    const [controls, setControls] = useState(true);
     const [progress, setProgress] = useState(new Animated.Value(currentTime));
     const opacity = useRef(new Animated.Value(1)).current;
 
@@ -213,6 +214,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
     }, [currentTime])
 
     const fadeIn = () => {
+        setControls(true);
         Animated.timing(opacity, {
             useNativeDriver: true,
             toValue: 1,
@@ -244,7 +246,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
             fadeOut();
         } else if (!controls) {
             fadeIn();
-            !paused ?setTimeout(function () {  fadeOut(); }, 3000): null;
+            !paused ? setTimeout(function () { fadeOut(); }, 3000) : null;
         }
     }
 
@@ -262,7 +264,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                     {/* AUDIO/VIDEO HEADER */}
                     <View style={styles.header} >
 
-                        <ImageBackground source={{ uri: sponsor.mainPhotoUrl }} style={styles.image}>
+                        <ImageBackground source={{ uri: sponsor.mainPhotoUrl }} style={landscape ? styles.landscape : styles.image}>
                             {/* video */}
                             <Video source={{ uri: sponsor.playUrl }}
                                 ref={video}
@@ -270,7 +272,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                                 volume={1.0}
                                 paused={paused}
                                 muted={false}
-                                resizeMode={"contain"}
+                                resizeMode={landscape ? "contain" : "cover"}
                                 style={styles.video}
                                 onProgress={onProgress}
                                 onLoad={onLoad}
@@ -280,7 +282,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                                 playWhenInactive={true}
                             />
 
-                            <TouchableWithoutFeedback onPress={() => { !locked? handlePlayerOnPress(): null; }} touchSoundDisabled={true}>
+                            <TouchableWithoutFeedback onPress={() => { !locked ? handlePlayerOnPress() : null; }} touchSoundDisabled={true}>
 
                                 <Animated.View style={[styles.overlay, {
                                     opacity: opacity,
@@ -343,7 +345,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                     {/* <View style={{ height: HEADER_MAX_HEIGHT }}></View> */}
 
                     {/* discription */}
-                    <View style={styles.discription}>
+                    {!landscape ? <View style={styles.discription}>
                         <View style={{ paddingHorizontal: 10, width: '100%' }}>
                             <Text style={[styles.postLabel, { padding: 10, color: '#999', textAlign: "center" }]}>{distance}</Text>
                             {(function () {
@@ -416,13 +418,13 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                             }
                         })()}
 
-                    </View>
+                    </View> : null}
 
                     {/* footer */}
-                    <View style={styles.footer}>
+                    {!landscape ? <View style={styles.footer}>
                         <Image source={require('../assets/1_MontanaRep_PrimaryLogo_GreenLandscape.png')} style={styles.footer_logo} />
 
-                    </View>
+                    </View> : null}
 
 
 
@@ -432,7 +434,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
         })()}
 
 
-        <TouchableOpacity style={styles.back} onPress={() => goBack()}>
+        {!landscape ? <TouchableOpacity style={styles.back} onPress={() => goBack()}>
             <FontAwesome5
                 name="chevron-left"
                 solid
@@ -440,10 +442,10 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                 size={30}
                 style={{ padding: 20, }}
             />
-        </TouchableOpacity>
+        </TouchableOpacity> : null}
 
         {/* <Settings /> */}
-        <Navigation navigation={navigation} />
+        {!landscape ? <Navigation navigation={navigation} /> : null}
     </View>
 }
 
@@ -455,11 +457,18 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         overflow: 'hidden',
         height: ITEM_HEIGHT,
+        alignItems: "center",
+        justifyContent: "center",
     },
     video: {
         position: 'absolute',
         height: "100%",
         width: ITEM_WIDTH,
+    },
+    videoLandscape: {
+        position: 'absolute',
+        height: ITEM_WIDTH,
+        width: "100%",
     },
     container: {
         flex: 1,
@@ -488,7 +497,13 @@ const styles = StyleSheet.create({
     image: {
         width: "100%",
         height: "100%",
-        //resizeMode: 'cover'
+    },
+    landscape: {
+        width: ITEM_HEIGHT,
+        height: ITEM_WIDTH,
+        transform: [
+            { rotate: "90deg" },
+        ],
     },
     footer: {
         flex: 1,
