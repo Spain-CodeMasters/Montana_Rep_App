@@ -23,7 +23,6 @@ import * as geolib from 'geolib';
 
 
 import { db } from '../components/Firebase/firebase';
-import { OpaqueColorValue } from 'react-native';
 
 const { width, height } = Dimensions.get('screen');
 const ITEM_WIDTH = width;
@@ -123,9 +122,8 @@ export default ({ navigation: { goBack }, navigation, route }) => {
     const [locked, setLocked] = useState(true);
     const [premium, setPremium] = useState(true);
     const [currentTime, setCurrentTime] = useState(0);
-    const [seekTime, setSeekTime] = useState(0);
     const [duration, setDuration] = useState(0);
-    const [fullScreen, setFullScreen] = useState(false);
+    const [landscape, setLandscape] = useState(false);
     const [loading, setLoading] = useState(true);
     const [paused, setPaused] = useState(true);
     const [controls, setControls] = useState(true);
@@ -241,7 +239,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
             fadeOut();
         } else if (!controls) {
             fadeIn();
-            !paused ?setTimeout(function () {  fadeOut(); }, 3000): null;
+            !paused ? setTimeout(function () { fadeOut(); }, 3000) : null;
         }
     }
 
@@ -258,7 +256,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
 
                     {/* AUDIO/VIDEO HEADER */}
                     <View style={styles.header} >
-                        <ImageBackground source={{ uri: play.mainPhotoUrl }} style={styles.image}>
+                        <ImageBackground source={{ uri: play.mainPhotoUrl }} style={landscape ? styles.landscape : styles.image}>
                             {/* video */}
                             <Video source={{ uri: play.playUrl }}
                                 ref={video}
@@ -266,8 +264,8 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                                 volume={1.0}
                                 paused={paused}
                                 muted={false}
-                                resizeMode={"cover"}
-                                style={styles.video}
+                                resizeMode={landscape ? "contain" : "cover"}
+                                style={landscape ? styles.videoLandscape : styles.video}
                                 onProgress={onProgress}
                                 onLoad={onLoad}
                                 onEnd={onEnd}
@@ -275,7 +273,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                                 playInBackground={true}
                                 playWhenInactive={true}
                             />
-                            <TouchableWithoutFeedback onPress={() => { !locked ? handlePlayerOnPress() : null;}} touchSoundDisabled={true}>
+                            <TouchableWithoutFeedback onPress={() => { !locked ? handlePlayerOnPress() : null; }} touchSoundDisabled={true}>
 
                                 <Animated.View style={[styles.overlay, {
                                     opacity: opacity,
@@ -286,7 +284,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
 
                                     {/* controls */}
                                     {
-                                        locked ? //<TouchableOpacity onPress={() => { setLocked(false), alert('Unlocked') }}>
+                                        locked ?
                                             <FontAwesome5
                                                 name="lock"
                                                 solid
@@ -294,7 +292,6 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                                                 size={40}
                                                 style={{ padding: 10, }}
                                             />
-                                            //</TouchableOpacity> 
                                             : <TouchableOpacity
                                                 onPress={() => { handlePlayPause() }}>
                                                 <FontAwesome5
@@ -305,6 +302,30 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                                                     style={{ padding: 10, }}
                                                 />
                                             </TouchableOpacity>
+                                    }
+
+                                    {
+                                        !locked ?
+                                            <TouchableOpacity
+                                                onPress={() => setLandscape(!landscape)}
+                                                style={{
+                                                    position: 'absolute',
+                                                    bottom: 60,
+                                                    right: 20,
+                                                }}>
+
+                                                {/* <Text style={[styles.postLabel, {color: "#fff"}]}>rotate</Text> */}
+                                                <FontAwesome5
+                                                    name={'undo'}
+                                                    solid
+                                                    color="#fff"
+                                                    size={20}
+                                                    style={{
+                                                        padding: 10,
+                                                    }}
+                                                />
+                                            </TouchableOpacity>
+                                            : null
                                     }
 
 
@@ -336,7 +357,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
 
 
                     {/* discription */}
-                    <View style={styles.discription}>
+                    {!landscape ? <View style={styles.discription}>
                         <View style={{ paddingHorizontal: 10, width: '100%' }}>
                             <Text style={[styles.postLabel, { padding: 10, color: '#999', textAlign: "center" }]}>{distance}</Text>
                             {(function () {
@@ -400,13 +421,13 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                             }
                         })()}
 
-                    </View>
+                    </View> : null}
 
                     {/* footer */}
-                    <View style={styles.footer}>
+                    {!landscape ? <View style={styles.footer}>
                         <Image source={require('../assets/1_MontanaRep_PrimaryLogo_GreenLandscape.png')} style={styles.footer_logo} />
 
-                    </View>
+                    </View> : null}
 
 
 
@@ -415,7 +436,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
 
         })()}
 
-        <TouchableOpacity style={styles.back} onPress={() => goBack()}>
+        {!landscape ? <TouchableOpacity style={styles.back} onPress={() => goBack()}>
             <FontAwesome5
                 name="chevron-left"
                 solid
@@ -423,9 +444,9 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                 size={30}
                 style={{ padding: 20, }}
             />
-        </TouchableOpacity>
+        </TouchableOpacity> : null}
 
-        <Navigation navigation={navigation} />
+        {!landscape ? <Navigation navigation={navigation} /> : null}
     </View>
 }
 
@@ -437,11 +458,18 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         overflow: 'hidden',
         height: ITEM_HEIGHT,
+        alignItems: "center",
+        justifyContent: "center",
     },
     video: {
         position: 'absolute',
         height: "100%",
         width: ITEM_WIDTH,
+    },
+    videoLandscape: {
+        position: 'absolute',
+        height: ITEM_WIDTH,
+        width: "100%",
     },
     container: {
         flex: 1,
@@ -470,6 +498,13 @@ const styles = StyleSheet.create({
     image: {
         width: "100%",
         height: "100%",
+    },
+    landscape: {
+        width: ITEM_HEIGHT,
+        height: ITEM_WIDTH,
+        transform: [
+            { rotate: "90deg" },
+        ],
     },
     footer: {
         flex: 1,
