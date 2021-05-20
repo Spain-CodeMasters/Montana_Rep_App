@@ -19,9 +19,9 @@ const SignupScreen = ({ navigation }) => {
   const { register } = useContext(AuthContext);
   const safeAreaInsets = useSafeAreaInsets();
 
-  const handleChecked = ({ target }) => {
-    setSubscribed(target.subscribed);
-  }
+  // const handleChecked = ({ target }) => {
+  //   setSubscribed(target.subscribed);
+  // }
 
   const handleUpload = () => {
     db.collection("users").add({

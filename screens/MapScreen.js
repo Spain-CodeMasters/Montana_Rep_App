@@ -248,9 +248,10 @@ export default ({ navigation }) => {
     Markers = () => {
 
       if (contentData !== null) {
-
+        try{
         var contents = contentData.map(({ id, content }) => content.geopoints.map((geopoints, pointId) => {
-          if (geopoints.latitude !== '' && geopoints.longitude !== '' && content.publish && new Date < content.end.toDate()) {
+          
+          if (geopoints.latitude !== "" || geopoints.longitude !== "" || content.publish && new Date < content.end.toDate()) {
 
             if (content.type == "easterEgg") {
               var distance = (geolib.getDistance(currentPosition, geopoints));
@@ -282,7 +283,7 @@ export default ({ navigation }) => {
                 </Marker.Animated>
 
               }
-
+              
             } else if (content.type == "play") {
               return <Marker.Animated
                 key={pointId}
@@ -373,6 +374,10 @@ export default ({ navigation }) => {
             }
           }
         }))
+        
+      }catch{
+        console.log("I errored out")
+      }
 
         return (
           <>
