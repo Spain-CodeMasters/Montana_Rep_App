@@ -3,20 +3,25 @@ import auth from '@react-native-firebase/auth';
 import firebase from '@react-native-firebase/app';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
+import { db } from '../components/Firebase/firebase';
+
 // import {handleUpload} from '../screens/SignupScreen';
 /**
  * This provider is created
  * to access user in whole app
  */
 
-
-
-
-
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [hasAccount, setHasAccount] = useState(false);
+ // const [subscribed, setSubscribed] = useState();
 
   return (
     <AuthContext.Provider
@@ -33,10 +38,21 @@ export const AuthProvider = ({ children }) => {
         register: async (email, password) => {
           try {
             await auth().createUserWithEmailAndPassword(email, password);
+            db.collection("users").add({
+              createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+              name: username,
+              email: email,
+              isAdmin: false,
+              isPremium: false,
+              isSubscribed: subscribed,
+              isSponsorBasic: false,
+              isSponsorPremium: false,
+            })
           } catch (e) {
             console.log(e);
           }
 
+         
         },
         logout: async () => {
           try {

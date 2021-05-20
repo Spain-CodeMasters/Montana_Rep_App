@@ -1,12 +1,13 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, StyleSheet, StatusBar, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, StatusBar, TouchableOpacity} from 'react-native';
+import CheckBox from '@react-native-community/checkbox';
+
 import FormButton from '../components/Forms/FormButton';
 import FormInput from '../components/FormInput';
 import * as Animatable from 'react-native-animatable';
 import { AuthContext } from '../navigation/AuthProvider';
 import { NavigationEvents } from 'react-navigation';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { db } from '../components/Firebase/firebase';
 
 
@@ -24,7 +25,7 @@ const SignupScreen = ({ navigation }) => {
 
   const handleUpload = () => {
     db.collection("users").add({
-      // createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       name: username,
       email: email,
       isAdmin: false,
@@ -68,7 +69,7 @@ const SignupScreen = ({ navigation }) => {
           <FormInput
             value={username}
             placeholderText='Name'
-            onChangeText={(setUserName) => setUsername(setUserName)}
+            onChangeText={username => setUsername(username)}
             autoCapitalize='none'
             keyboardType='email-address'
             autoCorrect={false}
@@ -95,7 +96,14 @@ const SignupScreen = ({ navigation }) => {
           />
         </View>
 
-        <View></View>
+        <View>
+        <Text style={styles.text_footer}>
+          <CheckBox
+              //disabled={false}
+              value={subscribed}
+              onValueChange={(e) => setSubscribed(!subscribed)}
+            />Subscribe to our Newsletter</Text>
+        </View>
 
         <View style={{ padding: 0, width: "100%" }}>
           <Text style={styles.text_footer}>
@@ -109,7 +117,7 @@ const SignupScreen = ({ navigation }) => {
         </View>
         <FormButton
           buttonTitle='Sign Up'
-          onPress={handleUpload}
+          
           onPress={() => register(email, password)}
         />
         {/* </View> */}
