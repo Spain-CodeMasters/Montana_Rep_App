@@ -11,21 +11,10 @@ import { db } from '../components/Firebase/firebase';
 
 const { width, height } = Dimensions.get('screen');
 const ITEM_WIDTH = width;
-const ITEM_HEIGHT = height * .88;
+const ITEM_HEIGHT = Platform.OS === 'android' ? height - StatusBar.currentHeight : height;
 
-// const HEADER_MAX_HEIGHT = ITEM_HEIGHT;
-// const HEADER_MIN_HEIGHT = 240;
-// const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
 export default ({ navigation: { goBack }, navigation, route }) => {
-    // const [scrollY, setScrollY] = useState(new Animated.Value(0));
-    // const headerHeight = scrollY.interpolate({
-    //     inputRange: [0, HEADER_SCROLL_DISTANCE],
-    //     outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
-    //     extrapolate: 'clamp',
-    // });
-
-    const locationPermission = PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
 
     const [distance, setDistance] = useState('');
     const [event, setEvent] = useState(null);
@@ -241,13 +230,11 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     header: {
-        // position: 'absolute',
-        // top: 0,
-        // left: 0,
-        // right: 0,
         backgroundColor: '#fff',
         overflow: 'hidden',
-        height: ITEM_HEIGHT,
+        height: ITEM_HEIGHT - 110,
+        alignItems: "center",
+        justifyContent: "center",
     },
     video: {
         position: 'absolute',
@@ -269,8 +256,8 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'flex-start',
         justifyContent: 'center',
-        margin: 45
-
+        marginTop: 18,
+        marginHorizontal: 45,
     },
     postLabel: {
         fontSize: 16,

@@ -25,7 +25,7 @@ import { db } from '../components/Firebase/firebase';
 const { width, height } = Dimensions.get('screen');
 
 const ITEM_WIDTH = width;
-const ITEM_HEIGHT = height * 0.90;
+const ITEM_HEIGHT = Platform.OS === 'android' ? height - StatusBar.currentHeight - 55 : height - 55;
 
 
 const Post = ({ item }) => (

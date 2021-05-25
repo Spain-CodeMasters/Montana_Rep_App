@@ -25,17 +25,9 @@ import { db } from '../components/Firebase/firebase';
 
 const { width, height } = Dimensions.get('screen');
 const ITEM_WIDTH = width;
-const ITEM_HEIGHT = height * .88;
+const ITEM_HEIGHT = Platform.OS === 'android' ? height - StatusBar.currentHeight : height;
 
-// const HEADER_MAX_HEIGHT = ITEM_HEIGHT;
-// const HEADER_MIN_HEIGHT = 240;
-// const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
-
-{/* Video Testing */ }
-//var source = 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4';
-
-{/* Audio Testing */ }
-//var source = 'https://actions.google.com/sounds/v1/crowds/voices_angry.ogg';
+const progressWidth = ITEM_WIDTH * 0.83;
 
 export default ({ navigation: { goBack }, navigation, route }) => {
 
@@ -167,13 +159,13 @@ export default ({ navigation: { goBack }, navigation, route }) => {
 
         if (position < 0) {
             barPosition = 0;
-        } else if (position > (ITEM_WIDTH * 0.83)) {
-            barPosition = ITEM_WIDTH * 0.83;
+        } else if (position > (progressWidth)) {
+            barPosition = progressWidth;
         } else {
             barPosition = position;
         }
 
-        const newProgress = (barPosition / (ITEM_WIDTH * 0.83)) * duration;
+        const newProgress = (barPosition / (progressWidth)) * duration;
         Animated.timing(progress, {
             useNativeDriver: false,
             toValue: newProgress,
@@ -188,13 +180,13 @@ export default ({ navigation: { goBack }, navigation, route }) => {
 
         if (position < 0) {
             barPosition = 0;
-        } else if (position > (ITEM_WIDTH * 0.83)) {
-            barPosition = ITEM_WIDTH * 0.83;
+        } else if (position > (progressWidth)) {
+            barPosition = progressWidth;
         } else {
             barPosition = position;
         }
 
-        const newProgress = (barPosition / (ITEM_WIDTH * 0.83)) * duration;
+        const newProgress = (barPosition / (progressWidth)) * duration;
         Animated.timing(progress, {
             useNativeDriver: false,
             toValue: newProgress,
@@ -262,7 +254,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                     <StatusBar translucent={true} hidden={true} />
 
                     {/* AUDIO/VIDEO HEADER */}
-                    <View style={styles.header} >
+                    <View style={landscape ? styles.headerLandscape : styles.header} >
 
                         <ImageBackground source={{ uri: sponsor.mainPhotoUrl }} style={landscape ? styles.landscape : styles.image}>
                             {/* video */}
@@ -272,6 +264,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                                 volume={1.0}
                                 paused={paused}
                                 muted={false}
+                                repeat={false}
                                 resizeMode={landscape ? "contain" : "cover"}
                                 style={styles.video}
                                 onProgress={onProgress}
@@ -315,8 +308,41 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                                             </TouchableOpacity>
                                     }
 
+                                    {/* FULLSCREEN */}
+                                    {
+                                        !locked ?
+                                            <TouchableOpacity
+                                                onPress={() => setLandscape(!landscape)}
+                                                style={landscape ? {
+                                                    position: 'absolute',
+                                                    bottom: 5,
+                                                    right: 5,
+                                                } : {
+                                                    position: 'absolute',
+                                                    bottom: 55,
+                                                }}>
+
+                                                {/* <Text style={[styles.postLabel, {color: "#fff"}]}>rotate</Text> */}
+                                                {landscape ? <FontAwesome5
+                                                    name={'compress'}
+                                                    solid
+                                                    color="#fff"
+                                                    size={20}
+                                                    style={{
+                                                        padding: 10,
+                                                    }}
+                                                /> : <Text style={[styles.postLabel, { color: '#fff' }]}>
+                                                    Fullscreen
+                                                </Text>
+                                                }
+
+                                            </TouchableOpacity>
+                                            : null
+                                    }
+
+
                                     <TouchableWithoutFeedback
-                                        hitSlop={{ top: 20, right: 10, bottom: 20, left: 10 }}
+                                        hitSlop={{ top: 10, right: 10, bottom: 10, left: 10 }}
                                         onPressIn={!locked ? (e) => handleProgressPressIn(e) : null}
                                         onPressOut={!locked ? (e) => handleProgressPressOut(e) : null}
                                         touchSoundDisabled={true}
@@ -341,8 +367,6 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                         </ImageBackground>
                     </View>
 
-                    {/* spacer */}
-                    {/* <View style={{ height: HEADER_MAX_HEIGHT }}></View> */}
 
                     {/* discription */}
                     {!landscape ? <View style={styles.discription}>
@@ -376,6 +400,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                         })()}
 
                         <Text allowFontScaling style={styles.subtext}>{sponsor.body}</Text>
+
                         {/* Check for Link */}
                         {(function () {
                             if (sponsor.link == '' || sponsor.link == null) {
@@ -454,6 +479,13 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     header: {
+        backgroundColor: '#fff',
+        overflow: 'hidden',
+        height: ITEM_HEIGHT - 110,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    headerLandscape: {
         backgroundColor: '#fff',
         overflow: 'hidden',
         height: ITEM_HEIGHT,
@@ -605,20 +637,20 @@ const styles = StyleSheet.create({
 
     progressBar: {
         position: 'absolute',
-        bottom: 40,
+        bottom: 30,
         backgroundColor: 'white',
-        height: 9,
+        height: 6,
         borderRadius: 5,
-        width: ITEM_WIDTH * 0.83,
+        width: progressWidth,
     },
 
     progressBarFill: {
         backgroundColor: '#CC8A05',
-        height: 9,
+        height: 6,
         borderRadius: 5,
         width: 0,
         flexDirection: "row-reverse",
-        alignItems: "center"
+        alignItems: "center",
     },
 
     progressDot: {
