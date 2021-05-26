@@ -16,7 +16,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		38C60CBD001FD5FE0670D914 /* libPods-GoPlay! Demo-GoPlay! DemoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 75256CDEE3B3BDB5E542AA95 /* libPods-GoPlay! Demo-GoPlay! DemoTests.a */; };
 		7E48DD0F263D04C0003FAB95 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E48DD0E263D04C0003FAB95 /* File.swift */; };
-		7E8D01F4264421DE00872251 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7E8D01F3264421DE00872251 /* GoogleService-Info.plist */; };
+		7E9A90F6265802A800BCEBC0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7E9A90F5265802A800BCEBC0 /* GoogleService-Info.plist */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		A4ACE48ACF2D39717872A24E /* libPods-GoPlay! Demo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABAA41FE2892B5FD90B05C58 /* libPods-GoPlay! Demo.a */; };
 /* End PBXBuildFile section */
@@ -63,6 +63,7 @@
 		7E48DD0D263D04C0003FAB95 /* Montana_Rep_App-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Montana_Rep_App-Bridging-Header.h"; sourceTree = "<group>"; };
 		7E48DD0E263D04C0003FAB95 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		7E8D01F3264421DE00872251 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		7E9A90F5265802A800BCEBC0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Desktop/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Montana_Rep_App/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		859E5311EDEEF17C353E07BA /* Pods-Montana_Rep_App-Montana_Rep_AppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Montana_Rep_App-Montana_Rep_AppTests.debug.xcconfig"; path = "Target Support Files/Pods-Montana_Rep_App-Montana_Rep_AppTests/Pods-Montana_Rep_App-Montana_Rep_AppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		98A70D98F560476DAA641AD7 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
@@ -204,6 +205,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				7E9A90F5265802A800BCEBC0 /* GoogleService-Info.plist */,
 				07C4D85D263D513000613189 /* FuturaPT-Book.otf */,
 				07C4D85C263D513000613189 /* FuturaPT-Demi.otf */,
 				07C4D85E263D513000613189 /* FuturaPT-Medium.otf */,
@@ -329,7 +331,7 @@
 				07C4D85F263D513000613189 /* FuturaPT-Demi.otf in Resources */,
 				07C4D860263D513000613189 /* FuturaPT-Book.otf in Resources */,
 				07C4D861263D513000613189 /* FuturaPT-Medium.otf in Resources */,
-				7E8D01F4264421DE00872251 /* GoogleService-Info.plist in Resources */,
+				7E9A90F6265802A800BCEBC0 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -584,7 +586,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = XU6A9MSJ49;
 				ENABLE_BITCODE = NO;
 				EXCLUDED_ARCHS = "";
@@ -595,7 +597,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 1.0.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -619,8 +621,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
-				DEVELOPMENT_TEAM = XU6A9MSJ49;
+				CURRENT_PROJECT_VERSION = 7;
+				DEVELOPMENT_TEAM = L4Z8UL9WVC;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = Montana_Rep_App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -628,13 +630,13 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 1.0.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.montana-rep-app.goplay";
+				PRODUCT_BUNDLE_IDENTIFIER = com.montanarepapp;
 				PRODUCT_NAME = "GoPlay! Demo";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Montana_Rep_App-Bridging-Header.h";
