@@ -1,1 +1,0 @@
-../../../../../../../../Flipper-Boost-iOSX/frameworks/Headers/boost/gil/extension/toolbox/metafunctions/get_pixel_type.hpp

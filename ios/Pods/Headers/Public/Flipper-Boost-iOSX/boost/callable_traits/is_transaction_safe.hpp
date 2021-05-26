@@ -1,1 +1,0 @@
-../../../../../Flipper-Boost-iOSX/frameworks/Headers/boost/callable_traits/is_transaction_safe.hpp

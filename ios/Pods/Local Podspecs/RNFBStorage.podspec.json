@@ -23,7 +23,7 @@
 
     ],
     "Firebase/Storage": [
-      "~> 7.6.0"
+      "7.8.1"
     ]
   },
   "static_framework": false

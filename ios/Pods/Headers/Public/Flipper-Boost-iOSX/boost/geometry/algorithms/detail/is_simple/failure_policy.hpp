@@ -1,1 +1,0 @@
-../../../../../../../../Flipper-Boost-iOSX/frameworks/Headers/boost/geometry/algorithms/detail/is_simple/failure_policy.hpp

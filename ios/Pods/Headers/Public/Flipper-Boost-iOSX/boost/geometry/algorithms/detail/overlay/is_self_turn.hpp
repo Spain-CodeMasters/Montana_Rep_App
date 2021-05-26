@@ -1,1 +1,0 @@
-../../../../../../../../Flipper-Boost-iOSX/frameworks/Headers/boost/geometry/algorithms/detail/overlay/is_self_turn.hpp
