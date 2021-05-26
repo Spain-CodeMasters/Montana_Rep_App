@@ -1,1 +1,0 @@
-../../../../../../../Flipper-Boost-iOSX/frameworks/Headers/boost/geometry/strategy/cartesian/envelope_segment.hpp

@@ -182,7 +182,7 @@ export default ({ navigation }) => {
         getCurrentLocation();
 
         //console.log('This will run every second');
-      }, 1000);
+      }, 5000);
 
       return () => clearInterval(interval);
 
