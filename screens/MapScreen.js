@@ -134,16 +134,15 @@ export default ({ navigation }) => {
                     console.log('The permission is granted');
                     break;
                   case RESULTS.BLOCKED:
-                    setLocationPermission(false);
                     console.log('The permission is denied and not requestable anymore');
                     break;
                 }
               });
 
-            setLocationPermission(false);
             console.log('The permission has not been requested / is denied but requestable');
             break;
           case RESULTS.LIMITED:
+            setLocationPermission(true);
             console.log('The permission is limited: some actions are possible');
             break;
           case RESULTS.GRANTED:
@@ -151,7 +150,6 @@ export default ({ navigation }) => {
             console.log('The permission is granted');
             break;
           case RESULTS.BLOCKED:
-            setLocationPermission(false);
             console.log('The permission is denied and not requestable anymore');
             break;
         }
@@ -165,7 +163,7 @@ export default ({ navigation }) => {
     Geolocation.getCurrentPosition(
       (position) => {
         setCurrentPosition(position.coords);
-        //setIsLoading(false);
+        setIsLoading(false);
         //console.log(position)
       },
       (error) => {
@@ -418,49 +416,49 @@ export default ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Cog onPress={() => navigation.navigate('Settings')} />
-      {/* {!isLoading ? ( */}
-      <MapView.Animated
-        ref={_map}
-        provider={PROVIDER_GOOGLE}
-        mapPadding={{ top: 50, left: 20, bottom: 50 }}
-        mapType="standard"
-        customMapStyle={googleMapStyle}
+      {!isLoading ? (
+        <MapView.Animated
+          ref={_map}
+          provider={PROVIDER_GOOGLE}
+          mapPadding={{ top: 50, left: 20, bottom: 50 }}
+          mapType="standard"
+          customMapStyle={googleMapStyle}
 
-        style={[styles.map, { width: mapWidth }]}
-        showsUserLocation
-        showsBuildings
-        //initialCamera={Camera}
+          style={[styles.map, { width: mapWidth }]}
+          showsUserLocation
+          showsBuildings
+          //initialCamera={Camera}
 
-        //region={mapRegion}
-        animateCamera={Camera, 1000}
-        // animateCamera = {{center: mapRegion,pitch: 2, heading: 20,altitude: 200, zoom: 40},500}
-        //onPanDrag={(e)=> setFollowsUserLocation(false)}
-        //onStartShouldSetResponder={(e)=> setFollowsUserLocation(false)}
-        // onUserLocationChange= {event => console.log(event.nativeEvent)}
-        followsUserLocation={followsUserLocation}
-        //onStartShouldSetResponder={(e)=> setFollowsUserLocation(false)}
-        onPanDrag={(e) => setFalse()}
-        showsMyLocationButton={false}
-        showsCompass={true}
-        zoomEnabled={true}
-        zoomControlEnabled={true}
-        onMapReady={() => updateMapStyle()}
-        //getCamera
-
-
-        //region={currentRegion}
-        //onRegionChangeComplete={onRegionChange}
-        //scrollEnabled={require('react-native').Platform.OS === 'android' ? true : !followsUserLocation}
-        scrollEnabled={true}
-      >
+          //region={mapRegion}
+          animateCamera={Camera, 1000}
+          // animateCamera = {{center: mapRegion,pitch: 2, heading: 20,altitude: 200, zoom: 40},500}
+          //onPanDrag={(e)=> setFollowsUserLocation(false)}
+          //onStartShouldSetResponder={(e)=> setFollowsUserLocation(false)}
+          // onUserLocationChange= {event => console.log(event.nativeEvent)}
+          followsUserLocation={followsUserLocation}
+          //onStartShouldSetResponder={(e)=> setFollowsUserLocation(false)}
+          onPanDrag={(e) => setFalse()}
+          showsMyLocationButton={false}
+          showsCompass={true}
+          zoomEnabled={true}
+          zoomControlEnabled={true}
+          onMapReady={() => updateMapStyle()}
+          //getCamera
 
 
-        {/* <MyLocationButton
+          //region={currentRegion}
+          //onRegionChangeComplete={onRegionChange}
+          //scrollEnabled={require('react-native').Platform.OS === 'android' ? true : !followsUserLocation}
+          scrollEnabled={true}
+        >
+
+
+          {/* <MyLocationButton
           
           /> */}
 
 
-        {/* Device Location Marker
+          {/* Device Location Marker
           <Marker.Animated
             coordinate={{
               latitude: deviceLatitude,
@@ -468,15 +466,15 @@ export default ({ navigation }) => {
             }}
             image={require('../assets/map_marker.png')}
           /> */}
-        <Markers
-          zIndex={1}
-          tracksViewChanges={true}
-          tracksInfoWindowChanges={false} />
+          <Markers
+            zIndex={1}
+            tracksViewChanges={true}
+            tracksInfoWindowChanges={false} />
 
-      </MapView.Animated>
+        </MapView.Animated>
 
 
-      {/* ) : (null)} */}
+      ) : (null)}
 
 
       {locationPermission ?
