@@ -128,7 +128,6 @@ export default ({ navigation }) => {
             setHeroData(snapshot.docs.map((doc) => ({ id: doc.id, hero: doc.data() })));
             }
         })
-        
     }, [])
 
     useEffect(() => {

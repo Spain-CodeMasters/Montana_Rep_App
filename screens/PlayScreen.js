@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import {
     Animated,
     Text,
@@ -12,9 +12,8 @@ import {
     ScrollView,
     Image,
     ImageBackground,
-    PermissionsAndroid,
-    Pressable,
-    Platform
+    Platform,
+    Linking
 } from 'react-native';
 import Video from 'react-native-video';
 import Navigation from '../components/navigation/navigation';
@@ -22,6 +21,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Geolocation from 'react-native-geolocation-service';
 import * as geolib from 'geolib';
 
+import { AuthContext } from '../navigation/AuthProvider';
 
 import { db } from '../components/Firebase/firebase';
 
@@ -34,8 +34,21 @@ const progressWidth = ITEM_WIDTH * 0.83;
 
 export default ({ navigation: { goBack }, navigation, route }) => {
 
+    const { user } = useContext(AuthContext);
+    const [userData, setUserData] = useState(null);
+
     const [distance, setDistance] = useState('');
     const [play, setPlay] = useState(null);
+
+    useEffect(() => {
+        db.collection("users").where('email', '==', user.email).onSnapshot((snapshot) => {
+            if (snapshot == null) {
+                return null;
+            } else {
+                setUserData(snapshot.docs.map((doc) => ({ id: doc.id, user: doc.data() })));
+            }
+        })
+    }, []);
 
 
     useEffect(() => {
@@ -56,6 +69,17 @@ export default ({ navigation: { goBack }, navigation, route }) => {
             setPlay(snapshot._data);
         })
     }, []);
+
+    useEffect(() => {
+        db.collection("users").where('email', '==', user.email).onSnapshot((snapshot) => {
+            if (snapshot == null) {
+                return null;
+            } else {
+                setUserData(snapshot.docs.map((doc) => ({ id: doc.id, user: doc.data() })));
+
+            }
+        })
+    }, [userData]);
 
 
     function checkPosition(currentPosition) {
@@ -84,7 +108,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
             const distance = (geolib.getDistance(currentPosition, play.geopoints[pointId]));
 
             if (distance < 10) {
-                setLocked(false);
+                if (userData !== null && userData[0].user.isPremium == true) { setLocked(false) };
                 const feet = Math.floor((geolib.convertDistance(distance, "ft")));
                 if (feet == 1) {
                     setDistance(
@@ -124,7 +148,6 @@ export default ({ navigation: { goBack }, navigation, route }) => {
 
     const video = useRef(null);
     const [locked, setLocked] = useState(true);
-    const [premium, setPremium] = useState(true);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
     const [landscape, setLandscape] = useState(false);
@@ -333,7 +356,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                                                     style={{
                                                         padding: 10,
                                                     }}
-                                                /> : <Text style={[styles.postLabel, {color: '#fff'}]}>
+                                                /> : <Text style={[styles.postLabel, { color: '#fff' }]}>
                                                     Fullscreen
                                                 </Text>
                                                 }
@@ -386,6 +409,23 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                         <Text style={styles.text_title}>{play.title}</Text>
 
                         {(function () {
+                            if (userData !== null && userData[0].user.isPremium == false) {
+                                return <TouchableOpacity onPress={() => {
+                                    Linking.openURL('https://goplay.montanarep.com/')
+                                        .catch(err => {
+                                            console.error("Failed opening page because: ", err);
+                                            alert('Failed to open page');
+                                        })
+                                }}
+                                >
+                                    <View style={[styles.subButton]}>
+                                        <Text style={styles.subButtonText}>Get GoPlay!</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            }
+                        })()}
+
+                        {(function () {
                             if (play.subHeader !== '' && play.subHeader !== ' ' && play.subHeader !== null) {
                                 return <Text allowFontScaling style={styles.text_subtitle}>{play.subHeader}</Text>
                             }
@@ -412,18 +452,6 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                         })()}
 
                         {!locked ? <Text allowFontScaling style={styles.subtext}></Text> : null}
-                        
-                        {/* {
-                            !premium ? <TouchableOpacity
-                            //onPress={() => [setLocked(false), alert('Unlocked')]}
-                            >
-                                <View style={[styles.subButton]}>
-
-                                    <Text style={styles.subButtonText}>Unlock</Text>
-
-                                </View>
-                            </TouchableOpacity> : null
-                        } */}
 
                         {/* Check for Link */}
                         {(function () {

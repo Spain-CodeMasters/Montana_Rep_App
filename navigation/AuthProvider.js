@@ -15,13 +15,12 @@ export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
+  //const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [hasAccount, setHasAccount] = useState(false);
-  const [subscribed, setSubscribed] = useState(true);
+  //const [subscribed, setSubscribed] = useState(true);
 
   return (
     <AuthContext.Provider
@@ -35,7 +34,7 @@ export const AuthProvider = ({ children }) => {
             console.log(e);
           }
         },
-        register: async (email, password) => {
+        register: async (username, email, password, subscribed) => {
           try {
             await auth().createUserWithEmailAndPassword(email, password);
             db.collection("users").add({
