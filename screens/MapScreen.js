@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import React, { useState, useRef, useEffect } from 'react';
 import { PERMISSIONS, RESULTS, check, request } from 'react-native-permissions';
-import { Text, View, Image, StyleSheet, TouchableOpacity, Dimensions, PermissionsAndroid, Platform, Pressable } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, Dimensions, PermissionsAndroid, Platform, Pressable, Alert } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker, Callout, Animated, AnimatedRegion, MapViewAnimated, Camera } from 'react-native-maps';
 import * as Animatable from 'react-native-animatable';
 import Cog from '../components/Cog';
@@ -117,27 +117,67 @@ export default ({ navigation }) => {
             console.log('This feature is not available (on this device / in this context)');
             break;
           case RESULTS.DENIED:
-            const requestPermission = request(type,
-              {
-                title: "Montana Repertory Theatre Location Permission",
-                message:
-                  "This app collects location data to enable " +
-                  "map features, & nearby audio/video content",
-                buttonNeutral: "Ask Me Later",
-                buttonNegative: "Cancel",
-                buttonPositive: "OK"
-              })
-              .then((result) => {
-                switch (result) {
-                  case RESULTS.GRANTED:
-                    setLocationPermission(true);
-                    console.log('The permission is granted');
-                    break;
-                  case RESULTS.BLOCKED:
-                    console.log('The permission is denied and not requestable anymore');
-                    break;
-                }
-              });
+            if (Platform.OS === "android") {
+
+              Alert.alert(
+                "Montana Repertory Theatre Location Permission",
+                "This app collects location data to " +
+                "display your location on the map, & enable nearby audio/video content " +
+                "even when the app is closed or not in use."
+                ,
+                [
+                  {
+                    text: "Continue", onPress: () => request(type,
+                      {
+                        title: "Enable Location Permission?",
+                        message:
+                          "This app collects location data to " +
+                          "display your location on the map, & enable nearby audio/video content " +
+                          "even when the app is closed or not in use."
+                        ,
+                        buttonNeutral: "Ask Me Later",
+                        buttonNegative: "Cancel",
+                        buttonPositive: "OK"
+                      })
+                      .then((result) => {
+                        switch (result) {
+                          case RESULTS.GRANTED:
+                            setLocationPermission(true);
+                            console.log('The permission is granted');
+                            break;
+                          case RESULTS.BLOCKED:
+                            console.log('The permission is denied and not requestable anymore');
+                            break;
+                        }
+                      })
+                  }
+                ]
+              );
+            } else {
+              const requestPermission = request(type,
+                {
+                  title: "Montana Repertory Theatre Location Permission",
+                  message:
+                    "This app collects location data to enable" +
+                    "the display your location on the map, & nearby audio/video content " +
+                    "even when the app is closed or not in use."
+                  ,
+                  buttonNeutral: "Ask Me Later",
+                  buttonNegative: "Cancel",
+                  buttonPositive: "OK"
+                })
+                .then((result) => {
+                  switch (result) {
+                    case RESULTS.GRANTED:
+                      setLocationPermission(true);
+                      console.log('The permission is granted');
+                      break;
+                    case RESULTS.BLOCKED:
+                      console.log('The permission is denied and not requestable anymore');
+                      break;
+                  }
+                });
+            }
 
             console.log('The permission has not been requested / is denied but requestable');
             break;
@@ -163,7 +203,7 @@ export default ({ navigation }) => {
     Geolocation.getCurrentPosition(
       (position) => {
         setCurrentPosition(position.coords);
-        setIsLoading(false);
+        //setIsLoading(false);
         //console.log(position)
       },
       (error) => {
@@ -416,49 +456,49 @@ export default ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Cog onPress={() => navigation.navigate('Settings')} />
-      {!isLoading ? (
-        <MapView.Animated
-          ref={_map}
-          provider={PROVIDER_GOOGLE}
-          mapPadding={{ top: 50, left: 20, bottom: 50 }}
-          mapType="standard"
-          customMapStyle={googleMapStyle}
+      {/* {!isLoading ? ( */}
+      <MapView.Animated
+        ref={_map}
+        provider={PROVIDER_GOOGLE}
+        mapPadding={{ top: 50, left: 20, bottom: 50 }}
+        mapType="standard"
+        customMapStyle={googleMapStyle}
 
-          style={[styles.map, { width: mapWidth }]}
-          showsUserLocation
-          showsBuildings
-          //initialCamera={Camera}
+        style={[styles.map, { width: mapWidth }]}
+        showsUserLocation
+        showsBuildings
+        //initialCamera={Camera}
 
-          //region={mapRegion}
-          animateCamera={Camera, 1000}
-          // animateCamera = {{center: mapRegion,pitch: 2, heading: 20,altitude: 200, zoom: 40},500}
-          //onPanDrag={(e)=> setFollowsUserLocation(false)}
-          //onStartShouldSetResponder={(e)=> setFollowsUserLocation(false)}
-          // onUserLocationChange= {event => console.log(event.nativeEvent)}
-          followsUserLocation={followsUserLocation}
-          //onStartShouldSetResponder={(e)=> setFollowsUserLocation(false)}
-          onPanDrag={(e) => setFalse()}
-          showsMyLocationButton={false}
-          showsCompass={true}
-          zoomEnabled={true}
-          zoomControlEnabled={true}
-          onMapReady={() => updateMapStyle()}
-          //getCamera
-
-
-          //region={currentRegion}
-          //onRegionChangeComplete={onRegionChange}
-          //scrollEnabled={require('react-native').Platform.OS === 'android' ? true : !followsUserLocation}
-          scrollEnabled={true}
-        >
+        //region={mapRegion}
+        animateCamera={Camera, 1000}
+        // animateCamera = {{center: mapRegion,pitch: 2, heading: 20,altitude: 200, zoom: 40},500}
+        //onPanDrag={(e)=> setFollowsUserLocation(false)}
+        //onStartShouldSetResponder={(e)=> setFollowsUserLocation(false)}
+        // onUserLocationChange= {event => console.log(event.nativeEvent)}
+        followsUserLocation={followsUserLocation}
+        //onStartShouldSetResponder={(e)=> setFollowsUserLocation(false)}
+        onPanDrag={(e) => setFalse()}
+        showsMyLocationButton={false}
+        showsCompass={true}
+        zoomEnabled={true}
+        zoomControlEnabled={true}
+        onMapReady={() => updateMapStyle()}
+        //getCamera
 
 
-          {/* <MyLocationButton
+        //region={currentRegion}
+        //onRegionChangeComplete={onRegionChange}
+        //scrollEnabled={require('react-native').Platform.OS === 'android' ? true : !followsUserLocation}
+        scrollEnabled={true}
+      >
+
+
+        {/* <MyLocationButton
           
           /> */}
 
 
-          {/* Device Location Marker
+        {/* Device Location Marker
           <Marker.Animated
             coordinate={{
               latitude: deviceLatitude,
@@ -466,15 +506,15 @@ export default ({ navigation }) => {
             }}
             image={require('../assets/map_marker.png')}
           /> */}
-          <Markers
-            zIndex={1}
-            tracksViewChanges={true}
-            tracksInfoWindowChanges={false} />
+        <Markers
+          zIndex={1}
+          tracksViewChanges={true}
+          tracksInfoWindowChanges={false} />
 
-        </MapView.Animated>
+      </MapView.Animated>
 
 
-      ) : (null)}
+      {/* ) : (null)} */}
 
 
       {locationPermission ?

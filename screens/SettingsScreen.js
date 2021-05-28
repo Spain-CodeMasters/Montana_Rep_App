@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import 'react-native-gesture-handler';
 import { AuthContext } from '../navigation/AuthProvider';
 import { Button, StyleSheet, ScrollView, View, Text, StatusBar, Switch, TouchableOpacity, Linking, Platform } from 'react-native';
@@ -9,13 +9,13 @@ import FancyCard from '../components/FancyCard';
 
 import FormButton from '../components/Forms/FormButton';
 
+import { db } from '../components/Firebase/firebase';
 
 
 
 export default ({ navigation: { goBack }, navigation }) => {
-  // const [show, setShow] = useState(false)
   const { user, logout } = useContext(AuthContext);
-  // const navigation = useNavigation()
+  const [userData, setUserData] = useState(null);
   const [isEnabled, setIsEnabled] = useState(true);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
@@ -24,6 +24,16 @@ export default ({ navigation: { goBack }, navigation }) => {
   const [isAboutSelected, setIsAboutSelected] = useState(false);
 
   const [isMenu, setIsMenu] = useState(false);
+
+  useEffect(() => {
+    db.collection("users").where('email', '==', user.email).onSnapshot((snapshot) => {
+      if (snapshot == null) {
+        return null;
+      } else {
+        setUserData(snapshot.docs.map((doc) => ({ id: doc.id, user: doc.data() })));
+      }
+    })
+  }, [userData]);
 
 
   const ExternalLinkBtn = (props) => {
@@ -47,11 +57,24 @@ export default ({ navigation: { goBack }, navigation }) => {
 
         <Text style={styles.header_text}>Settings</Text>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginBottom: 20, }}>
-          <FancyCard
-            title='GoPlay! Premium'
-            onPress={() => navigation.navigate('Account')}
-          />
+          {(function () {
+            if (userData !== null && userData[0].user.isPremium == false) {
+              //if(userData.user.isPremium == false){
+              return <FancyCard
+                title='Get GoPlay!'
+                onPress={() => {
+                  Linking.openURL('https://goplay.montanarep.com/')
+                    .catch(err => {
+                      console.error("Failed opening page because: ", err);
+                      alert('Failed to open page');
+                    })
+                }}
+              />
+            }
+          })()}
         </View>
+
+
         <View style={styles.horizontal_rule} />
         <View>
           <TouchableOpacity onPress={() => setIsAccountSelected(!isAccountSelected)}>

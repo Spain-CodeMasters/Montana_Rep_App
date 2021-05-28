@@ -23,18 +23,18 @@ const SignupScreen = ({ navigation }) => {
   //   setSubscribed(target.subscribed);
   // }
 
-  const handleUpload = () => {
-    db.collection("users").add({
-       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      name: username,
-      email: email,
-      isAdmin: false,
-      isPremium: false,
-      isSubscribed: subscribed,
-      isSponsorBasic: false,
-      isSponsorPremium: false,
-    });
-  }
+  // const handleUpload = () => {
+  //   db.collection("users").add({
+  //      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+  //     name: username,
+  //     email: email,
+  //     isAdmin: false,
+  //     isPremium: false,
+  //     isSubscribed: subscribed,
+  //     isSponsorBasic: false,
+  //     isSponsorPremium: false,
+  //   });
+  // }
 
   return (
     <View style={{
@@ -118,7 +118,7 @@ const SignupScreen = ({ navigation }) => {
         <FormButton
           buttonTitle='Sign Up'
           
-          onPress={() => register(email, password)}
+          onPress={() => register(username, email, password, subscribed)}
         />
         {/* </View> */}
       </Animatable.View>
