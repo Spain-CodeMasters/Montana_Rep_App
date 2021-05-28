@@ -121,9 +121,8 @@ export default ({ navigation }) => {
 
               Alert.alert(
                 "Montana Repertory Theatre Location Permission",
-                "This app collects location data to " +
-                "display your location on the map, & enable nearby audio/video content " +
-                "even when the app is closed or not in use."
+                "This app uses location data to " +
+                "display your location on the map, & enable nearby audio/video content"
                 ,
                 [
                   {
@@ -131,9 +130,8 @@ export default ({ navigation }) => {
                       {
                         title: "Enable Location Permission?",
                         message:
-                          "This app collects location data to " +
-                          "display your location on the map, & enable nearby audio/video content " +
-                          "even when the app is closed or not in use."
+                          "This app uses location data to " +
+                          "display your location on the map, & enable nearby audio/video content"
                         ,
                         buttonNeutral: "Ask Me Later",
                         buttonNegative: "Cancel",
@@ -159,8 +157,7 @@ export default ({ navigation }) => {
                   title: "Montana Repertory Theatre Location Permission",
                   message:
                     "This app collects location data to enable" +
-                    "the display your location on the map, & nearby audio/video content " +
-                    "even when the app is closed or not in use."
+                    "the display your location on the map, & nearby audio/video content."
                   ,
                   buttonNeutral: "Ask Me Later",
                   buttonNegative: "Cancel",
