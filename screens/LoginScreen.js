@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Platform, StatusBar } from 'react-native';
 import FormButton from '../components/Forms/FormButton';
 import FormInput from '../components/FormInput';
@@ -80,6 +80,10 @@ export default function LoginScreen({ navigation }) {
   //       });
   //     }
   // }
+
+  useEffect(() => {
+    setError('');
+  }, [])
 
   function navigate(){
     setError('');

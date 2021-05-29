@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, StyleSheet, StatusBar, TouchableOpacity } from 'react-native';
+import { View, ScrollView, Text, StyleSheet, StatusBar, TouchableOpacity } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 
 import FormButton from '../components/Forms/FormButton';
@@ -37,21 +37,21 @@ const SignupScreen = ({ navigation }) => {
   //   });
   // }
 
-  function navigate(){
+  function navigate() {
     setError('');
     navigation.navigate('Login');
   }
 
   function handleRegister(username, email, password, confirmPassword, subscribed) {
-    if(username == ""){
+    if (username == "") {
       setError(' Please enter a name.');
-    }else if (email == "") {
+    } else if (email == "") {
       setError(' Please enter a valid email.');
     } else if (password == "") {
       setError(" Please enter a password.");
-    } else if(confirmPassword == ""){
+    } else if (confirmPassword == "") {
       setError(" Please confirm your password.");
-    } else if(confirmPassword !== password){
+    } else if (confirmPassword !== password) {
       setError(" Passwords do not match.");
     } else {
       register(username, email, password, subscribed);
@@ -86,75 +86,78 @@ const SignupScreen = ({ navigation }) => {
       <Animatable.View
         animation="fadeInUpBig"
         style={styles.footer}>
+        <ScrollView>
+          <View style={styles.action}>
+            <FormInput
+              value={username}
+              placeholderText='Name'
+              onChangeText={username => setUsername(username)}
+              autoCapitalize='none'
+              keyboardType='email-address'
+              autoCorrect={false}
+            />
+          </View>
+          <View style={styles.action}>
 
-        <View style={styles.action}>
-          <FormInput
-            value={username}
-            placeholderText='Name'
-            onChangeText={username => setUsername(username)}
-            autoCapitalize='none'
-            keyboardType='email-address'
-            autoCorrect={false}
-          />
-        </View>
-        <View style={styles.action}>
+            <FormInput
+              value={email}
+              placeholderText='Email'
+              onChangeText={userEmail => setEmail(userEmail)}
+              autoCapitalize='none'
+              keyboardType='email-address'
+              autoCorrect={true}
+            />
+          </View>
+          <View style={styles.action}>
+            <FormInput
+              value={password}
+              placeholderText='Password'
+              onChangeText={userPassword => setPassword(userPassword)}
 
-          <FormInput
-            value={email}
-            placeholderText='Email'
-            onChangeText={userEmail => setEmail(userEmail)}
-            autoCapitalize='none'
-            keyboardType='email-address'
-            autoCorrect={true}
-          />
-        </View>
-        <View style={styles.action}>
-          <FormInput
-            value={password}
-            placeholderText='Password'
-            onChangeText={userPassword => setPassword(userPassword)}
+              secureTextEntry={true}
+            />
+          </View>
 
-            secureTextEntry={true}
-          />
-        </View>
+          <View style={styles.action}>
+            <FormInput
+              value={confirmPassword}
+              placeholderText='Confirm Password'
+              onChangeText={confirmUserPassword => setConfirmPassword(confirmUserPassword)}
 
-        <View style={styles.action}>
-          <FormInput
-            value={confirmPassword}
-            placeholderText='Confirm Password'
-            onChangeText={confirmUserPassword => setConfirmPassword(confirmUserPassword)}
+              secureTextEntry={true}
+            />
+          </View>
 
-            secureTextEntry={true}
-          />
-        </View>
+          <View>
+            <Text style={{ color: 'grey', fontSize: 16, fontFamily: 'FuturaPT-Book', }}>
+              <CheckBox
+                //disabled={false}
+                value={subscribed}
+                onValueChange={(e) => setSubscribed(!subscribed)}
+              />Subscribe to our Newsletter</Text>
+          </View>
 
-        <View>
-          <Text style={{ color: 'grey', fontSize: 16, fontFamily: 'FuturaPT-Book', }}>
-            <CheckBox
-              //disabled={false}
-              value={subscribed}
-              onValueChange={(e) => setSubscribed(!subscribed)}
-            />Subscribe to our Newsletter</Text>
-        </View>
-
-        <View style={{ padding: 0, width: "100%" }}>
-      <Text style={styles.text_footer}>
-            By signing up, you agree that you are over the age of 13 and have read the
+          <View style={{ padding: 0, width: "100%" }}>
+            <Text style={styles.text_footer}>
+              By signing up, you agree that you are over the age of 13 and have read the
             <Text
-              style={{ color: '#747A21', }}
-              onPress={() => navigation.navigate('TermsScreen')}
-            > Terms and Conditions</Text>
-          </Text>
+                style={{ color: '#747A21', }}
+                onPress={() => navigation.navigate('TermsScreen')}
+              > Terms and Conditions</Text>
+            </Text>
 
-          <Text style={{ color: "red", fontSize: 16, fontFamily: 'FuturaPT-Book', }}>{error}</Text>
+            <Text style={{ color: "red", fontSize: 16, fontFamily: 'FuturaPT-Book', }}>{error}</Text>
 
-        </View>
-        <FormButton
-          buttonTitle='Sign Up'
+          </View>
+          
+          <FormButton
+            buttonTitle='Sign Up'
 
-          onPress={() => handleRegister(username, email, password, confirmPassword, subscribed)}
-        />
-        {/* </View> */}
+            onPress={() => handleRegister(username, email, password, confirmPassword, subscribed)}
+          />
+          
+          {/* </View> */}
+        </ScrollView>
       </Animatable.View>
     </View>
   );
