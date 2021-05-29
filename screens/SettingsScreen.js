@@ -26,14 +26,15 @@ export default ({ navigation: { goBack }, navigation }) => {
   const [isMenu, setIsMenu] = useState(false);
 
   useEffect(() => {
-    db.collection("users").where('email', '==', user.email).onSnapshot((snapshot) => {
-      if (snapshot == null) {
-        return null;
-      } else {
+    const cleanUp = db.collection("users").where('email', '==', user.email).onSnapshot((snapshot) => {
+      // if (snapshot == null) {
+      //   return null;
+      // } else {
         setUserData(snapshot.docs.map((doc) => ({ id: doc.id, user: doc.data() })));
-      }
-    })
-  }, [userData]);
+      // }
+    });
+    return () => cleanUp();
+  }, []);
 
 
   const ExternalLinkBtn = (props) => {

@@ -182,16 +182,17 @@ export default ({ navigation }) => {
   const [scheduleView, setScheduleView] = useState(scheduleData);
 
   useEffect(() => {
-    db.collection("content").orderBy("start", "asc").onSnapshot((snapshot) => {
-      if(snapshot==null){
-        return null;
+    const cleanUp = db.collection("content").orderBy("start", "asc").onSnapshot((snapshot) => {
+      // if(snapshot==null){
+      //   return null;
 
-      }else{
+      // }else{
       setScheduleData(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
       setScheduleView(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
-      }
+      //}
       
-    })
+    });
+    return () => cleanUp();
   }, []);
 
   function filterPosts(type) {

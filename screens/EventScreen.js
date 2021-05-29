@@ -34,9 +34,10 @@ export default ({ navigation: { goBack }, navigation, route }) => {
 
 
     useEffect(() => {
-        db.collection("content").doc(route.params.id).onSnapshot((snapshot) => {
+        const cleanUp = db.collection("content").doc(route.params.id).onSnapshot((snapshot) => {
             setEvent(snapshot._data);
         })
+        return () => cleanUp();
     }, []);
 
 

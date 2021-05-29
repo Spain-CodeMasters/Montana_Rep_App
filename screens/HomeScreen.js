@@ -120,34 +120,38 @@ export default ({ navigation }) => {
     const [filter, setFilter] = useState("all");
 
     useEffect(() => {
-        db.collection("carousel").orderBy("carouselOrder", "asc").onSnapshot((snapshot) => {
-            
-            if(snapshot==null){
-                return null;
-            }else{
+        const cleanUp = db.collection("carousel").orderBy("carouselOrder", "asc").onSnapshot((snapshot) => {
+
+            // if(snapshot==null){
+            //     return null;
+            // }else{
             setHeroData(snapshot.docs.map((doc) => ({ id: doc.id, hero: doc.data() })));
-            }
+            // }
         })
+        return () => cleanUp();
     }, [])
 
     useEffect(() => {
-        db.collection("posts").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
+        const cleanUp = db.collection("posts").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
+
+            // if(snapshot==null){
+            //     return null;
+            // }else{
+
             /* BUG FIX: This data has to be set directly to run posts. Unsure why*/
-            
-            if(snapshot==null){
-                return null;
-            }else{
             setPostData(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
             setPostView(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
             //setPostView(postData);
-            }
+            // }
         })
-        console.log("loaded")
+        return () => cleanUp();
     }, [])
 
 
     function filterPosts(type) {
         scroll.current.scrollToOffset({ offset: ITEM_HEIGHT, animated: true });
+        //scroll.current.scrollToIndex({index: 0});
+
         if (filter !== type) {
             if (type == "mtrep") {
                 setFilter("mtrep");
@@ -251,12 +255,12 @@ export default ({ navigation }) => {
 
             {/* PINNED POST */}
             {(function () {
-                if (postData.filter(function (posts) { return posts.post.pinned == true; }).length !== 0) {
+                if (postData.filter(function (posts) { return posts.post.pinned == true && posts.post.publish == true; }).length !== 0) {
                     return <View style={{ padding: 10 }}>
                         <Text style={[styles.postLabel, { padding: 15, color: '#999', textAlign: "center" }]}>FEATURED</Text>
                         <View style={{ padding: 20, backgroundColor: "white", borderWidth: 1, borderColor: '#999', borderRadius: 5 }}>
                             <FlatList
-                                data={postData.filter(function (posts) { return posts.post.pinned == true; })}
+                                data={postData.filter(function (posts) { return posts.post.pinned == true && posts.post.publish == true; })}
                                 renderItem={renderItem}
                                 keyExtractor={(item) => item.id}
                                 ItemSeparatorComponent={renderItemSeparator}
@@ -352,7 +356,7 @@ export default ({ navigation }) => {
 
         <FlatList
             ref={scroll}
-            data={postView}
+            data={postView.filter(function (posts) { return posts.post.publish == true; })}
             renderItem={renderItem}
             keyExtractor={(item) => item.id}
             ListHeaderComponent={renderHeader}

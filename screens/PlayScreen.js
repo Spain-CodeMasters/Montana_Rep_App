@@ -36,20 +36,19 @@ export default ({ navigation: { goBack }, navigation, route }) => {
 
     const { user } = useContext(AuthContext);
     const [userData, setUserData] = useState(null);
-
+    const [isPremium, setIsPremium] = useState(false);
     const [distance, setDistance] = useState('');
     const [play, setPlay] = useState(null);
 
     useEffect(() => {
-        db.collection("users").where('email', '==', user.email).onSnapshot((snapshot) => {
-            if (snapshot == null) {
-                return null;
-            } else {
-                setUserData(snapshot.docs.map((doc) => ({ id: doc.id, user: doc.data() })));
-            }
-        })
+        const cleanUp = db.collection("users").where('email', '==', user.email).onSnapshot((snapshot) => {
+            // if (snapshot == null) {
+            //     return null;
+            // } else {
+            setUserData(snapshot.docs.map((doc) => ({ id: doc.id, user: doc.data() })));
+        });
+        return () => cleanUp();
     }, []);
-
 
     useEffect(() => {
         Geolocation.getCurrentPosition(
@@ -61,25 +60,19 @@ export default ({ navigation: { goBack }, navigation, route }) => {
             },
             { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
         );
-    }, [play]);
+    }, [play, userData]);
 
 
     useEffect(() => {
-        db.collection("content").doc(route.params.id).onSnapshot((snapshot) => {
+        const cleanUp = db.collection("content").doc(route.params.id).onSnapshot((snapshot) => {
             setPlay(snapshot._data);
-        })
+        });
+        return () => cleanUp();
     }, []);
 
-    useEffect(() => {
-        db.collection("users").where('email', '==', user.email).onSnapshot((snapshot) => {
-            if (snapshot == null) {
-                return null;
-            } else {
-                setUserData(snapshot.docs.map((doc) => ({ id: doc.id, user: doc.data() })));
 
-            }
-        })
-    }, [userData]);
+
+
 
 
     function checkPosition(currentPosition) {
@@ -108,7 +101,12 @@ export default ({ navigation: { goBack }, navigation, route }) => {
             const distance = (geolib.getDistance(currentPosition, play.geopoints[pointId]));
 
             if (distance < 10) {
-                if (userData !== null && userData[0].user.isPremium == true) { setLocked(false) };
+                if (userData !== null && userData[0].user.isPremium == true) { 
+                    setLocked(false) 
+                } else {
+                    setLocked(true);
+                };
+                
                 const feet = Math.floor((geolib.convertDistance(distance, "ft")));
                 if (feet == 1) {
                     setDistance(

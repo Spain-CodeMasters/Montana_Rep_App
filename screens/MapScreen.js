@@ -3,12 +3,12 @@ import React, { useState, useRef, useEffect } from 'react';
 import { PERMISSIONS, RESULTS, check, request } from 'react-native-permissions';
 import { Text, View, Image, StyleSheet, TouchableOpacity, Dimensions, PermissionsAndroid, Platform, Pressable, Alert } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker, Callout, Animated, AnimatedRegion, MapViewAnimated, Camera } from 'react-native-maps';
-import * as Animatable from 'react-native-animatable';
+//import * as Animatable from 'react-native-animatable';
 import Cog from '../components/Cog';
-import PlayingBanner from '../components/playingBanner';
+//import PlayingBanner from '../components/playingBanner';
 import Geolocation from 'react-native-geolocation-service';
 import * as geolib from 'geolib';
-import { useFocusEffect } from '@react-navigation/native';
+//import { useFocusEffect } from '@react-navigation/native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 
@@ -94,19 +94,20 @@ export default ({ navigation }) => {
     if (Platform.OS === "android") {
       checkPermissions(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
     } else if (Platform.OS === "ios") {
-      checkPermissions(PERMISSIONS.IOS.LOCATION_ALWAYS);
+      checkPermissions(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
     };
   }, []);
 
   useEffect(() => {
-    db.collection("content").onSnapshot((snapshot) => {
-      if (snapshot == null) {
-        return null;
-      } else {
-        setContentData(snapshot.docs.map((doc) => ({ id: doc.id, content: doc.data() })));
-      }
+    const cleanUp = db.collection("content").onSnapshot((snapshot) => {
+      // if (snapshot == null) {
+      //   return null;
+      // } else {
+      setContentData(snapshot.docs.map((doc) => ({ id: doc.id, content: doc.data() })));
+      // }
 
-    })
+    });
+    return () => cleanUp();
   }, []);
 
   function checkPermissions(type) {
@@ -200,7 +201,7 @@ export default ({ navigation }) => {
     Geolocation.getCurrentPosition(
       (position) => {
         setCurrentPosition(position.coords);
-        //setIsLoading(false);
+        setIsLoading(false);
         //console.log(position)
       },
       (error) => {
@@ -243,6 +244,9 @@ export default ({ navigation }) => {
             pitch: pitchVal,
             //heading: currentPosition.heading,
             heading: 0,
+
+            // Only on iOS MapKit, in meters. The property is ignored by Google Maps.
+            altitude: 20,
 
             // Only when using Google Maps.
             zoom: 20
@@ -442,6 +446,8 @@ export default ({ navigation }) => {
     pitch: 0,
     heading: 0,
 
+    // Only on iOS MapKit, in meters. The property is ignored by Google Maps.
+    altitude: 20,
 
     // Only when using Google Maps.
     zoom: 20
@@ -453,7 +459,7 @@ export default ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Cog onPress={() => navigation.navigate('Settings')} />
-      {/* {!isLoading ? ( */}
+
       <MapView.Animated
         ref={_map}
         provider={PROVIDER_GOOGLE}
@@ -467,7 +473,7 @@ export default ({ navigation }) => {
         //initialCamera={Camera}
 
         //region={mapRegion}
-        animateCamera={Camera, 1000}
+        setCamera={Camera, 1000}
         // animateCamera = {{center: mapRegion,pitch: 2, heading: 20,altitude: 200, zoom: 40},500}
         //onPanDrag={(e)=> setFollowsUserLocation(false)}
         //onStartShouldSetResponder={(e)=> setFollowsUserLocation(false)}
