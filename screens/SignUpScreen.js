@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, StyleSheet, StatusBar, TouchableOpacity} from 'react-native';
+import { View, Text, StyleSheet, StatusBar, TouchableOpacity } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 
 import FormButton from '../components/Forms/FormButton';
@@ -14,9 +14,10 @@ import { db } from '../components/Firebase/firebase';
 const SignupScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [username, setUsername] = useState('');
   const [subscribed, setSubscribed] = useState(true);
-  const { register } = useContext(AuthContext);
+  const { register, error, setError } = useContext(AuthContext);
   const safeAreaInsets = useSafeAreaInsets();
 
   // const handleChecked = ({ target }) => {
@@ -36,6 +37,27 @@ const SignupScreen = ({ navigation }) => {
   //   });
   // }
 
+  function navigate(){
+    setError('');
+    navigation.navigate('Login');
+  }
+
+  function handleRegister(username, email, password, confirmPassword, subscribed) {
+    if(username == ""){
+      setError(' Please enter a name.');
+    }else if (email == "") {
+      setError(' Please enter a valid email.');
+    } else if (password == "") {
+      setError(" Please enter a password.");
+    } else if(confirmPassword == ""){
+      setError(" Please confirm your password.");
+    } else if(confirmPassword !== password){
+      setError(" Passwords do not match.");
+    } else {
+      register(username, email, password, subscribed);
+    }
+  }
+
   return (
     <View style={{
       flex: 1,
@@ -53,7 +75,7 @@ const SignupScreen = ({ navigation }) => {
         <Text style={styles.text_header}>Sign Up</Text>
         <View style={{ display: "flex", flexDirection: "row", flex: 1, flexwrap: 'wrap', margin: 10 }}>
           <Text style={styles.text_subheader}>Have an Account? </Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+          <TouchableOpacity onPress={() => navigate()}>
             <Text style={styles.text_linkheader}>
               Sign In
             </Text>
@@ -83,7 +105,7 @@ const SignupScreen = ({ navigation }) => {
             onChangeText={userEmail => setEmail(userEmail)}
             autoCapitalize='none'
             keyboardType='email-address'
-            autoCorrect={false}
+            autoCorrect={true}
           />
         </View>
         <View style={styles.action}>
@@ -96,9 +118,19 @@ const SignupScreen = ({ navigation }) => {
           />
         </View>
 
+        <View style={styles.action}>
+          <FormInput
+            value={confirmPassword}
+            placeholderText='Confirm Password'
+            onChangeText={confirmUserPassword => setConfirmPassword(confirmUserPassword)}
+
+            secureTextEntry={true}
+          />
+        </View>
+
         <View>
-        <Text style={styles.text_footer}>
-          <CheckBox
+          <Text style={{ color: 'grey', fontSize: 16, fontFamily: 'FuturaPT-Book', }}>
+            <CheckBox
               //disabled={false}
               value={subscribed}
               onValueChange={(e) => setSubscribed(!subscribed)}
@@ -106,7 +138,7 @@ const SignupScreen = ({ navigation }) => {
         </View>
 
         <View style={{ padding: 0, width: "100%" }}>
-          <Text style={styles.text_footer}>
+      <Text style={styles.text_footer}>
             By signing up, you agree that you are over the age of 13 and have read the
             <Text
               style={{ color: '#747A21', }}
@@ -114,11 +146,13 @@ const SignupScreen = ({ navigation }) => {
             > Terms and Conditions</Text>
           </Text>
 
+          <Text style={{ color: "red", fontSize: 16, fontFamily: 'FuturaPT-Book', }}>{error}</Text>
+
         </View>
         <FormButton
           buttonTitle='Sign Up'
-          
-          onPress={() => register(username, email, password, subscribed)}
+
+          onPress={() => handleRegister(username, email, password, confirmPassword, subscribed)}
         />
         {/* </View> */}
       </Animatable.View>

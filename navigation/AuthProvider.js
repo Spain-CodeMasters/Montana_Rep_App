@@ -15,6 +15,7 @@ export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [error, setError] = useState('');
   //const [email, setEmail] = useState('');
   // const [password, setPassword] = useState('');
   // const [emailError, setEmailError] = useState('');
@@ -22,16 +23,37 @@ export const AuthProvider = ({ children }) => {
   // const [hasAccount, setHasAccount] = useState(false);
   //const [subscribed, setSubscribed] = useState(true);
 
+  function setErrorObject(e){
+    if (e.message.includes("auth/email-already-exists")){
+      setError(" An account with this email already exists.");
+    } else if (e.message.includes("auth/invalid-email")){
+      setError(" Please enter a valid email.");
+    } else if (e.message.includes("auth/user-not-found")){
+      setError(" There is no account under this email.");
+    } else if (e.message.includes("auth/wrong-password")){
+      setError(" Your password is incorrect.");
+    } else if (e.message.includes("auth/weak-password")){
+      setError(" Passwords must be at least 6 characters.");
+    } else if (e.message.includes("auth/too-many-requests")){
+      setError(" Too many attempts. Please try again later or reset your password.");
+    } else {
+      setError(" Login failed")
+    }
+  }
+
   return (
     <AuthContext.Provider
       value={{
         user,
         setUser,
+        error,
+        setError,
         login: async (email, password) => {
           try {
             await auth().signInWithEmailAndPassword(email, password);
           } catch (e) {
             console.log(e);
+            setErrorObject(e);
           }
         },
         register: async (username, email, password, subscribed) => {
@@ -49,6 +71,7 @@ export const AuthProvider = ({ children }) => {
             })
           } catch (e) {
             console.log(e);
+            setErrorObject(e);
           }
 
          
@@ -58,12 +81,14 @@ export const AuthProvider = ({ children }) => {
             await auth().signOut();
           } catch (e) {
             console.error(e);
+            setErrorObject(e);
           }
         },
         passwordReset: email => {
           firebase.auth().sendPasswordResetEmail(email, null);
         }, catch(e) {
           console.log(e);
+          setErrorObject(e);
         }
       }}
     >

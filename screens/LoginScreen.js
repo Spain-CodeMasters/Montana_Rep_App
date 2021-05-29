@@ -12,7 +12,7 @@ import { AuthContext } from '../navigation/AuthProvider';
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login } = useContext(AuthContext);
+  const { login, error, setError } = useContext(AuthContext);
 
   // const [data, setData] = React.useState({
   //   email: '',
@@ -81,6 +81,21 @@ export default function LoginScreen({ navigation }) {
   //     }
   // }
 
+  function navigate(){
+    setError('');
+    navigation.navigate('Signup');
+  }
+
+  function handleLogin(email, password) {
+    if (email == "") {
+      setError(' Please enter a valid email.')
+    } else if (password == "") {
+      setError(" Please enter a password.")
+    } else {
+      login(email, password)
+    }
+  }
+
   return (
     <SafeView style={styles.container}>
       {/* <Text style={styles.text}>Welcome to Firebase app</Text> */}
@@ -90,7 +105,7 @@ export default function LoginScreen({ navigation }) {
         <View>
           <View style={{ display: "flex", flexDirection: "row", flex: 1, flexwrap: 'wrap', margin: 15 }}>
             <Text style={styles.text_subheader}>New User? </Text>
-            <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
+            <TouchableOpacity onPress={() => navigate()}>
               <Text style={styles.text_linkheader}>
                 Create an Account
                   </Text>
@@ -151,8 +166,9 @@ export default function LoginScreen({ navigation }) {
           {/* } */}
           {/* </TouchableOpacity> */}
         </View>
+        <Text style={{color: "red", fontSize: 16, fontFamily: 'FuturaPT-Book',}}>{error}</Text>
         <View styles={styles.button} >
-          <FormButton buttonTitle='Sign In' onPress={() => login(email, password)} />
+          <FormButton buttonTitle='Sign In' onPress={() => handleLogin(email, password)} />
         </View>
         <TouchableOpacity onPress={() => navigation.navigate('ForgotPasswordScreen')}>
           <Text style={styles.text_footer}>Forgot your password?</Text>
