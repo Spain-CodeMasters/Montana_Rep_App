@@ -182,7 +182,10 @@ export default ({ navigation }) => {
   const [scheduleView, setScheduleView] = useState(scheduleData);
 
   useEffect(() => {
-    const cleanUp = db.collection("content").orderBy("start", "asc").onSnapshot((snapshot) => {
+    const cleanUp = db.collection("content").orderBy("start", "asc").onSnapshot((snapshot, error) => {
+      if (error || !snapshot) {
+        return;
+      }
       // if(snapshot==null){
       //   return null;
 
@@ -190,7 +193,7 @@ export default ({ navigation }) => {
       setScheduleData(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
       setScheduleView(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
       //}
-      
+
     });
     return () => cleanUp();
   }, []);
@@ -303,7 +306,6 @@ export default ({ navigation }) => {
 
 
   return <View>
-    <Cog onPress={() => navigation.navigate('Settings')} />
 
     <FlatList
       ref={scroll}
@@ -348,6 +350,8 @@ export default ({ navigation }) => {
         }
       </TouchableOpacity>
     </View>
+
+    <Cog onPress={() => navigation.navigate('Settings')} />
 
   </View>
 }

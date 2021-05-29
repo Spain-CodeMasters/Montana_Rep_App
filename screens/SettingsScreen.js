@@ -26,11 +26,14 @@ export default ({ navigation: { goBack }, navigation }) => {
   const [isMenu, setIsMenu] = useState(false);
 
   useEffect(() => {
-    const cleanUp = db.collection("users").where('email', '==', user.email).onSnapshot((snapshot) => {
+    const cleanUp = db.collection("users").where('email', '==', user.email).onSnapshot((snapshot, error) => {
+      if (error || !snapshot) {
+        return;
+      }
       // if (snapshot == null) {
       //   return null;
       // } else {
-        setUserData(snapshot.docs.map((doc) => ({ id: doc.id, user: doc.data() })));
+      setUserData(snapshot.docs.map((doc) => ({ id: doc.id, user: doc.data() })));
       // }
     });
     return () => cleanUp();

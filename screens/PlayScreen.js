@@ -41,7 +41,10 @@ export default ({ navigation: { goBack }, navigation, route }) => {
     const [play, setPlay] = useState(null);
 
     useEffect(() => {
-        const cleanUp = db.collection("users").where('email', '==', user.email).onSnapshot((snapshot) => {
+        const cleanUp = db.collection("users").where('email', '==', user.email).onSnapshot((snapshot, error) => {
+            if (error || !snapshot) {
+                return;
+            }
             // if (snapshot == null) {
             //     return null;
             // } else {
@@ -64,7 +67,10 @@ export default ({ navigation: { goBack }, navigation, route }) => {
 
 
     useEffect(() => {
-        const cleanUp = db.collection("content").doc(route.params.id).onSnapshot((snapshot) => {
+        const cleanUp = db.collection("content").doc(route.params.id).onSnapshot((snapshot, error) => {
+            if (error || !snapshot) {
+                return;
+            }
             setPlay(snapshot._data);
         });
         return () => cleanUp();
@@ -106,7 +112,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                 } else {
                     setLocked(true);
                 };
-                
+
                 const feet = Math.floor((geolib.convertDistance(distance, "ft")));
                 if (feet == 1) {
                     setDistance(

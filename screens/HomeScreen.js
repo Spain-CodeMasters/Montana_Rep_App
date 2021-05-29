@@ -120,8 +120,12 @@ export default ({ navigation }) => {
     const [filter, setFilter] = useState("all");
 
     useEffect(() => {
-        const cleanUp = db.collection("carousel").orderBy("carouselOrder", "asc").onSnapshot((snapshot) => {
 
+        const cleanUp = db.collection("carousel").orderBy("carouselOrder", "asc").onSnapshot((snapshot, error) => {
+
+            if (error || !snapshot) {
+                return;
+            }
             // if(snapshot==null){
             //     return null;
             // }else{
@@ -132,11 +136,11 @@ export default ({ navigation }) => {
     }, [])
 
     useEffect(() => {
-        const cleanUp = db.collection("posts").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
+        const cleanUp = db.collection("posts").orderBy("timestamp", "desc").onSnapshot((snapshot, error) => {
 
-            // if(snapshot==null){
-            //     return null;
-            // }else{
+            if (error || !snapshot) {
+                return;
+            }
 
             /* BUG FIX: This data has to be set directly to run posts. Unsure why*/
             setPostData(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
@@ -365,8 +369,6 @@ export default ({ navigation }) => {
             ListEmptyComponent={renderEmpty}
         />
 
-        <Cog onPress={() => navigation.navigate('Settings')} />
-
         <View style={{ position: "absolute", left: ITEM_WIDTH - 63, flexDirection: 'column', alignItems: 'center', padding: 10, paddingTop: 55 }}>
 
             {/* GREEN */}
@@ -399,6 +401,9 @@ export default ({ navigation }) => {
                 }
             </TouchableOpacity>
         </View>
+
+        <Cog onPress={() => navigation.navigate('Settings')} />
+
 
     </View>
 }

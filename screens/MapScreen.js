@@ -99,7 +99,10 @@ export default ({ navigation }) => {
   }, []);
 
   useEffect(() => {
-    const cleanUp = db.collection("content").onSnapshot((snapshot) => {
+    const cleanUp = db.collection("content").onSnapshot((snapshot, error) => {
+      if (error || !snapshot) {
+        return;
+      }
       // if (snapshot == null) {
       //   return null;
       // } else {
@@ -458,7 +461,6 @@ export default ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Cog onPress={() => navigation.navigate('Settings')} />
 
       <MapView.Animated
         ref={_map}
@@ -548,6 +550,7 @@ export default ({ navigation }) => {
         </TouchableOpacity>
         : null}
 
+      <Cog onPress={() => navigation.navigate('Settings')} />
 
     </View>
   );

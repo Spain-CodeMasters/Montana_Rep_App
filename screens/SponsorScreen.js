@@ -48,7 +48,10 @@ export default ({ navigation: { goBack }, navigation, route }) => {
 
 
     useEffect(() => {
-        const cleanup = db.collection("content").doc(route.params.id).onSnapshot((snapshot) => {
+        const cleanUp = db.collection("content").doc(route.params.id).onSnapshot((snapshot, error) => {
+            if (error || !snapshot) {
+                return;
+            }
             setSponsor(snapshot._data);
         });
         return () => cleanUp();
