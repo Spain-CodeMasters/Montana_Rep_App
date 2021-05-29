@@ -6,9 +6,7 @@ import FormButton from '../components/Forms/FormButton';
 import FormInput from '../components/FormInput';
 import * as Animatable from 'react-native-animatable';
 import { AuthContext } from '../navigation/AuthProvider';
-import { NavigationEvents } from 'react-navigation';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { db } from '../components/Firebase/firebase';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 
 const SignupScreen = ({ navigation }) => {
@@ -20,22 +18,6 @@ const SignupScreen = ({ navigation }) => {
   const { register, error, setError } = useContext(AuthContext);
   const safeAreaInsets = useSafeAreaInsets();
 
-  // const handleChecked = ({ target }) => {
-  //   setSubscribed(target.subscribed);
-  // }
-
-  // const handleUpload = () => {
-  //   db.collection("users").add({
-  //      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-  //     name: username,
-  //     email: email,
-  //     isAdmin: false,
-  //     isPremium: false,
-  //     isSubscribed: subscribed,
-  //     isSponsorBasic: false,
-  //     isSponsorPremium: false,
-  //   });
-  // }
 
   function navigate() {
     setError('');
@@ -128,13 +110,14 @@ const SignupScreen = ({ navigation }) => {
             />
           </View>
 
-          <View>
-            <Text style={{ color: 'grey', fontSize: 16, fontFamily: 'FuturaPT-Book', }}>
-              <CheckBox
-                //disabled={false}
-                value={subscribed}
-                onValueChange={(e) => setSubscribed(!subscribed)}
-              />Subscribe to our Newsletter</Text>
+          <View style={{ flexDirection: "row", alignItems: "center", marginTop: 20 }}>
+            <CheckBox
+              value={subscribed}
+              onValueChange={(e) => setSubscribed(!subscribed)}
+            />
+            <Text style={{ color: 'grey', fontSize: 16, fontFamily: 'FuturaPT-Book', alignItems: "center" }}>
+              &nbsp;Subscribe to our Newsletter
+            </Text>
           </View>
 
           <View style={{ padding: 0, width: "100%" }}>
@@ -149,14 +132,13 @@ const SignupScreen = ({ navigation }) => {
             <Text style={{ color: "red", fontSize: 16, fontFamily: 'FuturaPT-Book', }}>{error}</Text>
 
           </View>
-          
+
           <FormButton
             buttonTitle='Sign Up'
 
             onPress={() => handleRegister(username, email, password, confirmPassword, subscribed)}
           />
-          
-          {/* </View> */}
+
         </ScrollView>
       </Animatable.View>
     </View>
@@ -172,12 +154,10 @@ const styles = StyleSheet.create({
   },
   header: {
     flex: 1,
-    // backgroundColor: 'blue',
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 0,
     paddingTop: 10
-    // paddingBottom: 50
   },
   footer: {
     flex: 4,
@@ -189,19 +169,16 @@ const styles = StyleSheet.create({
   },
   text_header: {
     color: '#343A3F',
-    //fontWeight: 'bold',
     fontSize: 40,
     fontFamily: 'FuturaPT-Demi'
   },
   text_subheader: {
     color: '#343a3f',
-    // marginTop: 10,
     fontSize: 20,
     fontFamily: 'FuturaPT-Book'
   },
   text_linkheader: {
     color: '#747A21',
-    // marginTop: 10,
     fontSize: 20,
     fontFamily: 'FuturaPT-Book'
   },

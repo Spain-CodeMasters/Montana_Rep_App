@@ -3,26 +3,22 @@ import React, { useState, useRef, useEffect } from 'react';
 import { PERMISSIONS, RESULTS, check, request } from 'react-native-permissions';
 import { Text, View, Image, StyleSheet, TouchableOpacity, Dimensions, PermissionsAndroid, Platform, Pressable, Alert } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker, Callout, Animated, AnimatedRegion, MapViewAnimated, Camera } from 'react-native-maps';
-//import * as Animatable from 'react-native-animatable';
 import Cog from '../components/Cog';
 //import PlayingBanner from '../components/playingBanner';
 import Geolocation from 'react-native-geolocation-service';
 import * as geolib from 'geolib';
-//import { useFocusEffect } from '@react-navigation/native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
-
-
 import { db } from '../components/Firebase/firebase';
-import { greaterThan } from 'react-native-reanimated';
+
 
 let val;
 let pitchVal;
 let Markers;
+
 export default ({ navigation }) => {
   const _map = useRef(null);
   const [locationPermission, setLocationPermission] = useState(false);
-  // const iosLocationPermission = 
   const [currentPosition, setCurrentPosition] = useState({});
   const [currentRegion, setCurrentRegion] = useState();
   const [contentData, setContentData] = useState([]);
@@ -32,7 +28,6 @@ export default ({ navigation }) => {
   //const [showsUserLocation, setShowsUserLocation] = useState(true);
   const [followsUserLocation, setFollowsUserLocation] = useState(true);
   const [mapWidth, setMapWidth] = useState('99%')
-  //const [mapRegion, setMapRegion] = useState()
 
   //Update map styling to force a re-render to make sure the geolocation button appears
   const updateMapStyle = () => {
@@ -60,34 +55,6 @@ export default ({ navigation }) => {
     pitchVal = 45;
   }
 
-  /*   let mapRegion;
-  
-    if(followsUserLocation==true){
-      mapRegion = {
-        latitude: currentPosition.latitude,
-        longitude: currentPosition.longitude,
-        latitudeDelta: 0.00120,
-        longitudeDelta: 0.00120,
-    
-      }} */
-
-
-  // let statusBarHeight= "1 px";
-
-  // useEffect(() => {
-  //   if(_map.current) {
-  //     _map.current.animateCamera(
-  //       {
-  //         center: {
-  //           latitude: 50.1109221,
-  //           longitude: 8.6821267
-  //         },
-  //         zoom: 15
-  //       },
-  //       5000
-  //     );
-  //   }
-  // }, []);
 
   useEffect(() => {
     //requestLocationPermission();
@@ -103,11 +70,8 @@ export default ({ navigation }) => {
       if (error || !snapshot) {
         return;
       }
-      // if (snapshot == null) {
-      //   return null;
-      // } else {
+
       setContentData(snapshot.docs.map((doc) => ({ id: doc.id, content: doc.data() })));
-      // }
 
     });
     return () => cleanUp();
@@ -205,7 +169,6 @@ export default ({ navigation }) => {
       (position) => {
         setCurrentPosition(position.coords);
         setIsLoading(false);
-        //console.log(position)
       },
       (error) => {
         console.log(error.code, error.message);
@@ -215,20 +178,17 @@ export default ({ navigation }) => {
   }
 
   useEffect(() => {
-    //React.useCallback(() => {
     if (locationPermission) {
       getCurrentLocation();
 
       const interval = setInterval(() => {
         getCurrentLocation();
 
-        //console.log('This will run every second');
       }, 5000);
 
       return () => clearInterval(interval);
 
     }
-    //}, [])
   }, [locationPermission]);
 
   renderTheCamera();
@@ -285,10 +245,6 @@ export default ({ navigation }) => {
       id: id,
       pointId: pointId,
     });
-  }
-
-  function onRegionChange(region) {
-    setCurrentRegion(region);
   }
 
   renderMarkers();
@@ -432,7 +388,6 @@ export default ({ navigation }) => {
         return (
           <>
             {contents}
-
           </>
         );
       }
@@ -472,36 +427,20 @@ export default ({ navigation }) => {
         style={[styles.map, { width: mapWidth }]}
         showsUserLocation
         showsBuildings
-        //initialCamera={Camera}
 
-        //region={mapRegion}
+        //initialCamera={Camera}
         setCamera={Camera, 1000}
-        // animateCamera = {{center: mapRegion,pitch: 2, heading: 20,altitude: 200, zoom: 40},500}
-        //onPanDrag={(e)=> setFollowsUserLocation(false)}
-        //onStartShouldSetResponder={(e)=> setFollowsUserLocation(false)}
-        // onUserLocationChange= {event => console.log(event.nativeEvent)}
+
         followsUserLocation={followsUserLocation}
-        //onStartShouldSetResponder={(e)=> setFollowsUserLocation(false)}
         onPanDrag={(e) => setFalse()}
         showsMyLocationButton={false}
         showsCompass={true}
         zoomEnabled={true}
         zoomControlEnabled={true}
         onMapReady={() => updateMapStyle()}
-        //getCamera
 
-
-        //region={currentRegion}
-        //onRegionChangeComplete={onRegionChange}
-        //scrollEnabled={require('react-native').Platform.OS === 'android' ? true : !followsUserLocation}
         scrollEnabled={true}
       >
-
-
-        {/* <MyLocationButton
-          
-          /> */}
-
 
         {/* Device Location Marker
           <Marker.Animated
@@ -518,10 +457,6 @@ export default ({ navigation }) => {
 
       </MapView.Animated>
 
-
-      {/* ) : (null)} */}
-
-
       {locationPermission ?
         <TouchableOpacity style={styles.buttonContainer} onPress={() => { setTrue() }}>
           <View style={styles.button}>
@@ -535,6 +470,7 @@ export default ({ navigation }) => {
           </View>
         </TouchableOpacity>
         : null}
+        
       {locationPermission ?
         <TouchableOpacity style={styles.buttonContainer2} onPress={() =>
           toggleChangeView()}>

@@ -186,13 +186,9 @@ export default ({ navigation }) => {
       if (error || !snapshot) {
         return;
       }
-      // if(snapshot==null){
-      //   return null;
-
-      // }else{
+      
       setScheduleData(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
       setScheduleView(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
-      //}
 
     });
     return () => cleanUp();
@@ -406,14 +402,12 @@ const styles = StyleSheet.create({
     fontFamily: 'FuturaPT-Book',
     fontSize: 24,
     color: "white",
-    //fontWeight: 'bold',
 
   },
   buttonText: {
     fontFamily: 'FuturaPT-Book',
     fontSize: 24,
     color: "white",
-    //fontWeight: 'bold',
 
   },
   postNavi: {

@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
-import React, { useState, useRef, useEffect } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, Dimensions, StatusBar, ScrollView, Image, ImageBackground, Linking, PermissionsAndroid, } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Text, View, StyleSheet, TouchableOpacity, Dimensions, StatusBar, ScrollView, Image, ImageBackground, Linking, } from 'react-native';
 import Navigation from '../components/navigation/navigation';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Geolocation from 'react-native-geolocation-service';
@@ -58,12 +58,6 @@ export default ({ navigation: { goBack }, navigation, route }) => {
 
                 for (var i = 0; i < event.geopoints.length; i++) {
                     arr.push(geolib.getDistance(currentPosition, event.geopoints[i]))
-
-                    // for (var j = 1; j < arr.length; j++) {
-                    //     if (arr[j] < arr[0]) {
-                    //         pointId = j - 1;
-                    //     }
-                    // }
                 }
 
                 pointId = arr.indexOf(Math.min(...arr));
@@ -105,19 +99,11 @@ export default ({ navigation: { goBack }, navigation, route }) => {
         {(function () {
 
             if (event !== null) {
-                return <ScrollView
-                // style={{ position: 'relative' }}
-                // scrollEventThrottle={16}
-                // onScroll={Animated.event(
-                //     [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-                //     { useNativeDriver: false }
-                // )}
-                >
+                return <ScrollView>
 
                     <StatusBar translucent={true} hidden={true} />
                     {/* HEADER */}
                     <View style={styles.header} >
-                        {/* <Animated.View style={[styles.header, { height: headerHeight }]} ></Animated.View> */}
                         <ImageBackground source={{ uri: event.photoUrl }} style={styles.image}>
                             <View style={styles.overlay}>
 

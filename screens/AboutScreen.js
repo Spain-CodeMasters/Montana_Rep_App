@@ -8,8 +8,6 @@ export default() => {
             <View>
                  <Text style={styles.subtext}>Information about GoPlay! and Montana Repertory Theatre can go here.</Text>
             </View>
-            
-            
         </View>
     );
 }

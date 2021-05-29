@@ -36,7 +36,6 @@ export default ({ navigation: { goBack }, navigation, route }) => {
 
     const { user } = useContext(AuthContext);
     const [userData, setUserData] = useState(null);
-    const [isPremium, setIsPremium] = useState(false);
     const [distance, setDistance] = useState('');
     const [play, setPlay] = useState(null);
 
@@ -45,9 +44,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
             if (error || !snapshot) {
                 return;
             }
-            // if (snapshot == null) {
-            //     return null;
-            // } else {
+            
             setUserData(snapshot.docs.map((doc) => ({ id: doc.id, user: doc.data() })));
         });
         return () => cleanUp();
@@ -92,16 +89,9 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                 var arr = [];
 
                 for (var i = 0; i < play.geopoints.length; i++) {
-                    arr.push(geolib.getDistance(currentPosition, play.geopoints[i]));
-
-                    // for (var j = 1; j < arr.length; j++) {
-                    //     if (arr[j] < arr[0]) {
-                    //         pointId = j - 1;
-                    //     }
-                    // }                    
+                    arr.push(geolib.getDistance(currentPosition, play.geopoints[i]));                  
                 }
                 pointId = arr.indexOf(Math.min(...arr));
-                //console.log(pointId)
             }
 
             const distance = (geolib.getDistance(currentPosition, play.geopoints[pointId]));
@@ -386,7 +376,6 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                                             }
                                             ]}
                                             >
-                                                {/* <Animated.View style={styles.progressDot}></Animated.View> */}
                                             </Animated.View>
                                         </View>
                                     </TouchableWithoutFeedback>
@@ -714,14 +703,6 @@ const styles = StyleSheet.create({
         width: 0,
         flexDirection: "row-reverse",
         alignItems: "center",
-    },
-
-    progressDot: {
-        backgroundColor: '#CC8A05',
-        height: 14,
-        borderRadius: 15,
-        marginRight: -7,
-        width: 14,
     },
 
     postLabel: {

@@ -4,8 +4,6 @@ import FormButton from '../components/Forms/FormButton';
 import FormInput from '../components/FormInput';
 import SafeView from '../components/SafeView';
 import * as Animatable from 'react-native-animatable';
-import Feather from 'react-native-vector-icons/Feather';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import { AuthContext } from '../navigation/AuthProvider';
 
@@ -14,78 +12,12 @@ export default function LoginScreen({ navigation }) {
   const [password, setPassword] = useState('');
   const { login, error, setError } = useContext(AuthContext);
 
-  // const [data, setData] = React.useState({
-  //   email: '',
-  //   password: '',
-  //   // check_textInputChange: false,
-  //   // secureTextEntry: true,
-  //   // isValidEmail: true, 
-  //   // isValidPassword: true,
-
-  // });
-
-  // const textInputChange = (val) => {
-  //   if( val.trim().length >= 4) {
-  //     setData({
-  //       ...data,
-  //       email: val, 
-  //       check_textInputChange: true,
-  //       isValidEmail: true
-  //     });
-  //   } else {
-  //     setData({
-  //       ...data,
-  //       email: val, 
-  //       check_textInputChange: false,
-  //       isValidEmail: false
-  //     });
-  //   }
-  // }
-
-  // const handlePasswordChange = (val) => {
-  //   if( val.trim().length >= 6) {
-  //   setData({
-  //     ...data, 
-  //     password: val,
-  //     isValidPassword: true
-  //   });
-  // } else {
-  //   setData({
-  //     ...data, 
-  //     password: val,
-  //     isValidPassword: false
-  //   });
-
-  // }
-  // }
-
-  // const updateSecureTextEntry = () => {
-  //   setData({
-  //     ...data, 
-  //     secureTextEntry: !data.secureTextEntry
-  //   });
-  // }
-
-  // const handleValidEmail = (val) => {
-  //     if( val.trim().length >= 4) {
-  //       setData({
-  //         ...data, 
-  //         isValidEmail: true
-  //       });
-
-  //     } else {
-  //       setData({
-  //         ...data, 
-  //         isValidEmail: false
-  //       });
-  //     }
-  // }
 
   useEffect(() => {
     setError('');
   }, [])
 
-  function navigate(){
+  function navigate() {
     setError('');
     navigation.navigate('Signup');
   }
@@ -102,7 +34,6 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <SafeView style={styles.container}>
-      {/* <Text style={styles.text}>Welcome to Firebase app</Text> */}
       <StatusBar backgroundColor='#fff' barStyle="dark-content" />
       <View style={styles.header}>
         <Text style={styles.text_header}>Sign In</Text>
@@ -129,17 +60,7 @@ export default function LoginScreen({ navigation }) {
             keyboardType='email-address'
             autoCorrect={false}
           />
-          {/* {data.check_textInputChange ? */}
-          {/* <Animatable.View
-                animation="bounceIn"
-            >
-            <Feather
-              name="check-circle"
-              color="green"
-              size={20}
-            />
-            </Animatable.View> */}
-          {/* : null} */}
+
         </View>
 
         <View style={[styles.action, {
@@ -152,32 +73,14 @@ export default function LoginScreen({ navigation }) {
 
             secureTextEntry={true}
           />
-          {/* <TouchableOpacity
-              onPress={updateSecureTextEntry}
-            > */}
-          {/* {data.secureTextEntry ?  */}
-          {/* <Feather
-                  name="eye-off"
-                  color="grey"
-                  size={20}
-                /> */}
-          {/* : */}
-          {/* <Feather
-                  name="eye"
-                  color="grey"
-                  size={20}
-                /> */}
-          {/* } */}
-          {/* </TouchableOpacity> */}
         </View>
-        <Text style={{color: "red", fontSize: 16, fontFamily: 'FuturaPT-Book',}}>{error}</Text>
+        <Text style={{ color: "red", fontSize: 16, fontFamily: 'FuturaPT-Book', }}>{error}</Text>
         <View styles={styles.button} >
           <FormButton buttonTitle='Sign In' onPress={() => handleLogin(email, password)} />
         </View>
         <TouchableOpacity onPress={() => navigation.navigate('ForgotPasswordScreen')}>
           <Text style={styles.text_footer}>Forgot your password?</Text>
         </TouchableOpacity>
-        {/* </View> */}
       </Animatable.View>
     </SafeView>
   );
@@ -204,27 +107,22 @@ const styles = StyleSheet.create({
     flex: 3,
     backgroundColor: '#fff',
     paddingHorizontal: 20,
-    // paddingVertical: 30,
-    // paddingTop: 20,
     paddingLeft: 50,
     paddingRight: 50
   },
   text_header: {
     color: '#343A3F',
     fontFamily: 'FuturaPT-Demi',
-    //fontWeight: 'bold',
     fontSize: 40
   },
   text_subheader: {
     color: '#343a3f',
     fontFamily: 'FuturaPT-Book',
-    // marginTop: 10,
     fontSize: 20
   },
   text_linkheader: {
     color: '#747A21',
     fontFamily: 'FuturaPT-Book',
-    // marginTop: 10,
     fontSize: 20
   },
   text_footer: {
@@ -236,7 +134,6 @@ const styles = StyleSheet.create({
   },
   action: {
     flexDirection: 'row',
-    // marginTop: 10,
     paddingBottom: 10
   },
   actionError: {
@@ -257,7 +154,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   button: {
-    // alignItems: 'center',
     paddingTop: 25,
     marginTop: 50
   },

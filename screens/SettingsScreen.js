@@ -16,25 +16,21 @@ import { db } from '../components/Firebase/firebase';
 export default ({ navigation: { goBack }, navigation }) => {
   const { user, logout } = useContext(AuthContext);
   const [userData, setUserData] = useState(null);
-  const [isEnabled, setIsEnabled] = useState(true);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  //const [isEnabled, setIsEnabled] = useState(true);
+  //const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   const [isAccountSelected, setIsAccountSelected] = useState(false);
   const [isPrivacySelected, setIsPrivacySelected] = useState(false);
   const [isAboutSelected, setIsAboutSelected] = useState(false);
-
-  const [isMenu, setIsMenu] = useState(false);
 
   useEffect(() => {
     const cleanUp = db.collection("users").where('email', '==', user.email).onSnapshot((snapshot, error) => {
       if (error || !snapshot) {
         return;
       }
-      // if (snapshot == null) {
-      //   return null;
-      // } else {
+   
       setUserData(snapshot.docs.map((doc) => ({ id: doc.id, user: doc.data() })));
-      // }
+    
     });
     return () => cleanUp();
   }, []);
@@ -63,7 +59,6 @@ export default ({ navigation: { goBack }, navigation }) => {
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginBottom: 20, }}>
           {(function () {
             if (userData !== null && userData[0].user.isPremium == false) {
-              //if(userData.user.isPremium == false){
               return <FancyCard
                 title='Get GoPlay!'
                 onPress={() => {
@@ -238,17 +233,7 @@ const styles = StyleSheet.create({
     height: '100%',
     flexDirection: 'row-reverse',
   },
-  settingsOpen: {
-    position: 'absolute',
-    top: 0,
-    width: windowWidth,
-    height: windowHeight,
-    // flexDirection: 'column',
-    // justifyContent: 'flex-end',
-    // alignItems: 'center',
-    // backgroundColor: 'white',
-    // paddingBottom: 80,
-  },
+  
   text: {
     fontSize: 18,
     fontFamily: 'FuturaPT-Book',

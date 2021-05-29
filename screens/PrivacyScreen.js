@@ -1,7 +1,6 @@
-import React, { useState, useContext, } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Platform, StatusBar, Linking } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking } from 'react-native';
 
-const email = "email";
 
 export default () => {
     return (

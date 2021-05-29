@@ -1,7 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { useState, useRef, useEffect } from 'react';
 import {
-    Animated,
     Text,
     View,
     StyleSheet,
@@ -12,7 +11,6 @@ import {
     Image,
     Linking,
     ImageBackground,
-    LogBox
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -126,11 +124,9 @@ export default ({ navigation }) => {
             if (error || !snapshot) {
                 return;
             }
-            // if(snapshot==null){
-            //     return null;
-            // }else{
+           
             setHeroData(snapshot.docs.map((doc) => ({ id: doc.id, hero: doc.data() })));
-            // }
+            
         })
         return () => cleanUp();
     }, [])
@@ -145,8 +141,7 @@ export default ({ navigation }) => {
             /* BUG FIX: This data has to be set directly to run posts. Unsure why*/
             setPostData(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
             setPostView(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
-            //setPostView(postData);
-            // }
+            
         })
         return () => cleanUp();
     }, [])

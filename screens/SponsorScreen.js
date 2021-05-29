@@ -12,7 +12,6 @@ import {
     Image,
     ImageBackground,
     Linking,
-    PermissionsAndroid,
     TouchableWithoutFeedback,
 } from 'react-native';
 import Video from 'react-native-video';
@@ -70,12 +69,6 @@ export default ({ navigation: { goBack }, navigation, route }) => {
 
                 for (var i = 0; i < sponsor.geopoints.length; i++) {
                     arr.push(geolib.getDistance(currentPosition, sponsor.geopoints[i]));
-
-                    // for (var j = 1; j < arr.length; j++) {
-                    //     if (arr[j] < arr[0]) {
-                    //         pointId = j-1;
-                    //     }
-                    // }
                 }
 
                 pointId = arr.indexOf(Math.min(...arr));
@@ -361,7 +354,6 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                                             }
                                             ]}
                                             >
-                                                {/* <Animated.View style={styles.progressDot}></Animated.View> */}
                                             </Animated.View>
                                         </View>
                                     </TouchableWithoutFeedback>
@@ -657,11 +649,4 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
 
-    progressDot: {
-        backgroundColor: '#CC8A05',
-        height: 14,
-        borderRadius: 15,
-        marginRight: -7,
-        width: 14,
-    },
 })
