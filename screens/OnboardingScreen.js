@@ -1,33 +1,43 @@
 import React from 'react';
-import { View, Text, Button, Image, StyleSheet} from 'react-native';
+import { View, Text, Button, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import Onboarding from 'react-native-onboarding-swiper';
 
 
 const OnboardingScreen = ({navigation}) => {
+
+    
     return (
         <Onboarding
-        onSkip={()=> navigation.replace("SignInScreen")}
-        onDone={()=> navigation.replace("SignInScreen")}
+        titleStyles={{fontFamily: 'FuturaPT-Demi'}}
+        subTitleStyles={{fontFamily: 'FuturaPT-Medium', fontSize: 20}}
+        onSkip={() => navigation.replace('Login', {screen: "LoginScreen"})}
+        onDone={() => navigation.navigate('Login', {screen: "LoginScreen"})}
         pages={[
             {
-            backgroundColor: '#747A21',
-            image: <Image source={require('../assets/logo.png')} />,
-            title: 'logo',
-            subtitle: 'Done with React Native Onboarding Swiper',
+            backgroundColor: '#004E47',
+            image: <Image  source={require('../assets/logo.png')} style={{height: 300, width: 145}}/>,
+            title: 'Welcome',
+            subtitle: 'To the Montana Repertory Theatre GoPlay! App',
             
             },
             {
-            backgroundColor: '#8C2804',
+            backgroundColor: '#747A21',
             
             image: <Image source={require('../assets/group34.png')} />,
             title: 'Check for local plays in your area',
-            subtitle: 'Done with React Native Onboarding Swiper',
+            subtitle: 'Visit them to listen or watch',
             },
             {
             backgroundColor: '#CD9A36',
             image: <Image source={require('../assets/group35.png')} />,
-            title: 'Onboarding_3',
-            subtitle: 'Done with React Native Onboarding Swiper',
+            title: 'Check out Community Events',
+            subtitle: '',
+            },
+            {
+            backgroundColor: '#004E47',
+            image: <Image source={require('../assets/GoPlay_LogoGreen-03.png')} style={{height: 220, width:400}}/>,
+            title: 'Are you ready?',
+            subtitle: '',
             },
             
         ]}
@@ -38,7 +48,7 @@ const OnboardingScreen = ({navigation}) => {
 export default OnboardingScreen;
 
 const styles = StyleSheet.create({
-    container: {
+    containerStyles: {
         flex: 1, 
         alignItems: 'center',
         justifyContent: 'center',

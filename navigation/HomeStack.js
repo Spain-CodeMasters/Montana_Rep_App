@@ -2,6 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
+import Navigation from '../components/navigation/navigation';
 import HomeScreen from '../screens/HomeScreen';
 import MapScreen from '../screens/MapScreen';
 import ScheduleScreen from '../screens/ScheduleScreen';
@@ -16,7 +17,7 @@ import TermsScreen from '../screens/TermsScreen';
 import AboutScreen from '../screens/AboutScreen';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen';
 import UpdateAccountScreen from '../screens/UpdateAccountScreen';
-import Navigation from '../components/navigation/navigation';
+import OnboardingScreen from '../screens/OnboardingScreen';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 
@@ -46,6 +47,7 @@ export default function HomeStack() {
       paddingRight: safeAreaInsets.right,
     }}>
       <Stack.Navigator>
+      {/* <Stack.Screen name='Onboarding' component={OnboardingScreen} options={{header: () => null}} /> */}
         <Stack.Screen name='Main' component={MainTabs} options={{ header: () => null }} />
         <Stack.Screen name='Play' component={PlayScreen} options={{ header: () => null }} />
         <Stack.Screen name='Sponsor' component={SponsorScreen} options={{ header: () => null }} />
