@@ -8,6 +8,7 @@ import Cog from '../components/Cog';
 import Geolocation from 'react-native-geolocation-service';
 import * as geolib from 'geolib';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import { db } from '../components/Firebase/firebase';
 
@@ -17,10 +18,12 @@ let pitchVal;
 let Markers;
 
 export default ({ navigation }) => {
+  const [isFirstMapLaunch, setIsFirstMapLaunch] = useState(null);
+
   const _map = useRef(null);
   const [locationPermission, setLocationPermission] = useState(false);
   const [currentPosition, setCurrentPosition] = useState({});
-  const [currentRegion, setCurrentRegion] = useState();
+  // const [currentRegion, setCurrentRegion] = useState();
   const [contentData, setContentData] = useState([]);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -57,7 +60,25 @@ export default ({ navigation }) => {
 
 
   useEffect(() => {
-    //requestLocationPermission();
+    AsyncStorage.getItem('alreadyLaunchedMap').then(value => {
+      if (locationPermission == true) {
+        if (value == null) {
+          AsyncStorage.setItem('alreadyLaunchedMap', 'true');
+          setIsFirstMapLaunch(true);
+        } else if (value != null) {
+          setIsFirstMapLaunch(false);
+        } else {
+          setIsFirstMapLaunch(null);
+        }
+      }
+    });
+
+    console.log(isFirstMapLaunch);
+
+
+  }, [locationPermission]);
+
+  useEffect(() => {
     if (Platform.OS === "android") {
       checkPermissions(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
     } else if (Platform.OS === "ios") {
@@ -442,18 +463,38 @@ export default ({ navigation }) => {
         scrollEnabled={true}
       >
 
-        {/* Device Location Marker
-          <Marker.Animated
-            coordinate={{
-              latitude: deviceLatitude,
-              longitude: deviceLongitude,
-            }}
-            image={require('../assets/map_marker.png')}
-          /> */}
         <Markers
           zIndex={1}
           tracksViewChanges={true}
           tracksInfoWindowChanges={false} />
+
+        {(function () {
+       
+          if (isFirstMapLaunch == true && currentPosition.latitude !== undefined) {
+            return <Marker.Animated
+              //key={pointId}
+              coordinate={{
+                latitude: currentPosition.latitude,
+                longitude: currentPosition.longitude,
+              }}
+              image={require('../assets/GoPlay_PinGold.png')}
+              onPress={e => navigation.navigate('Welcome')}
+              style={{ height: 10, }}
+              resizeMode="contain"
+              tracksViewChanges={true}
+            >
+              <Callout tooltip>
+                <View>
+                  <View style={styles.bubble}>
+                    <Text style={styles.name}>Welcome to GoPlay!</Text>
+                  </View>
+                  <View style={styles.arrowBorder} />
+                  <View style={styles.arrow} />
+                </View>
+              </Callout>
+            </Marker.Animated>
+          }
+        })()}
 
       </MapView.Animated>
 
@@ -470,7 +511,7 @@ export default ({ navigation }) => {
           </View>
         </TouchableOpacity>
         : null}
-        
+
       {locationPermission ?
         <TouchableOpacity style={styles.buttonContainer2} onPress={() =>
           toggleChangeView()}>

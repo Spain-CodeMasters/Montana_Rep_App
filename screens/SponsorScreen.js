@@ -76,7 +76,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
             }
 
             const distance = (geolib.getDistance(currentPosition, sponsor.geopoints[pointId]));
-            if (distance < 10) {
+            if (distance < 16) {
                 setLocked(false);
                 const feet = Math.floor((geolib.convertDistance(distance, "ft")))
                 if (feet == 1) {
@@ -477,7 +477,7 @@ const styles = StyleSheet.create({
     header: {
         backgroundColor: '#fff',
         overflow: 'hidden',
-        height: ITEM_HEIGHT - 110,
+        height: ITEM_HEIGHT - 135,
         alignItems: "center",
         justifyContent: "center",
     },

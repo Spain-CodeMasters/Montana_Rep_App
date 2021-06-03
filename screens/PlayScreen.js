@@ -96,7 +96,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
 
             const distance = (geolib.getDistance(currentPosition, play.geopoints[pointId]));
 
-            if (distance < 10) {
+            if (distance < 16) {
                 if (userData !== null && userData[0].user.isPremium == true) { 
                     setLocked(false) 
                 } else {
@@ -536,7 +536,7 @@ const styles = StyleSheet.create({
     header: {
         backgroundColor: '#fff',
         overflow: 'hidden',
-        height: ITEM_HEIGHT - 110,
+        height: ITEM_HEIGHT - 135,
         alignItems: "center",
         justifyContent: "center",
     },

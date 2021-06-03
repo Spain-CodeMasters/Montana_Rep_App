@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     header: {
         backgroundColor: '#fff',
         overflow: 'hidden',
-        height: ITEM_HEIGHT - 110,
+        height: ITEM_HEIGHT  - 135,
         alignItems: "center",
         justifyContent: "center",
     },

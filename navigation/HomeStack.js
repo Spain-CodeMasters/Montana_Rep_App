@@ -9,9 +9,8 @@ import ScheduleScreen from '../screens/ScheduleScreen';
 import PlayScreen from '../screens/PlayScreen';
 import SponsorScreen from '../screens/SponsorScreen';
 import EventScreen from '../screens/EventScreen';
-
 import SettingsScreen from '../screens/SettingsScreen';
-
+import WelcomeScreen from '../screens/WelcomeScreen';
 import PrivacyScreen from '../screens/PrivacyScreen';
 import TermsScreen from '../screens/TermsScreen';
 import AboutScreen from '../screens/AboutScreen';
@@ -53,7 +52,7 @@ export default function HomeStack() {
         <Stack.Screen name='Sponsor' component={SponsorScreen} options={{ header: () => null }} />
         <Stack.Screen name='Event' component={EventScreen} options={{ header: () => null }} />
         <Stack.Screen name='Settings' component={SettingsScreen} options={{ header: () => null }} />
-
+        <Stack.Screen name='Welcome' component={WelcomeScreen} options={{ header: () => null }} />
         <Stack.Screen name='About' component={AboutScreen} />
         <Stack.Screen name='Privacy Policy' component={PrivacyScreen} />
         <Stack.Screen name='Terms and Conditions' component={TermsScreen} />
