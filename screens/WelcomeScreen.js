@@ -163,7 +163,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
 
                 <ImageBackground source={require("../assets/Topographic_Map.jpg")} style={landscape ? styles.landscape : styles.image}>
                     {/* video */}
-                    <Video source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/montana-rep-app-testing.appspot.com/o/playContent%2Fsw5x1BsxXd?alt=media&token=879c741e-32e7-43b0-9d95-b86380949f78' }}
+                    <Video source={require("../assets/welcomeMessage.m4a")}
                         ref={video}
                         rate={1.0}
                         volume={1.0}
@@ -276,11 +276,11 @@ export default ({ navigation: { goBack }, navigation, route }) => {
             {!landscape ? <View style={styles.discription}>
 
 
-                <Text style={styles.text_title}>Hello!</Text>
+                <Text style={styles.text_title}>Hi!</Text>
 
-                <Text allowFontScaling style={styles.text_subtitle}>Welcome to GoPlay!</Text>
+                <Text allowFontScaling style={styles.text_subtitle}>Welcome to Montana Repertory Theatre's GoPlay!</Text>
 
-                <Text allowFontScaling style={styles.subtext}>Enjoy the Montana Repertory Theatre's location-based play experience. View plays and other community content in your area and find new events near you. Enjoy this first audio piece "A Travel Story" right now!</Text>
+                <Text allowFontScaling style={styles.subtext}>Our app is designed to get you out in the world in search of plays and other interactive experiences. To get started, check the map to see if there is anything nearby, or click on the calendar to see what is avaliable, and thanks for supporting Montana Repertory Theatre.</Text>
 
                 {/* Check for Link */}
 
