@@ -58,8 +58,8 @@ export const AuthProvider = ({ children }) => {
         },
         register: async (username, email, password, subscribed) => {
           try {
-            await auth().createUserWithEmailAndPassword(email, password);
-            db.collection("users").add({
+            await auth().createUserWithEmailAndPassword(email, password).then(cred => {
+            db.collection("users").doc(cred.user.uid).set({
               createdAt: firebase.firestore.FieldValue.serverTimestamp(),
               name: username,
               email: email,
@@ -69,6 +69,8 @@ export const AuthProvider = ({ children }) => {
               isSponsorBasic: false,
               isSponsorPremium: false,
             })
+
+          })
           } catch (e) {
             console.log(e);
             setErrorObject(e);
