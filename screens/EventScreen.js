@@ -21,15 +21,7 @@ export default ({ navigation: { goBack }, navigation, route }) => {
 
 
     useEffect(() => {
-        Geolocation.getCurrentPosition(
-            (position) => {
-                checkPosition(position.coords);
-            },
-            (error) => {
-                console.log(error.code, error.message);
-            },
-            { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-        );
+        getLocation();
     }, [event]);
 
 
@@ -43,6 +35,22 @@ export default ({ navigation: { goBack }, navigation, route }) => {
         })
         return () => cleanUp();
     }, []);
+
+    function getLocation() {
+        Geolocation.getCurrentPosition(
+            (position) => {
+                checkPosition(position.coords);
+            },
+            (error) => {
+                console.log(error.code, error.message);
+            },
+            { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+        );
+    }
+
+    function refresh() {
+        getLocation();
+    }
 
 
     function checkPosition(currentPosition) {
@@ -119,7 +127,19 @@ export default ({ navigation: { goBack }, navigation, route }) => {
                     {/* discription */}
                     <View style={styles.discription}>
                         <View style={{ paddingHorizontal: 10, width: '100%' }}>
-                            <Text style={[styles.postLabel, { padding: 10, color: '#999', textAlign: "center" }]}>{distance}</Text>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                                <Text style={[styles.postLabel, { padding: 10, color: '#999', textAlign: "center", flexDirection: 'row' }]}>{distance}</Text>
+                                <TouchableOpacity
+                                    onPress={() => { refresh() }}>
+                                    <FontAwesome5
+                                        name={'sync-alt'}
+                                        solid
+                                        color="#999"
+                                        size={15}
+                                    // style={{ padding: 10, }}
+                                    />
+                                </TouchableOpacity>
+                            </View>
                             {(function () {
                                 if (event.locationInfo !== '' && event.locationInfo !== ' ' && event.locationInfo !== null) {
                                     return <View style={{ padding: 20, backgroundColor: "white", borderWidth: 1, borderColor: '#999', borderRadius: 5, marginBottom: 20, }}>
@@ -223,7 +243,7 @@ const styles = StyleSheet.create({
     header: {
         backgroundColor: '#fff',
         overflow: 'hidden',
-        height: ITEM_HEIGHT  - 135,
+        height: ITEM_HEIGHT - 113,
         alignItems: "center",
         justifyContent: "center",
     },

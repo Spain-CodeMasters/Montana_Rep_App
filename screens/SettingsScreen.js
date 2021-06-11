@@ -28,9 +28,8 @@ export default ({ navigation: { goBack }, navigation }) => {
       if (error || !snapshot) {
         return;
       }
-   
+      //console.log(user.uid);
       setUserData(snapshot.docs.map((doc) => ({ id: doc.id, user: doc.data() })));
-    
     });
     return () => cleanUp();
   }, []);
@@ -59,6 +58,7 @@ export default ({ navigation: { goBack }, navigation }) => {
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginBottom: 20, }}>
           {(function () {
             if (userData !== null && userData[0].user.isPremium == false) {
+              
               return <FancyCard
                 title='Get GoPlay!'
                 onPress={() => {
