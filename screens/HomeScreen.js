@@ -341,6 +341,9 @@ export default ({ navigation }) => {
                 </View>
                 <Text style={styles.footer_text}>©2021 Montana Repertory Theatre</Text>
                 <Text style={styles.footer_text}>All Rights Reserved</Text>
+                <View style={{ marginBottom: 10 }}></View>
+                <Text style={styles.footer_text}>Designed and Developed by</Text>
+                <Text style={styles.footer_text}>Claire Spain and Miya Fordah</Text>
                 <View style={{ marginBottom: 100 }}></View>
             </View>
 
