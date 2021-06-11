@@ -5,11 +5,11 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>GoPlay!</string>
+	<string>Montana Rep</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleGetInfoString</key>
-	<string/>
+	<string></string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -25,7 +25,7 @@
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSApplicationCategoryType</key>
-	<string/>
+	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -38,13 +38,13 @@
 		<true/>
 	</dict>
 	<key>NSHumanReadableCopyright</key>
-	<string/>
+	<string></string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>We need access to your location to use the community map.</string>
+	<string>This app uses location data to display your location on the map, &amp; enable nearby audio/video content.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>We need access to your location to use the community map.</string>
+	<string>This app uses location data to display your location on the map, &amp; enable nearby audio/video content.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We need access to your location to use the community map.</string>
+	<string>This app uses location data to display your location on the map, &amp; enable nearby audio/video content.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>FuturaPT-Book.otf</string>
@@ -76,6 +76,9 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>

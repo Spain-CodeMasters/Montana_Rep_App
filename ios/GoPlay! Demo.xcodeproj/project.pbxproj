@@ -43,7 +43,7 @@
 		07C4D85D263D513000613189 /* FuturaPT-Book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "FuturaPT-Book.otf"; path = "../assets/fonts/FuturaPT-Book.otf"; sourceTree = "<group>"; };
 		07C4D85E263D513000613189 /* FuturaPT-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "FuturaPT-Medium.otf"; path = "../assets/fonts/FuturaPT-Medium.otf"; sourceTree = "<group>"; };
 		0E370097AA3C8CE6F6EB9008 /* Pods-GoPlay! Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoPlay! Demo.debug.xcconfig"; path = "Target Support Files/Pods-GoPlay! Demo/Pods-GoPlay! Demo.debug.xcconfig"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* GoPlay! Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GoPlay! Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* Montana Rep.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Montana Rep.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Montana_Rep_App/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Montana_Rep_App/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Montana_Rep_App/Images.xcassets; sourceTree = "<group>"; };
@@ -225,7 +225,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* GoPlay! Demo.app */,
+				13B07F961A680F5B00A75B9A /* Montana Rep.app */,
 				00E356EE1AD99517003FC87E /* GoPlay! DemoTests.xctest */,
 			);
 			name = Products;
@@ -275,7 +275,7 @@
 			);
 			name = "GoPlay! Demo";
 			productName = Montana_Rep_App;
-			productReference = 13B07F961A680F5B00A75B9A /* GoPlay! Demo.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* Montana Rep.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -586,7 +586,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = XU6A9MSJ49;
 				ENABLE_BITCODE = NO;
 				EXCLUDED_ARCHS = "";
@@ -597,18 +597,19 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.montana-rep-app.goplay";
-				PRODUCT_NAME = "GoPlay! Demo";
+				PRODUCT_NAME = "Montana Rep";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Montana_Rep_App-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -621,7 +622,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = L4Z8UL9WVC;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = Montana_Rep_App/Info.plist;
@@ -630,17 +631,18 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.montanarepapp;
-				PRODUCT_NAME = "GoPlay! Demo";
+				PRODUCT_NAME = "Montana Rep";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Montana_Rep_App-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

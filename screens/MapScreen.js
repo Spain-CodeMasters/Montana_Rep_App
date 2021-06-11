@@ -47,14 +47,18 @@ export default ({ navigation }) => {
 
   function setTrue() {
     val = true;
+    setFollowsUserLocation(true);
     pitchVal = 0;
+    altitude=20;
 
   }
   function setFalse() {
+    setFollowsUserLocation(false);
     val = false;
   }
 
   function toggleChangeView() {
+    setFollowsUserLocation(false);
     pitchVal = 45;
   }
 
@@ -230,10 +234,10 @@ export default ({ navigation }) => {
             heading: 0,
 
             // Only on iOS MapKit, in meters. The property is ignored by Google Maps.
-            altitude: 20,
+            //altitude: 20,
 
             // Only when using Google Maps.
-            zoom: 20
+            //zoom: 20
           }
 
           _map.current.animateCamera(newCamera, { duration: 1000 })
@@ -440,7 +444,7 @@ export default ({ navigation }) => {
 
       <MapView.Animated
         ref={_map}
-        provider={PROVIDER_GOOGLE}
+        //provider={PROVIDER_GOOGLE}
         mapPadding={{ top: 50, left: 20, bottom: 50 }}
         mapType="standard"
         customMapStyle={googleMapStyle}
@@ -449,7 +453,7 @@ export default ({ navigation }) => {
         showsUserLocation
         showsBuildings
 
-        //initialCamera={Camera}
+        initialCamera={Camera}
         setCamera={Camera, 1000}
 
         followsUserLocation={followsUserLocation}
@@ -459,13 +463,13 @@ export default ({ navigation }) => {
         zoomEnabled={true}
         zoomControlEnabled={true}
         onMapReady={() => updateMapStyle()}
-
+        rotateEnabled={true}
         scrollEnabled={true}
       >
 
         <Markers
           zIndex={1}
-          tracksViewChanges={true}
+          tracksViewChanges={false}
           tracksInfoWindowChanges={false} />
 
         {(function () {
