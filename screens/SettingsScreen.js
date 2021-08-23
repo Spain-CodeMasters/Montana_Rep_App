@@ -28,9 +28,8 @@ export default ({ navigation: { goBack }, navigation }) => {
       if (error || !snapshot) {
         return;
       }
-   
+      //console.log(user.uid);
       setUserData(snapshot.docs.map((doc) => ({ id: doc.id, user: doc.data() })));
-    
     });
     return () => cleanUp();
   }, []);

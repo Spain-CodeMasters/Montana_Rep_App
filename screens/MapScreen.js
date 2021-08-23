@@ -2,7 +2,7 @@ import 'react-native-gesture-handler';
 import React, { useState, useRef, useEffect } from 'react';
 import { PERMISSIONS, RESULTS, check, request } from 'react-native-permissions';
 import { Text, View, Image, StyleSheet, TouchableOpacity, Dimensions, PermissionsAndroid, Platform, Pressable, Alert } from 'react-native';
-import MapView, { PROVIDER_GOOGLE, Marker, Callout, Animated, AnimatedRegion, MapViewAnimated, Camera } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, PROVIDER_DEFAULT, Marker, Callout, Animated, AnimatedRegion, MapViewAnimated, Camera } from 'react-native-maps';
 import Cog from '../components/Cog';
 //import PlayingBanner from '../components/playingBanner';
 import Geolocation from 'react-native-geolocation-service';
@@ -13,13 +13,17 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { db } from '../components/Firebase/firebase';
 
 
+
 let val;
 let pitchVal;
 let Markers;
 
+let provider;
+let welcomeLat;
+let welcomeLong;
+
 export default ({ navigation }) => {
   const [isFirstMapLaunch, setIsFirstMapLaunch] = useState(null);
-
   const _map = useRef(null);
   const [locationPermission, setLocationPermission] = useState(false);
   const [currentPosition, setCurrentPosition] = useState({});
@@ -30,13 +34,13 @@ export default ({ navigation }) => {
 
   //const [showsUserLocation, setShowsUserLocation] = useState(true);
   const [followsUserLocation, setFollowsUserLocation] = useState(true);
-  const [mapWidth, setMapWidth] = useState('99%')
+  const [mapWidth, setMapWidth] = useState('99%');
+  const [isAndroid, setIsAndroid] = useState(false);
 
   //Update map styling to force a re-render to make sure the geolocation button appears
   const updateMapStyle = () => {
     setMapWidth('100%')
   }
-
 
 
   useEffect(() => {
@@ -47,14 +51,19 @@ export default ({ navigation }) => {
 
   function setTrue() {
     val = true;
+    setFollowsUserLocation(true);
     pitchVal = 0;
+    altitude = 20;
 
   }
+
   function setFalse() {
+    setFollowsUserLocation(false);
     val = false;
   }
 
   function toggleChangeView() {
+    setFollowsUserLocation(false);
     pitchVal = 45;
   }
 
@@ -72,19 +81,20 @@ export default ({ navigation }) => {
         }
       }
     });
-
-    console.log(isFirstMapLaunch);
-
-
   }, [locationPermission]);
+
 
   useEffect(() => {
     if (Platform.OS === "android") {
       checkPermissions(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
+      provider = PROVIDER_GOOGLE;
+      setIsAndroid(true);
     } else if (Platform.OS === "ios") {
       checkPermissions(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
+      provider = PROVIDER_DEFAULT;
     };
   }, []);
+
 
   useEffect(() => {
     const cleanUp = db.collection("content").onSnapshot((snapshot, error) => {
@@ -97,6 +107,7 @@ export default ({ navigation }) => {
     });
     return () => cleanUp();
   }, []);
+
 
   function checkPermissions(type) {
     check(type)
@@ -185,6 +196,7 @@ export default ({ navigation }) => {
       });
   }
 
+
   function getCurrentLocation() {
     Geolocation.getCurrentPosition(
       (position) => {
@@ -197,6 +209,7 @@ export default ({ navigation }) => {
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
     );
   }
+
 
   useEffect(() => {
     if (locationPermission) {
@@ -220,23 +233,38 @@ export default ({ navigation }) => {
       if (val) {
 
         if (_map.current) {
-          const newCamera = {
-            center: {
-              latitude: currentPosition.latitude,
-              longitude: currentPosition.longitude,
-            },
-            pitch: pitchVal,
-            //heading: currentPosition.heading,
-            heading: 0,
+          if (isAndroid) {
+            const newCamera = {
+              center: {
+                latitude: currentPosition.latitude,
+                longitude: currentPosition.longitude,
+              },
+              pitch: pitchVal,
+              //heading: currentPosition.heading,
+              heading: 0,
 
-            // Only on iOS MapKit, in meters. The property is ignored by Google Maps.
-            altitude: 20,
+              // Only on iOS MapKit, in meters. The property is ignored by Google Maps.
+              //altitude: 20,
 
-            // Only when using Google Maps.
-            zoom: 20
+              // Only when using Google Maps.
+              zoom: 18
+            }
+
+            _map.current.animateCamera(newCamera, { duration: 1000 });
+          } else {
+            const newCamera = {
+              center: {
+                latitude: currentPosition.latitude,
+                longitude: currentPosition.longitude,
+              },
+              pitch: pitchVal,
+              //heading: currentPosition.heading,
+              heading: 0,
+
+            }
+
+            _map.current.animateCamera(newCamera, { duration: 1000 });
           }
-
-          _map.current.animateCamera(newCamera, { duration: 1000 })
         }
       }
     } catch {
@@ -244,8 +272,6 @@ export default ({ navigation }) => {
     }
 
   }
-
-
 
   function selectPlay(id, pointId) {
     navigation.navigate('Play', {
@@ -266,6 +292,13 @@ export default ({ navigation }) => {
       id: id,
       pointId: pointId,
     });
+  }
+
+  function getCenterOffsetForAnchor(markerWidth, markerHeight) {
+    return {
+      x: (markerWidth * 0.5) - (markerWidth * 0.5),
+      y: (markerHeight * 0.5) - (markerHeight * 1),
+    };
   }
 
   renderMarkers();
@@ -294,6 +327,10 @@ export default ({ navigation }) => {
                       latitude: geopoints.latitude * 1,
                       longitude: geopoints.longitude * 1,
                     }}
+
+                    anchor={{ x: 0.5, y: 1 }}
+                    centerOffset={getCenterOffsetForAnchor(75, 108)}
+
                     image={require('../assets/GoPlay_PinGift.png')}
                     onPress={e => selectPlay(id, pointId)}
                     tracksViewChanges={true}
@@ -318,6 +355,10 @@ export default ({ navigation }) => {
                     latitude: geopoints.latitude * 1,
                     longitude: geopoints.longitude * 1,
                   }}
+
+                  anchor={{ x: 0.5, y: 1 }}
+                  centerOffset={getCenterOffsetForAnchor(75, 108)}
+
                   image={require('../assets/GoPlay_PinGold.png')}
                   onPress={e => selectPlay(id, pointId)}
                   style={{ height: 10, }}
@@ -341,6 +382,10 @@ export default ({ navigation }) => {
                     latitude: geopoints.latitude * 1,
                     longitude: geopoints.longitude * 1,
                   }}
+
+                  anchor={{ x: 0.5, y: 1 }}
+                  centerOffset={getCenterOffsetForAnchor(75, 108)}
+
                   image={require('../assets/GoPlay_PinGreen.png')}
                   onPress={e => selectEvent(id, pointId)}
                   tracksViewChanges={true}
@@ -363,6 +408,10 @@ export default ({ navigation }) => {
                     latitude: geopoints.latitude * 1,
                     longitude: geopoints.longitude * 1,
                   }}
+
+                  anchor={{ x: 0.5, y: 1 }}
+                  centerOffset={getCenterOffsetForAnchor(75, 108)}
+
                   image={require('../assets/GoPlay_PinCopper.png')}
                   onPress={e => selectSponsor(id, pointId)}
                   tracksViewChanges={true}
@@ -384,6 +433,10 @@ export default ({ navigation }) => {
                     latitude: geopoints.latitude * 1,
                     longitude: geopoints.longitude * 1,
                   }}
+
+                  anchor={{ x: 0.5, y: 1 }}
+                  centerOffset={getCenterOffsetForAnchor(75, 108)}
+
                   image={require('../assets/GoPlay_PinCopper.png')}
                   onPress={e => selectEvent(id, pointId)}
                   tracksViewChanges={true}
@@ -432,7 +485,20 @@ export default ({ navigation }) => {
     zoom: 20
   }
 
+  let defaultCamera = {
+    center: {
+      latitude: 46.8601,
+      longitude: 113.9852,
+    },
+    pitch: 0,
+    heading: 0,
 
+    // Only on iOS MapKit, in meters. The property is ignored by Google Maps.
+    altitude: 20,
+
+    // Only when using Google Maps.
+    zoom: 20
+  }
 
 
   return (
@@ -440,7 +506,7 @@ export default ({ navigation }) => {
 
       <MapView.Animated
         ref={_map}
-        provider={PROVIDER_GOOGLE}
+        provider={provider}
         mapPadding={{ top: 50, left: 20, bottom: 50 }}
         mapType="standard"
         customMapStyle={googleMapStyle}
@@ -449,7 +515,7 @@ export default ({ navigation }) => {
         showsUserLocation
         showsBuildings
 
-        //initialCamera={Camera}
+        initialCamera={defaultCamera}
         setCamera={Camera, 1000}
 
         followsUserLocation={followsUserLocation}
@@ -459,40 +525,52 @@ export default ({ navigation }) => {
         zoomEnabled={true}
         zoomControlEnabled={true}
         onMapReady={() => updateMapStyle()}
-
+        rotateEnabled={true}
         scrollEnabled={true}
       >
 
         <Markers
           zIndex={1}
-          tracksViewChanges={true}
+          tracksViewChanges={false}
           tracksInfoWindowChanges={false} />
 
         {(function () {
-       
+
           if (isFirstMapLaunch == true && currentPosition.latitude !== undefined) {
-            return <Marker.Animated
-              //key={pointId}
-              coordinate={{
-                latitude: currentPosition.latitude,
-                longitude: currentPosition.longitude,
-              }}
-              image={require('../assets/GoPlay_PinGold.png')}
-              onPress={e => navigation.navigate('Welcome')}
-              style={{ height: 10, }}
-              resizeMode="contain"
-              tracksViewChanges={true}
-            >
-              <Callout tooltip>
-                <View>
-                  <View style={styles.bubble}>
-                    <Text style={styles.name}>Welcome to GoPlay!</Text>
+
+            if (welcomeLat == undefined && welcomeLong == undefined) {
+              welcomeLat = currentPosition.latitude;
+              welcomeLong = currentPosition.longitude;
+
+            } else {
+
+              return <Marker.Animated
+                //key={pointId}
+                coordinate={{
+                  latitude: welcomeLat,
+                  longitude: welcomeLong,
+                }}
+
+                anchor={{ x: 0.5, y: 1 }}
+                centerOffset={getCenterOffsetForAnchor(75, 108)}
+
+                image={require('../assets/GoPlay_PinGift.png')}
+                onPress={e => navigation.navigate('Welcome')}
+                style={{ height: 10, }}
+                resizeMode="contain"
+                tracksViewChanges={false}
+              >
+                <Callout tooltip>
+                  <View>
+                    <View style={styles.bubble}>
+                      <Text style={styles.name}>Welcome to GoPlay!</Text>
+                    </View>
+                    <View style={styles.arrowBorder} />
+                    <View style={styles.arrow} />
                   </View>
-                  <View style={styles.arrowBorder} />
-                  <View style={styles.arrow} />
-                </View>
-              </Callout>
-            </Marker.Animated>
+                </Callout>
+              </Marker.Animated>
+            }
           }
         })()}
 

@@ -334,7 +334,7 @@ const styles = StyleSheet.create({
     header: {
         backgroundColor: '#fff',
         overflow: 'hidden',
-        height: ITEM_HEIGHT - 150,
+        height: ITEM_HEIGHT - 110,
         alignItems: "center",
         justifyContent: "center",
     },
