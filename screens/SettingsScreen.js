@@ -15,7 +15,7 @@ import { db } from '../components/Firebase/firebase';
 
 export default ({ navigation: { goBack }, navigation }) => {
   const { user, logout } = useContext(AuthContext);
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState();
   //const [isEnabled, setIsEnabled] = useState(true);
   //const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
@@ -57,8 +57,13 @@ export default ({ navigation: { goBack }, navigation }) => {
 
         <Text style={styles.header_text}>Settings</Text>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginBottom: 20, }}>
-          {(function () {
-            if (userData !== null && userData[0].user.isPremium == false) {
+          {(function () {        
+            if (typeof(userData) !== "undefined") {
+              //Hack to get around undefined userData for button render. 8/22/2021
+              if(typeof(userData[0])=='undefined'){
+                return null;
+              }
+              if(userData[0].user.isPremium == false){
               return <FancyCard
                 title='Get GoPlay!'
                 onPress={() => {
@@ -69,6 +74,7 @@ export default ({ navigation: { goBack }, navigation }) => {
                     })
                 }}
               />
+              }
             }
           })()}
         </View>

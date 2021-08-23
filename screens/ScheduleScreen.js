@@ -18,12 +18,13 @@ const { width, height } = Dimensions.get('screen');
 const ITEM_WIDTH = width;
 const ITEM_HEIGHT = height * .90;
 
+
 //Adjust size of title text based on content
 const AdjustTitle = ({ fontSize, text, style, numberOfLines }) => {
 
   const [currentFont, setCurrentFont] = useState(fontSize);
   const [currentLines, setCurrentLines] = useState(numberOfLines);
-
+  
   return (
     <Text
       numberOfLines={currentLines}
@@ -180,6 +181,8 @@ export default ({ navigation }) => {
 
   const [scheduleData, setScheduleData] = useState([]);
   const [scheduleView, setScheduleView] = useState(scheduleData);
+  
+  const [isAnythingAvailable, setIsAnythingAvailable] = useState(true);
 
   useEffect(() => {
     const cleanUp = db.collection("content").orderBy("start", "asc").onSnapshot((snapshot, error) => {
@@ -281,22 +284,32 @@ export default ({ navigation }) => {
 
   const renderItem = ({ item }) => {
     if (item.post.publish && new Date < item.post.end.toDate()) {
+      console.log("I render2")
       if (item.post.type == 'play') {
+        console.log("a")
+        setIsAnythingAvailable(true);
         return <Play
           item={item}
           onPress={() => selectPlay(item.id)}
         />
       } else if (item.post.type == 'event') {
+        console.log("ab")
+        setIsAnythingAvailable(true);
         return <Event
           item={item}
           onPress={() => selectEvent(item.id)}
         />
       } else if (item.post.type == "sponsor") {
+        console.log("abc")
+        setIsAnythingAvailable(true);
         return <Sponsor
           item={item}
           onPress={() => selectSponsor(item.id)}
         />
       }
+    }
+    else{
+      setIsAnythingAvailable(false);
     }
   };
 
@@ -348,7 +361,13 @@ export default ({ navigation }) => {
     </View>
 
     <Cog onPress={() => navigation.navigate('Settings')} />
-
+      <View style={{alignItems: 'center'}}>
+        {isAnythingAvailable ?
+        <Text></Text>
+        :
+        <Text style={styles.subtext}>No Plays Available</Text>
+        }
+      </View>
   </View>
 }
 

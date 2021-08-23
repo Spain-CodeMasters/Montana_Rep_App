@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 import auth from '@react-native-firebase/auth';
 import firebase from '@react-native-firebase/app';
 import firestore from '@react-native-firebase/firestore';
@@ -14,7 +14,7 @@ import { db } from '../components/Firebase/firebase';
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState();
   const [error, setError] = useState('');
   //const [email, setEmail] = useState('');
   // const [password, setPassword] = useState('');
@@ -91,8 +91,11 @@ export const AuthProvider = ({ children }) => {
         }, catch(e) {
           console.log(e);
           setErrorObject(e);
-        }
+        },
+
+        
       }}
+      
     >
       {children}
     </AuthContext.Provider>
