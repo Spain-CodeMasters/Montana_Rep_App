@@ -1,33 +1,106 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-platform :ios, '10.0'
+ platform :ios, '10.0'
 
-target 'Montana_Rep_App' do
-  config = use_native_modules!
+# We ingore warning except for RNMBGL
+INHIBIT_WARNING_BY_DEFAULT = true
 
-  use_react_native!(:path => config["reactNativePath"])
+if INHIBIT_WARNING_BY_DEFAULT
+  ORIG_POD = method(:pod)
 
-  target 'Montana_Rep_AppTests' do
-    inherit! :complete
-    # Pods for testing
-  end
-
-  # Enables Flipper.
-  #
-  # Note that if you have use_frameworks! enabled, Flipper will not work and
-  # you should disable these next few lines.
-  use_flipper!
-  post_install do |installer|
-    flipper_post_install(installer)
+  # Override pods so we default to disbling all warnings
+  def pod(name, *requirements)
+    options = requirements.last
+    if options.is_a?(Hash)
+      options[:inhibit_warnings] = true unless options.has_key?(:inhibit_warnings)
+    else
+      requirements.push({inhibit_warnings: true})
+    end
+    ORIG_POD[name, *requirements]
   end
 end
 
-target 'Montana_Rep_App-tvOS' do
-  # Pods for Montana_Rep_App-tvOS
+pod 'GoogleMaps'
+pod 'Google-Maps-iOS-Utils'
 
-  target 'Montana_Rep_App-tvOSTests' do
-    inherit! :search_paths
+# add pods for desired Firebase products
+# https://firebase.google.com/docs/ios/setup#available-pods
+
+target 'GoPlay! Demo' do
+  config = use_native_modules!
+
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  pod 'Permission-LocationAccuracy', :path => "#{permissions_path}/LocationAccuracy"
+  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
+  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+  # pod 'Permission-Notifications', :path => "#{permissions_path}/Notifications.podspec"
+  
+  pod 'react-native-maps', :path => '../node_modules/react-native-maps'
+
+  use_react_native!(
+    :path => config[:reactNativePath],
+    # to enable hermes on iOS, change `false` to `true` and then install pods
+    :hermes_enabled => true
+  )
+  
+  target 'GoPlay! DemoTests' do
+    inherit! :complete
     # Pods for testing
   end
+  rn_maps_path = '../node_modules/react-native-maps'
+  pod 'react-native-google-maps', :path => rn_maps_path
+  use_native_modules!
+
+    #pre_install do |installer|
+     # $RNMBGL.pre_install(installer)
+    #end
+    
+  # Enables Flipper.
+  #
+  # Note that if you have use_frameworks! enabled, Flipper will not work and
+  # you should disable the next line.ß
+  use_flipper!({ 'Flipper-Folly' => '2.5.3', 'Flipper' => '0.87.0', 'Flipper-RSocket' => '1.3.1' })
+
+
+  # Define find-and-replace function
+  def find_and_replace(dir, findstr, replacestr)
+    Dir[dir].each do |name|
+        text = File.read(name)
+        replace = text.gsub(findstr,replacestr)
+        replaced = text.index(replacestr)
+        if replaced == nil && text != replace
+            puts "Fix: " + name
+            File.open(name, "w") { |file| file.puts replace }
+            STDOUT.flush
+        end
+    end
+    Dir[dir + '*/'].each(&method(:find_and_replace))
+  end
+
+  post_install do |installer|
+    react_native_post_install(installer)
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = 'arm64'
+        end
+    end
+    
+#     Fix for Flipper-Folly on iOS 14.5
+#    These are no longer required as Flipper-folly is updated
+#   find_and_replace("Pods/Flipper-Folly/folly/synchronization/DistributedMutex-inl.h",
+#                    "atomic_notify_one(state)", "folly::atomic_notify_one(state)")
+
+#   find_and_replace("Pods/Flipper-Folly/folly/synchronization/DistributedMutex-inl.h",
+#   "atomic_wait_until(&state, previous | data, deadline)", "folly::atomic_wait_until(&state, previous | data, deadline)")
+
+  find_and_replace("Pods/RCT-Folly/folly/synchronization/DistributedMutex-inl.h",
+                   "atomic_notify_one(state)", "folly::atomic_notify_one(state)")
+
+  find_and_replace("Pods/RCT-Folly/folly/synchronization/DistributedMutex-inl.h",
+  "atomic_wait_until(&state, previous | data, deadline)", "folly::atomic_wait_until(&state, previous | data, deadline)")
+
+    
+  end
+
 end

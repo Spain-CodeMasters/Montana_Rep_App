@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "556304158511",
+    "firebase_url": "https://montana-rep-app-testing-default-rtdb.firebaseio.com",
+    "project_id": "montana-rep-app-testing",
+    "storage_bucket": "montana-rep-app-testing.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:556304158511:android:99a46fa48592f47919dbda",
+        "android_client_info": {
+          "package_name": "com.montana_rep_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "556304158511-ncdeboarm0j3hmomg2jge8541g1322cm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5-Io7A7P-CgYYQODYU8HTWCteopHNSnA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "556304158511-ncdeboarm0j3hmomg2jge8541g1322cm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
