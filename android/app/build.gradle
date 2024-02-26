@@ -120,16 +120,20 @@ def jscFlavor = 'org.webkit:android-jsc:+'
  * and the benefits of using Hermes will therefore be sharply reduced.
  */
 def enableHermes = project.ext.react.get("enableHermes", false)
-def hermesPath = "../../node_modules/hermes-engine/android/";
+// def hermesPath = "../../node_modules/hermes-engine/android/";
 
 android {
+    
     compileSdkVersion rootProject.ext.compileSdkVersion
     namespace "com.montana_rep_app"
+    // packagingOptions {
+    //     exclude("META-INF/AL2.0")
+    //     exclude("META-INF/LGPL2.1")
+    // }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
     defaultConfig {
         applicationId "com.montana_rep_app"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -175,6 +179,11 @@ android {
             matchingFallbacks = ['release']
         }
     }
+    tasks.configureEach {
+        if (name == "generateReleaseLintVitalReportModel") {
+            mustRunAfter(tasks.copyReactNativeVectorIconFonts)
+        }
+    }
 
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->
@@ -190,38 +199,41 @@ android {
 
         }
     }
+    
 }
 
 dependencies {
-    implementation 'com.jakewharton:butterknife:10.0.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
-
-    implementation "com.facebook.react:react-android"
-    implementation "com.facebook.react:hermes-android"
-
-    implementation fileTree(dir: "libs", include: ["*.jar"])
+    // implementation "com.facebook.react:react-android"
+    // implementation "com.facebook.react:hermes-android"
+    implementation "com.facebook.react:react-native:+" 
+    // implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
+    // implementation 'com.google.android.material:material:1.11.0'
+    implementation project(':react-native-linear-gradient')
+    implementation group: 'androidx.appcompat', name: 'appcompat', version: '1.6.1' 
+
+    implementation group: 'androidx.constraintlayout', name: 'constraintlayout', version: '2.1.4'
+
+    implementation group: 'androidx.browser', name: 'browser', version: '1.7.0'
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
     implementation 'com.android.support:multidex:1.0.3'
 
-    implementation platform('com.google.firebase:firebase-bom:26.4.0')
-    implementation 'com.google.firebase:firebase-auth'
-    //  implementation 'com.google.firebase:firebase-core:16.0.4'
-
-    //  implementation project(':react-native-maps')
+    // implementation platform('com.google.firebase:firebase-bom:26.4.0')
+    // implementation 'com.google.firebase:firebase-auth'
+    // implementation 'com.google.firebase:firebase-core:16.0.4'
+    implementation project(':react-native-maps')
 
     //  classpath 'com.google.gms:google-services:4.3.5'
 
-    implementation 'com.android.tools.build:gradle:8.2.2'
+    // implementation 'com.android.tools.build:gradle:8.2.2'
 
-    // implementation platform('com.google.firebase:firebase-bom:26.3.0')
+    implementation platform('com.google.firebase:firebase-bom:26.3.0')
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'
     }
-
     debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.flipper'
         exclude group:'com.squareup.okhttp3', module:'okhttp'
@@ -230,15 +242,16 @@ dependencies {
     debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.flipper'
     }
-    debugImplementation files(hermesPath + "hermes-debug.aar")
-    releaseImplementation files(hermesPath + "hermesrelease.aar")
-    if (enableHermes) {
-        implementation("com.facebook.react:hermes-engine:+") {
-            exclude group: 'com.facebook.fbjni'
-        }
-    } else {
-        implementation jscFlavor
-    }
+    annotationProcessor 'com.android.tools.build.jetifier:jetifier-core:1.0.0-beta02'
+    // debugImplementation files(hermesPath + "hermes-debug.aar")
+    // releaseImplementation files(hermesPath + "hermesrelease.aar")
+    // if (enableHermes) {
+    //     implementation("com.facebook.react:hermes-engine:+") {
+    //         exclude group: 'com.facebook.fbjni'
+    //     }
+    // } else {
+    //     implementation jscFlavor
+    // }
 }
 
 

@@ -15,7 +15,7 @@ import {
 import * as Animatable from 'react-native-animatable';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Cog from '../components/Cog';
-import AutoHeightImage from 'react-native-auto-height-image';
+import AutoHeightImage from 'rn-auto-image-height';
 
 import { db } from '../components/Firebase/firebase';
 

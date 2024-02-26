@@ -1,8 +1,8 @@
 import 'react-native-gesture-handler';
 import React, {useState, useEffect} from 'react';
 import {Text, View, Button, ActivityIndicator, LogBox, StyleSheet} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+// import {NavigationContainer} from '@react-navigation/native';
+// import {createStackNavigator} from '@react-navigation/stack';
 import auth from '@react-native-firebase/auth';
 
 // import { createStackNavigator, createAppContainer } from 'react-navigaton';
@@ -17,9 +17,9 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Providers from './navigation/index';
 // import AppStack from './navigation/AppStack';
 
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const AppStack = createStackNavigator();
+// const AppStack = createStackNavigator();
 
 
 

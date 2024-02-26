@@ -8,7 +8,7 @@ import Cog from '../components/Cog';
 import Geolocation from 'react-native-geolocation-service';
 import * as geolib from 'geolib';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { db } from '../components/Firebase/firebase';
 
