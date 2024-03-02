@@ -14,15 +14,14 @@ buildscript {
     }
     repositories {
         google()
-        jcenter()
         mavenCentral()
     }
     dependencies {
         classpath("com.android.tools.build:gradle:8.2.2")
-        classpath("com.google.gms:google-services:4.3.0")
+        classpath("com.google.gms:google-services:4.4.1")
         classpath("com.facebook.react:react-native-gradle-plugin")
         classpath("com.neenbedankt.gradle.plugins:android-apt:1.8")
-        classpath ("com.android.tools.build.jetifier:jetifier-processor:1.0.0-beta02")
+        classpath ("com.android.tools.build.jetifier:jetifier-processor:1.0.0-beta10")
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -35,7 +34,7 @@ plugins {
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         mavenLocal()
         maven {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm

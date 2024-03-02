@@ -2,7 +2,11 @@ package com.montana_rep_app;
 
 import android.app.Application;
 import android.content.Context;
+
+import com.facebook.drawee.backends.pipeline.Fresco;
+//import com.facebook.fresco.ui.common.ImagePerfDataListener;
 import com.facebook.react.PackageList;
+import com.facebook.react.BuildConfig;
 import com.facebook.react.ReactApplication;
 // import com.airbnb.android.react.maps.MapsPackage;
 // import com.airbnb.android.react.maps.MapsPackage;
@@ -13,6 +17,10 @@ import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import com.BV.LinearGradient.LinearGradientPackage;
+import com.facebook.react.ReactActivity;
+import com.facebook.react.ReactActivityDelegate;
+import com.facebook.react.ReactRootView;
+import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -22,7 +30,6 @@ public class MainApplication extends Application implements ReactApplication {
         public boolean getUseDeveloperSupport() {
           return BuildConfig.DEBUG;
         }
-
         @Override
         protected List<ReactPackage> getPackages() {
           @SuppressWarnings("UnnecessaryLocalVariable")
@@ -44,12 +51,27 @@ public class MainApplication extends Application implements ReactApplication {
   public ReactNativeHost getReactNativeHost() {
     return mReactNativeHost;
   }
-
+  public class MainActivity extends ReactActivity {
+      @Override
+      protected String getMainComponentName() {
+          return "Example";
+      }
+      @Override
+      protected ReactActivityDelegate createReactActivityDelegate() {
+          return new ReactActivityDelegate(this, getMainComponentName()) {
+              @Override
+              protected ReactRootView createRootView() {
+                  return new RNGestureHandlerEnabledRootView(MainActivity.this);
+              }
+          };
+      }
+  }
   @Override
   public void onCreate() {
     super.onCreate();
+    Fresco.initialize(this);
     SoLoader.init(this, /* native exopackage */ false);
-    initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
+//    initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
   }
 
   /**
