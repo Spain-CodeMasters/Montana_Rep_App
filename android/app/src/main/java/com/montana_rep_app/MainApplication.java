@@ -17,10 +17,10 @@ import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import com.BV.LinearGradient.LinearGradientPackage;
-import com.facebook.react.ReactActivity;
-import com.facebook.react.ReactActivityDelegate;
-import com.facebook.react.ReactRootView;
-import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
+//import com.facebook.react.ReactActivity;
+//import com.facebook.react.ReactActivityDelegate;
+//import com.facebook.react.ReactRootView;
+//import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -51,21 +51,21 @@ public class MainApplication extends Application implements ReactApplication {
   public ReactNativeHost getReactNativeHost() {
     return mReactNativeHost;
   }
-  public class MainActivity extends ReactActivity {
-      @Override
-      protected String getMainComponentName() {
-          return "Example";
-      }
-      @Override
-      protected ReactActivityDelegate createReactActivityDelegate() {
-          return new ReactActivityDelegate(this, getMainComponentName()) {
-              @Override
-              protected ReactRootView createRootView() {
-                  return new RNGestureHandlerEnabledRootView(MainActivity.this);
-              }
-          };
-      }
-  }
+//  public class MainActivity extends ReactActivity {
+//      @Override
+//      protected String getMainComponentName() {
+//          return "Example";
+//      }
+//      @Override
+//      protected ReactActivityDelegate createReactActivityDelegate() {
+//          return new ReactActivityDelegate(this, getMainComponentName()) {
+//              @Override
+//              protected ReactRootView createRootView() {
+//                  return new RNGestureHandlerEnabledRootView(MainActivity.this);
+//              }
+//          };
+//      }
+//  }
   @Override
   public void onCreate() {
     super.onCreate();

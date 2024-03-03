@@ -41,7 +41,6 @@
     "react-native-bouncy-checkbox": "^3.0.7",
     "react-native-elements": "^3.4.3",
     "react-native-geolocation-service": "^5.3.1",
-    "react-native-gesture-handler": "^2.15.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-linear-gradient": "^2.8.3",
     "react-native-maps": "^1.10.2",
